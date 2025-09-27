@@ -241,6 +241,365 @@ def not_found(error):
     }), 404
 
 
+
+##############################################################################################
+# Add these imports to your existing app.py file
+from whatsapp_handler import WhatsAppHandler
+from flask import request
+import requests
+
+# Initialize WhatsApp handler (add this after your existing binance_client initialization)
+whatsapp_handler = WhatsAppHandler()
+
+# Top 10 cryptocurrencies by market cap
+TOP_10_CRYPTOS = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT', 
+                  'DOGEUSDT', 'SOLUSDT', 'DOTUSDT', 'LINKUSDT', 'LTCUSDT']
+
+# Route 5: WhatsApp Webhook Verification
+@app.route('/webhook', methods=['GET'])
+def webhook_verify():
+    """
+    Verify WhatsApp webhook with Meta
+    """
+    mode = request.args.get('hub.mode')
+    token = request.args.get('hub.verify_token') 
+    challenge = request.args.get('hub.challenge')
+    
+    result = whatsapp_handler.verify_webhook(mode, token, challenge)
+    if result:
+        return result, 200
+    else:
+        return 'Forbidden', 403
+
+
+# Route 6: WhatsApp Webhook Handler
+@app.route('/webhook', methods=['POST'])
+def webhook_handler():
+    """
+    Handle incoming WhatsApp messages
+    """
+    try:
+        data = request.get_json()
+        
+        # Process the webhook data
+        message_data = whatsapp_handler.process_webhook(data)
+        
+        if not message_data or not message_data.get('text'):
+            return jsonify({'status': 'ignored'}), 200
+        
+        user_phone = message_data['from']
+        message_text = message_data['text']
+        
+        print(f"📱 Received message from {user_phone}: {message_text}")
+        
+        # Check if it's a valid command
+        if whatsapp_handler.is_valid_command(message_text):
+            # Generate crypto report
+            try:
+                report_data = generate_crypto_report(message_text)
+                formatted_message = whatsapp_handler.format_crypto_report(report_data, message_text)
+                
+                # Send the report back to user
+                success = whatsapp_handler.send_message(user_phone, formatted_message)
+                
+                if success:
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'{message_text.title()} report sent successfully'
+                    }), 200
+                else:
+                    return jsonify({
+                        'status': 'error', 
+                        'message': 'Failed to send report'
+                    }), 500
+                    
+            except Exception as e:
+                error_msg = "❌ Sorry, I couldn't generate the crypto report right now. Please try again later."
+                whatsapp_handler.send_message(user_phone, error_msg)
+                return jsonify({
+                    'status': 'error',
+                    'message': str(e)
+                }), 500
+        else:
+            # Send help message for invalid commands
+            help_message = whatsapp_handler.get_help_message()
+            whatsapp_handler.send_message(user_phone, help_message)
+            
+            return jsonify({
+                'status': 'help_sent',
+                'message': 'Help message sent for invalid command'
+            }), 200
+            
+    except Exception as e:
+        print(f"❌ Webhook error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': 'Webhook processing failed'
+        }), 500
+
+
+# Route 7: Generate Crypto Report API
+@app.route('/crypto-report', methods=['GET'])
+def crypto_report_api():
+    """
+    Generate crypto report for specified period
+    Query Parameters:
+    - period: daily, weekly, or monthly (default: daily)
+    """
+    period = request.args.get('period', 'daily').lower()
+    
+    if period not in ['daily', 'weekly', 'monthly']:
+        return jsonify({
+            'error': 'Invalid period. Use daily, weekly, or monthly'
+        }), 400
+    
+    try:
+        report_data = generate_crypto_report(period)
+        return jsonify(report_data)
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+
+# Updated generate_crypto_report function in app.py
+def generate_crypto_report(period):
+    """
+    Generate enhanced crypto report with additional metrics
+    """
+    if not binance_client:
+        raise Exception('Binance client not initialized')
+    
+    # Determine the interval and lookback based on period
+    period_config = {
+        'daily': {'interval': '1h', 'lookback_hours': 25, 'rsi_period': 14},
+        'weekly': {'interval': '1d', 'lookback_days': 8, 'rsi_period': 7}, 
+        'monthly': {'interval': '1d', 'lookback_days': 31, 'rsi_period': 14}
+    }
+    
+    config = period_config.get(period)
+    if not config:
+        raise Exception('Invalid period specified')
+    
+    currencies_data = []
+    
+    # Get global market data (simplified)
+    try:
+        global_stats = get_global_market_data()
+    except:
+        global_stats = None
+    
+    for symbol in TOP_10_CRYPTOS:
+        try:
+            # Get historical data with more candles for calculations
+            limit = config.get('lookback_days', config.get('lookback_hours', 25))
+            klines = binance_client.get_klines(
+                symbol=symbol,
+                interval=config['interval'],
+                limit=limit + config['rsi_period']  # Extra data for RSI calculation
+            )
+            
+            if len(klines) < 2:
+                continue
+            
+            # Get current and previous prices
+            current_candle = klines[-1]  # Most recent
+            if period == 'daily':
+                previous_candle = klines[-25]  # 24 hours ago (hourly data)
+            else:
+                previous_candle = klines[-limit] if len(klines) >= limit else klines[0]
+            
+            current_price = float(current_candle[4])  # Close price
+            previous_price = float(previous_candle[4])  # Close price
+            high_price = float(current_candle[2])  # High price
+            low_price = float(current_candle[3])   # Low price
+            
+            # Calculate percentage change
+            change_percent = ((current_price - previous_price) / previous_price) * 100
+            
+            # Calculate volatility (high-low range as percentage of current price)
+            volatility = ((high_price - low_price) / current_price) * 100
+            
+            # Calculate RSI
+            rsi = calculate_rsi([float(k[4]) for k in klines[-config['rsi_period']-1:]], config['rsi_period'])
+            
+            # Get 24h high/low for better context
+            ticker_24h = binance_client.get_ticker(symbol=symbol)
+            high_24h = float(ticker_24h['highPrice'])
+            low_24h = float(ticker_24h['lowPrice'])
+            
+            currencies_data.append({
+                'symbol': symbol.replace('USDT', ''),
+                'current_price': current_price,
+                'previous_price': previous_price,
+                'high_price': high_24h,  # Use 24h high for consistency
+                'low_price': low_24h,    # Use 24h low for consistency
+                'change_percent': change_percent,
+                'volatility': volatility,
+                'rsi': rsi,
+                'timestamp': datetime.fromtimestamp(current_candle[0] / 1000).isoformat()
+            })
+            
+        except Exception as e:
+            print(f"❌ Error fetching data for {symbol}: {e}")
+            continue
+    
+    # Sort by percentage change in ASCENDING order (lowest to highest)
+    currencies_data.sort(key=lambda x: x['change_percent'])
+    
+    return {
+        'status': 'success',
+        'period': period,
+        'generated_at': datetime.now().isoformat(),
+        'total_currencies': len(currencies_data),
+        'global_data': global_stats,
+        'currencies': currencies_data[:10]  # Top 10
+    }
+
+
+# Helper function to calculate RSI
+def calculate_rsi(prices, period=14):
+    """
+    Calculate Relative Strength Index (RSI)
+    """
+    try:
+        if len(prices) < period + 1:
+            return 50  # Default neutral RSI
+        
+        deltas = [prices[i] - prices[i-1] for i in range(1, len(prices))]
+        gains = [d if d > 0 else 0 for d in deltas]
+        losses = [-d if d < 0 else 0 for d in deltas]
+        
+        avg_gain = sum(gains[-period:]) / period
+        avg_loss = sum(losses[-period:]) / period
+        
+        if avg_loss == 0:
+            return 100
+        
+        rs = avg_gain / avg_loss
+        rsi = 100 - (100 / (1 + rs))
+        
+        return rsi
+        
+    except:
+        return 50  # Default neutral RSI
+
+
+# Helper function to get global market data (simplified)
+def get_global_market_data():
+    """
+    Get global cryptocurrency market data
+    """
+    try:
+        # This is a simplified version - in production, you'd use CoinGecko API
+        # For now, we'll calculate approximate values from our top currencies
+        
+        total_prices = []
+        for symbol in TOP_10_CRYPTOS[:5]:  # Use top 5 for approximation
+            try:
+                ticker = binance_client.get_ticker(symbol=symbol)
+                current_price = float(ticker['lastPrice'])
+                price_change = float(ticker['priceChangePercent'])
+                total_prices.append({'price': current_price, 'change': price_change})
+            except:
+                continue
+        
+        if total_prices:
+            avg_change = sum([p['change'] for p in total_prices]) / len(total_prices)
+            return {
+                'market_cap': '2.13T',  # Static for now
+                'volume_24h': '89.2B',  # Static for now
+                'change_24h': f"{avg_change:+.1f}%"
+            }
+        
+        return None
+        
+    except:
+        return None
+
+
+# Route 8: Send Test WhatsApp Message
+@app.route('/test-whatsapp', methods=['POST'])
+def test_whatsapp():
+    """
+    Test endpoint to send a WhatsApp message
+    Body: {"phone": "+1234567890", "message": "Test message"}
+    """
+    try:
+        data = request.get_json()
+        phone = data.get('phone')
+        message = data.get('message', 'Test message from Crypto Bot!')
+        
+        if not phone:
+            return jsonify({
+                'error': 'Phone number is required'
+            }), 400
+        
+        success = whatsapp_handler.send_message(phone, message)
+        
+        if success:
+            return jsonify({
+                'status': 'success',
+                'message': 'Test message sent successfully'
+            })
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': 'Failed to send test message'
+            }), 500
+            
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+
+# Route 9: Get Top Cryptocurrencies
+@app.route('/top-cryptos', methods=['GET'])
+def get_top_cryptos():
+    """
+    Get current prices for top 10 cryptocurrencies
+    """
+    if not binance_client:
+        return jsonify({
+            'error': 'Binance client not initialized'
+        }), 500
+    
+    try:
+        crypto_prices = []
+        
+        for symbol in TOP_10_CRYPTOS:
+            try:
+                ticker = binance_client.get_symbol_ticker(symbol=symbol)
+                crypto_prices.append({
+                    'symbol': symbol.replace('USDT', ''),
+                    'price': float(ticker['price']),
+                    'pair': symbol
+                })
+            except Exception as e:
+                print(f"❌ Error fetching price for {symbol}: {e}")
+                continue
+        
+        return jsonify({
+            'status': 'success',
+            'timestamp': datetime.now().isoformat(),
+            'total_cryptos': len(crypto_prices),
+            'cryptos': crypto_prices
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+
+
+
+
+
 # Main execution
 if __name__ == '__main__':
     print("🚀 Starting Crypto Trading Signals API...")
@@ -251,16 +610,16 @@ if __name__ == '__main__':
     print("   • GET /symbols - Get available trading pairs")
     print()
     print("🔗 Example URLs:")
-    print("   • http://127.0.0.1:5000/health")
-    print("   • http://127.0.0.1:5000/binance/ping")
-    print("   • http://127.0.0.1:5000/ohlcv?symbol=BTCUSDT&interval=1h&limit=10")
-    print("   • http://127.0.0.1:5000/ohlcv?symbol=ETHUSDT&interval=15m&limit=50")
-    print("   • http://127.0.0.1:5000/symbols")
+    print("   • http://127.0.0.1:8000/health")
+    print("   • http://127.0.0.1:8000/binance/ping")
+    print("   • http://127.0.0.1:8000/ohlcv?symbol=BTCUSDT&interval=1h&limit=10")
+    print("   • http://127.0.0.1:8000/ohlcv?symbol=ETHUSDT&interval=15m&limit=50")
+    print("   • http://127.0.0.1:8000/symbols")
     print()
     
     # Run the Flask app
     app.run(
         debug=True,
         host='127.0.0.1',
-        port=5000
+        port=8000
     )
