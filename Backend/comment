@@ -1,0 +1,107 @@
+# Route 5: WhatsApp Webhook Verification
+@app.route("/webhook", methods=["GET"])
+def webhook_verify():
+    """
+    Verify WhatsApp webhook with Meta
+    """
+    mode = request.args.get("hub.mode")
+    token = request.args.get("hub.verify_token")
+    challenge = request.args.get("hub.challenge")
+
+    result = whatsapp_handler.verify_webhook(mode, token, challenge)
+    if result:
+        return result, 200
+    else:
+        return "Forbidden", 403
+
+
+# At the top of your file, add:
+processed_messages = set()  # Store processed message IDs
+from datetime import datetime, timedelta
+import time
+
+# Replace your webhook_handler function with this:
+@app.route("/webhook", methods=["POST"])
+def webhook_handler():
+    """
+    Handle incoming WhatsApp messages with deduplication
+    """
+    try:
+        data = request.get_json()
+
+        # Process the webhook data
+        message_data = whatsapp_handler.process_webhook(data)
+
+        if not message_data or not message_data.get("text"):
+            return jsonify({"status": "ignored"}), 200
+
+        message_id = message_data["id"]
+        user_phone = message_data["from"]
+        message_text = message_data["text"]
+
+        # **DEDUPLICATION: Check if we already processed this message**
+        if message_id in processed_messages:
+            print(f"⏭️  Skipping duplicate message ID: {message_id}")
+            return jsonify({"status": "duplicate_ignored"}), 200
+
+        # Add message ID to processed set
+        processed_messages.add(message_id)
+        
+        # Clean old message IDs (keep only last 1000 to prevent memory issues)
+        if len(processed_messages) > 1000:
+            processed_messages.clear()
+
+        print(f"📱 Received message from {user_phone}: {message_text}")
+
+        # Check if it's a valid command
+        if whatsapp_handler.is_valid_command(message_text):
+            # Generate crypto report
+            try:
+                report_data = generate_crypto_report(message_text)
+                formatted_message = whatsapp_handler.format_crypto_report(
+                    report_data, message_text
+                )
+
+                # Send the report back to user
+                success = whatsapp_handler.send_message(user_phone, formatted_message)
+
+                if success:
+                    return (
+                        jsonify(
+                            {
+                                "status": "success",
+                                "message": f"{message_text.title()} report sent successfully",
+                            }
+                        ),
+                        200,
+                    )
+                else:
+                    return (
+                        jsonify(
+                            {"status": "error", "message": "Failed to send report"}
+                        ),
+                        500,
+                    )
+
+            except Exception as e:
+                error_msg = "❌ Sorry, I couldn't generate the crypto report right now. Please try again later."
+                whatsapp_handler.send_message(user_phone, error_msg)
+                return jsonify({"status": "error", "message": str(e)}), 500
+        else:
+            # Send help message for invalid commands
+            help_message = whatsapp_handler.get_help_message()
+            whatsapp_handler.send_message(user_phone, help_message)
+
+            return (
+                jsonify(
+                    {
+                        "status": "help_sent",
+                        "message": "Help message sent for invalid command",
+                    }
+                ),
+                200,
+            )
+
+    except Exception as e:
+        print(f"❌ Webhook error: {e}")
+        return jsonify({"status": "error", "message": "Webhook processing failed"}), 500
