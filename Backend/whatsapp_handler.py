@@ -221,3 +221,32 @@ class WhatsAppHandler:
         """
         valid_commands = ["daily", "weekly", "monthly"]
         return text in valid_commands
+    # Add this method to your WhatsAppHandler class:
+    
+    # Add this method to your existing WhatsAppHandler class
+
+def get_help_message_with_predictions(self):
+    """
+    Return updated help message with prediction commands
+    """
+    return """👋 *Welcome to Crypto Trading Bot!*
+
+        📊 *Market Reports:*
+        • *daily* - Daily market report
+        • *weekly* - Weekly market report  
+        • *monthly* - Monthly market report
+
+        🔮 *AI Price Predictions:*
+        • *predict* - Predict BTC price (default)
+        • *predict BTC* - Bitcoin prediction
+        • *predict ETH* - Ethereum prediction
+        • *predict BNB* - Binance Coin prediction
+
+        Supported cryptos: BTC, ETH, BNB, XRP, ADA, DOGE, SOL, DOT, LINK, LTC
+
+        💡 *Example:*
+        Type "predict BTC" to get 24-hour price forecast with AI analysis!
+
+        🤖 Powered by Amazon Chronos AI & Binance API
+
+        ⚠️ *Disclaimer:* Not financial advice. Crypto trading involves risk."""
