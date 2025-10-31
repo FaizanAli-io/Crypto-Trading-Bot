@@ -1,0 +1,11 @@
+{
+  "symbol": "ADAUSDT",
+  "interval": "15m",
+  "horizon_minutes": 15,
+  "shift_candles": 1,
+  "num_features": 49,
+  "trained_at": "20251008_195530",
+  "model_path": "models\\xgb_model_ADAUSDT_15m_15min_20251008_195530.pkl",
+  "features_path": "models\\features_ADAUSDT_15m_15min_20251008_195530.txt",
+  "scaler_path": "models\\scaler_ADAUSDT_15m_15min_20251008_195530.pkl"
+}

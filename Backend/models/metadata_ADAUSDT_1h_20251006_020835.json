@@ -1,0 +1,8 @@
+{
+  "symbol": "ADAUSDT",
+  "horizon": 1,
+  "num_features": 50,
+  "trained_at": "20251006_020835",
+  "model_path": "models\\xgb_model_ADAUSDT_1h_20251006_020835.pkl",
+  "features_path": "models\\features_ADAUSDT_1h_20251006_020835.txt"
+}

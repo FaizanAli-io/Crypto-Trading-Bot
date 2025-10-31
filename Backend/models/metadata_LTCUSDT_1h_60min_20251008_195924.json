@@ -1,0 +1,11 @@
+{
+  "symbol": "LTCUSDT",
+  "interval": "1h",
+  "horizon_minutes": 60,
+  "shift_candles": 1,
+  "num_features": 48,
+  "trained_at": "20251008_195924",
+  "model_path": "models\\xgb_model_LTCUSDT_1h_60min_20251008_195924.pkl",
+  "features_path": "models\\features_LTCUSDT_1h_60min_20251008_195924.txt",
+  "scaler_path": "models\\scaler_LTCUSDT_1h_60min_20251008_195924.pkl"
+}

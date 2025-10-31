@@ -1,0 +1,12 @@
+{
+  "symbol": "ETHUSDT",
+  "interval": "15m",
+  "horizon_minutes": 15,
+  "shift_candles": 1,
+  "num_features": 79,
+  "use_smc": true,
+  "trained_at": "20251025_223318",
+  "model_path": "models\\xgb_model_smc_ETHUSDT_15m_15min_20251025_223318.pkl",
+  "features_path": "models\\features_smc_ETHUSDT_15m_15min_20251025_223318.txt",
+  "scaler_path": "models\\scaler_smc_ETHUSDT_15m_15min_20251025_223318.pkl"
+}

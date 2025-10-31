@@ -1,0 +1,11 @@
+{
+  "symbol": "HBARUSDT",
+  "interval": "1h",
+  "horizon_minutes": 60,
+  "shift_candles": 1,
+  "num_features": 51,
+  "trained_at": "20251009_192339",
+  "model_path": "models\\xgb_model_HBARUSDT_1h_60min_20251009_192339.pkl",
+  "features_path": "models\\features_HBARUSDT_1h_60min_20251009_192339.txt",
+  "scaler_path": "models\\scaler_HBARUSDT_1h_60min_20251009_192339.pkl"
+}

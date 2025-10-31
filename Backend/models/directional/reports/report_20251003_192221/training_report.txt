@@ -1,0 +1,74 @@
+================================================================================
+DIRECTIONAL MODEL TRAINING REPORT
+================================================================================
+
+TRAINING INFORMATION
+--------------------------------------------------------------------------------
+Model Type: lightgbm
+Training Date: 2025-10-03 19:22:22
+Symbols: BTCUSDT, ETHUSDT, BNBUSDT, SOLUSDT, ADAUSDT
+Training Days: 365
+Prediction Horizon: 12 hours
+Number of Features: 171
+Train Samples: 30617
+Validation Samples: 6562
+Test Samples: 6561
+
+
+TRAIN SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.5808
+Precision: 0.6378
+Recall:    0.5808
+F1-Score:  0.5257
+
+Per-Class Metrics:
+  DOWN    : Precision=0.7548, Recall=0.2309, F1=0.3536
+  NEUTRAL : Precision=0.5510, Recall=0.9415, F1=0.6952
+  UP      : Precision=0.6840, Recall=0.2686, F1=0.3857
+
+
+VALIDATION SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.3863
+Precision: 0.3905
+Recall:    0.3863
+F1-Score:  0.3832
+
+Per-Class Metrics:
+  DOWN    : Precision=0.3567, Recall=0.4671, F1=0.4045
+  NEUTRAL : Precision=0.3955, Recall=0.2851, F1=0.3313
+  UP      : Precision=0.4156, Recall=0.4001, F1=0.4077
+
+
+TEST SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.3472
+Precision: 0.3776
+Recall:    0.3472
+F1-Score:  0.2473
+
+Per-Class Metrics:
+  DOWN    : Precision=0.4455, Recall=0.0607, F1=0.1068
+  NEUTRAL : Precision=0.3361, Recall=0.0828, F1=0.1329
+  UP      : Precision=0.3426, Recall=0.8731, F1=0.4921
+
+
+BEST HYPERPARAMETERS
+--------------------------------------------------------------------------------
+num_leaves: 73
+learning_rate: 0.010074902164790499
+n_estimators: 744
+max_depth: 6
+min_child_samples: 46
+subsample: 0.9338531952680966
+colsample_bytree: 0.7088765631610628
+reg_alpha: 0.8739606189159974
+reg_lambda: 0.4999982923726809
+objective: multiclass
+num_class: 3
+metric: multi_logloss
+boosting_type: gbdt
+verbose: -1
+
+================================================================================

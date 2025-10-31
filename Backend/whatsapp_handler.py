@@ -118,135 +118,69 @@ class WhatsAppHandler:
             logger.error(f"❌ Error sending message: {e}")
             return False
 
-    def format_crypto_report(self, report_data, period):
+    def get_next_prediction_schedule(self):
         """
-        Format crypto report data into WhatsApp message with styled blocks
-        (per-coin) wrapped in monospace ``` formatting.
+        Calculate and return when the next predictions will run for each interval
         """
-        try:
-            period_emoji = {"daily": "📅", "weekly": "📊", "monthly": "📈"}
-
-            message = (
-                f"{period_emoji.get(period, '📈')} *{period.upper()} CRYPTO REPORT*\n"
-            )
-            message += f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}\n"
-
-            # Add global market data if available
-            if report_data.get("global_data"):
-                global_data = report_data["global_data"]
-                message += (
-                    f"\n🌍 Global Market Cap: ${global_data.get('market_cap', 'N/A')}\n"
-                )
-                message += f"💸 24h Volume: ${global_data.get('volume_24h', 'N/A')}\n"
-
-            message += "\n*Cryptocurrencies*\n"
-            message += "━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-            if report_data.get("status") != "success":
-                message += "❌ Unable to fetch crypto data. Please try again later."
-                return message
-
-            currencies = report_data.get("currencies", [])
-            if not currencies:
-                message += "❌ No currency data available."
-                return message
-
-            for i, currency in enumerate(currencies, 1):
-                symbol = currency.get("symbol", "N/A")
-                current_price = currency.get("current_price", 0)
-                previous_price = currency.get("previous_price", 0)
-                high_price = currency.get("high_price", 0)
-                low_price = currency.get("low_price", 0)
-                change_percent = currency.get("change_percent", 0)
-                volatility = currency.get("volatility", 0)
-                rsi = currency.get("rsi", 50)
-
-                # Format prices
-                if current_price >= 1:
-                    current_str = f"{current_price:,.2f}"
-                    previous_str = f"{previous_price:,.2f}"
-                    high_str = f"{high_price:,.2f}"
-                    low_str = f"{low_price:,.2f}"
-                else:
-                    current_str = f"{current_price:.6f}"
-                    previous_str = f"{previous_price:.6f}"
-                    high_str = f"{high_price:.6f}"
-                    low_str = f"{low_price:.6f}"
-
-                # Trend + change
-                if change_percent > 0:
-                    trend = "🟢"
-                    change_str = f"+{change_percent:.2f}%"
-                elif change_percent < 0:
-                    trend = "🔴"
-                    change_str = f"{change_percent:.2f}%"
-                else:
-                    trend = "⚪"
-                    change_str = "0.00%"
-
-                # RSI Status
-                if rsi >= 70:
-                    rsi_status = "Overbought"
-                elif rsi <= 30:
-                    rsi_status = "Oversold"
-                else:
-                    rsi_status = "Neutral"
-
-                # Block format
-                message += "```\n"
-                message += f"{i}. {symbol}\n"
-                message += "-" * 25 + "\n"
-                message += f"Current     : ${current_str}\n"
-                message += f"Previous    : ${previous_str}\n"
-                message += f"Change      : {trend} {change_str}\n"
-                message += f"High        : ${high_str}\n"
-                message += f"Low         : ${low_str}\n"
-                message += f"Volatility  : ±{volatility:.1f}%\n"
-                message += f"RSI         : {rsi:.0f} ({rsi_status})\n"
-                message += "```\n\n"
-
-            message += "━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            message += "💡 *Note:* Prices are in USD\n"
-            message += "🤖 Powered by Crypto Trading Bot"
-
-            return message
-
-        except Exception as e:
-            logger.error(f"❌ Error formatting report: {e}")
-            return "❌ Error generating crypto report. Please try again later."
-
-    def is_valid_command(self, text):
-        """
-        Check if the received text is a valid command
-        """
-        valid_commands = ["daily", "weekly", "monthly"]
-        return text in valid_commands
-    # Add this method to your WhatsAppHandler class:
-    
-    # Add this method to your existing WhatsAppHandler class
-
-def get_help_message_with_predictions(self):
-    """
-    Return updated help message with prediction commands
-    """
-    return """👋 *Welcome to Crypto Trading Bot!*
-
-        📊 *Market Reports:*
-        • *daily* - Daily market report
-        • *weekly* - Weekly market report  
-        • *monthly* - Monthly market report
-
-        🔮 *AI Price Predictions:*
-        • *predict* - Predict BTC price (default)
-        • *predict BTC* - Bitcoin prediction
-        • *predict ETH* - Ethereum prediction
-        • *predict BNB* - Binance Coin prediction
-
-        Supported cryptos: BTC, ETH, BNB, XRP, ADA, DOGE, SOL, DOT, LINK, LTC
-
-        💡 *Example:*
-        Type "predict BTC" to get 24-hour price forecast with AI analysis!
-
-        🤖 Powered by Amazon Chronos AI & Binance API
-
-        ⚠️ *Disclaimer:* Not financial advice. Crypto trading involves risk."""
+        from datetime import datetime, timedelta
+        
+        now = datetime.now()
+        current_minute = now.minute
+        current_hour = now.hour
+        
+        # Calculate next run times
+        # 5-minute predictions - every 5 minutes
+        next_5min = 5 - (current_minute % 5)
+        if next_5min == 0:
+            next_5min = 5
+        
+        # 15-minute predictions - at :00, :15, :30, :45
+        next_15min_options = [0, 15, 30, 45]
+        next_15min = min([m for m in next_15min_options if m > current_minute] or [60])
+        if next_15min == 60:
+            next_15min = 60 - current_minute
+        else:
+            next_15min = next_15min - current_minute
+        
+        # 30-minute predictions - at :00 and :30
+        next_30min_options = [0, 30]
+        next_30min = min([m for m in next_30min_options if m > current_minute] or [60])
+        if next_30min == 60:
+            next_30min = 60 - current_minute
+        else:
+            next_30min = next_30min - current_minute
+        
+        # 1-hour predictions - every hour at :00
+        next_1hour = 60 - current_minute
+        
+        # Format message
+        message = "👋 *Welcome to Crypto Trading Bot!*\n\n"
+        message += "🤖 I'm running automated predictions and will send you high-confidence signals!\n\n"
+        message += "⏰ *Next Predictions:*\n"
+        message += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        
+        message += f"🕐 *5-min interval:* {next_5min} min\n"
+        message += f"   • ETHUSDT\n\n"
+        
+        message += f"🕐 *15-min interval:* {next_15min} min\n"
+        message += f"   • BTC, ETH, BNB, XRP, ADA\n"
+        message += f"   • DOGE, SOL, DOT, LINK, LTC\n\n"
+        
+        message += f"🕐 *30-min interval:* {next_30min} min\n"
+        message += f"   • All 10 cryptocurrencies\n\n"
+        
+        message += f"🕐 *1-hour interval:* {next_1hour} min\n"
+        message += f"   • All 10 cryptocurrencies\n\n"
+        
+        message += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        message += "📊 *What I do:*\n"
+        message += "• Monitor 10 major cryptocurrencies\n"
+        message += "• Run AI predictions every 5-60 minutes\n"
+        message += "• Send you alerts when confidence ≥ 80%\n"
+        message += "• Include BUY/SELL signals with targets\n\n"
+        
+        message += f"🕐 *Current Time:* {now.strftime('%H:%M:%S')}\n\n"
+        message += "💡 Just sit back and wait for high-confidence signals!\n\n"
+        message += "⚠️ *Disclaimer:* Not financial advice. Trade at your own risk."
+        
+        return message

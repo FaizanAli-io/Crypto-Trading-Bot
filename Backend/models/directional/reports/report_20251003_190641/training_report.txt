@@ -1,0 +1,74 @@
+================================================================================
+DIRECTIONAL MODEL TRAINING REPORT
+================================================================================
+
+TRAINING INFORMATION
+--------------------------------------------------------------------------------
+Model Type: lightgbm
+Training Date: 2025-10-03 19:06:43
+Symbols: BTCUSDT, ETHUSDT, BNBUSDT
+Training Days: 180
+Prediction Horizon: 6 hours
+Number of Features: 171
+Train Samples: 9059
+Validation Samples: 1941
+Test Samples: 1942
+
+
+TRAIN SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.7544
+Precision: 0.7728
+Recall:    0.7544
+F1-Score:  0.7497
+
+Per-Class Metrics:
+  DOWN    : Precision=0.8681, Recall=0.5771, F1=0.6933
+  NEUTRAL : Precision=0.6994, Recall=0.8941, F1=0.7849
+  UP      : Precision=0.8032, Recall=0.6930, F1=0.7441
+
+
+VALIDATION SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.5662
+Precision: 0.5270
+Recall:    0.5662
+F1-Score:  0.4823
+
+Per-Class Metrics:
+  DOWN    : Precision=0.4318, Recall=0.0920, F1=0.1517
+  NEUTRAL : Precision=0.5805, Recall=0.9290, F1=0.7145
+  UP      : Precision=0.4908, Recall=0.1695, F1=0.2520
+
+
+TEST SET PERFORMANCE
+--------------------------------------------------------------------------------
+Accuracy:  0.4135
+Precision: 0.4091
+Recall:    0.4135
+F1-Score:  0.3860
+
+Per-Class Metrics:
+  DOWN    : Precision=0.4066, Recall=0.2455, F1=0.3062
+  NEUTRAL : Precision=0.4199, Recall=0.6927, F1=0.5229
+  UP      : Precision=0.3995, Recall=0.2374, F1=0.2978
+
+
+BEST HYPERPARAMETERS
+--------------------------------------------------------------------------------
+num_leaves: 31
+learning_rate: 0.031089690277326786
+n_estimators: 145
+max_depth: 6
+min_child_samples: 19
+subsample: 0.7242766568182007
+colsample_bytree: 0.71810670616227
+reg_alpha: 0.2256373614899205
+reg_lambda: 0.09819016648395326
+objective: multiclass
+num_class: 3
+metric: multi_logloss
+boosting_type: gbdt
+verbose: -1
+
+================================================================================

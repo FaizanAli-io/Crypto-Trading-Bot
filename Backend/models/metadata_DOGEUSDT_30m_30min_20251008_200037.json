@@ -1,0 +1,11 @@
+{
+  "symbol": "DOGEUSDT",
+  "interval": "30m",
+  "horizon_minutes": 30,
+  "shift_candles": 1,
+  "num_features": 50,
+  "trained_at": "20251008_200037",
+  "model_path": "models\\xgb_model_DOGEUSDT_30m_30min_20251008_200037.pkl",
+  "features_path": "models\\features_DOGEUSDT_30m_30min_20251008_200037.txt",
+  "scaler_path": "models\\scaler_DOGEUSDT_30m_30min_20251008_200037.pkl"
+}

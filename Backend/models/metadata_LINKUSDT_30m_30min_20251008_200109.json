@@ -1,0 +1,11 @@
+{
+  "symbol": "LINKUSDT",
+  "interval": "30m",
+  "horizon_minutes": 30,
+  "shift_candles": 1,
+  "num_features": 50,
+  "trained_at": "20251008_200109",
+  "model_path": "models\\xgb_model_LINKUSDT_30m_30min_20251008_200109.pkl",
+  "features_path": "models\\features_LINKUSDT_30m_30min_20251008_200109.txt",
+  "scaler_path": "models\\scaler_LINKUSDT_30m_30min_20251008_200109.pkl"
+}

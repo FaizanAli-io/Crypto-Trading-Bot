@@ -1,0 +1,11 @@
+{
+  "symbol": "BTCUSDT",
+  "interval": "30m",
+  "horizon_minutes": 30,
+  "shift_candles": 1,
+  "num_features": 49,
+  "trained_at": "20251008_200211",
+  "model_path": "models\\xgb_model_BTCUSDT_30m_30min_20251008_200211.pkl",
+  "features_path": "models\\features_BTCUSDT_30m_30min_20251008_200211.txt",
+  "scaler_path": "models\\scaler_BTCUSDT_30m_30min_20251008_200211.pkl"
+}

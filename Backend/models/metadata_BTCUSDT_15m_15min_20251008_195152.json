@@ -1,0 +1,11 @@
+{
+  "symbol": "BTCUSDT",
+  "interval": "15m",
+  "horizon_minutes": 15,
+  "shift_candles": 1,
+  "num_features": 49,
+  "trained_at": "20251008_195152",
+  "model_path": "models\\xgb_model_BTCUSDT_15m_15min_20251008_195152.pkl",
+  "features_path": "models\\features_BTCUSDT_15m_15min_20251008_195152.txt",
+  "scaler_path": "models\\scaler_BTCUSDT_15m_15min_20251008_195152.pkl"
+}

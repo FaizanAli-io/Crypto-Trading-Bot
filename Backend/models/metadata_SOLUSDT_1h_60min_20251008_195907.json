@@ -1,0 +1,11 @@
+{
+  "symbol": "SOLUSDT",
+  "interval": "1h",
+  "horizon_minutes": 60,
+  "shift_candles": 1,
+  "num_features": 49,
+  "trained_at": "20251008_195907",
+  "model_path": "models\\xgb_model_SOLUSDT_1h_60min_20251008_195907.pkl",
+  "features_path": "models\\features_SOLUSDT_1h_60min_20251008_195907.txt",
+  "scaler_path": "models\\scaler_SOLUSDT_1h_60min_20251008_195907.pkl"
+}
