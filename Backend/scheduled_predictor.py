@@ -16,6 +16,8 @@ from whatsapp_handler import WhatsAppHandler
 # WhatsApp numbers to send alerts to (can be a single number or list)
 WHATSAPP_NUMBERS = [
     "+923312844594",
+    "+923332275445",
+    "+966560771267"
     # Add more numbers here:
     # "+1234567890",
     # "+9876543210",
