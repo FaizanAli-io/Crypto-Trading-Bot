@@ -47,6 +47,10 @@ class ScheduledPredictor:
         
         # Track last predictions to avoid duplicates
         self.last_predictions = {}
+        
+        # Record bot start time to ignore old signals
+        self.bot_start_time = datetime.now()
+        logger.info(f"🕐 Bot started at: {self.bot_start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     
     def predict_and_alert(self, symbol, interval, horizon_minutes, days=10):
         """
@@ -85,9 +89,23 @@ class ScheduledPredictor:
     def _send_whatsapp_alert(self, result):
         """Send WhatsApp alert for high-confidence signal to all numbers"""
         try:
+            # Check if signal is fresh (generated within last 2 minutes)
+            signal_time = datetime.fromisoformat(result['timestamp'])
+            current_time = datetime.now()
+            signal_age_minutes = (current_time - signal_time).total_seconds() / 60
+            
+            # Ignore signals generated before bot started
+            if signal_time < self.bot_start_time:
+                logger.warning(f"⏭️ Skipping signal generated before bot start ({signal_time.strftime('%H:%M:%S')})")
+                return
+            
+            # Ignore signals older than 2 minutes
+            if signal_age_minutes > 2:
+                logger.warning(f"⏭️ Skipping old signal (generated {signal_age_minutes:.1f} minutes ago)")
+                return
+            
             # Create unique key to avoid duplicate alerts
             alert_key = f"{result['symbol']}_{result['interval']}_{result['horizon_minutes']}_{result['signal']}"
-            current_time = datetime.now()
             
             # Check if we already sent this alert recently (within horizon time)
             if alert_key in self.last_predictions:
