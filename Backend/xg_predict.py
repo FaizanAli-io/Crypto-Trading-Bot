@@ -662,7 +662,7 @@ if __name__ == "__main__":
     # predictor.predict_signal(symbol="HBARUSDT", interval="1h", horizon_minutes=60, 
     #                 estimate_price=True, days=10)
 
-    predictor.predict_all_models()
+    # predictor.predict_all_models()
 
     # symbols = ["BTCUSDT",
     # "ETHUSDT",
@@ -680,6 +680,6 @@ if __name__ == "__main__":
     # #     singal = predictor.predict_signal(symbol=symbol, interval="15m", 
     # #     horizon_minutes=15, estimate_price=True, days=10)
 
-    # symbol = "ETHUSDT"    
-    # singal = predictor.predict_signal(symbol=symbol, interval="15m", 
-    #     horizon_minutes=15, estimate_price=True, days=10)
+    symbol = "SOLUSDT"    
+    singal = predictor.predict_signal(symbol=symbol, interval="15m", 
+        horizon_minutes=15,custom_confidence = 0.85, estimate_price=True, days=10)

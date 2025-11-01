@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from loguru import logger
 from binance.client import Client
 
-from xg_predict_smc import SignalPredictor
+from xg_predict import SignalPredictor
 from whatsapp_handler import WhatsAppHandler
 
 # Configuration
@@ -24,7 +24,7 @@ WHATSAPP_NUMBERS = [
     # "+9876543210",
 ]
 
-HIGH_CONFIDENCE_THRESHOLD = 0.75  # 75% confidence for WhatsApp alerts
+HIGH_CONFIDENCE_THRESHOLD = 0.5  # 75% confidence for WhatsApp alerts
 
 # Symbols to monitor
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT", 
@@ -74,8 +74,7 @@ class ScheduledPredictor:
                 interval=interval,
                 horizon_minutes=horizon_minutes,
                 custom_confidence=HIGH_CONFIDENCE_THRESHOLD,
-                days=days,
-                use_smc=True
+                days=days
             )
             
             # Check if we should send WhatsApp alert
