@@ -269,7 +269,7 @@ class SignalPredictor:
             raise ValueError(f"Could not load model for {symbol} with interval={interval}, horizon={horizon_minutes}min")
         
         # Get confidence threshold
-        min_confidence = custom_confidence if custom_confidence else self.confidence_thresholds.get(horizon_minutes, 0.60)
+        min_confidence =custom_confidence if custom_confidence else self.confidence_thresholds.get(horizon_minutes, 0.60)
         logger.info(f"Using confidence threshold: {min_confidence:.0%}")
         
         # Fetch recent data
