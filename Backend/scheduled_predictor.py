@@ -24,7 +24,7 @@ WHATSAPP_NUMBERS = [
     # "+9876543210",
 ]
 
-HIGH_CONFIDENCE_THRESHOLD = 0.5  # 75% confidence for WhatsApp alerts
+HIGH_CONFIDENCE_THRESHOLD = 0.75  # 75% confidence for WhatsApp alerts
 
 # Symbols to monitor
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT", 
