@@ -23,9 +23,12 @@ class SignalPredictor:
         self.model = None
         self.scaler = None
         self.feature_names = None
+        self.is_smc_model = False  # Track if loaded model is SMC
         self.model_dir = Path("models")
         self.signals_dir = Path("signals")
         self.signals_dir.mkdir(exist_ok=True)
+        
+
         
         # Confidence thresholds by horizon
         self.confidence_thresholds = {
@@ -185,6 +188,7 @@ class SignalPredictor:
             self.interval = interval
             self.horizon_minutes = horizon_minutes
             self.shift_candles = self.calculate_horizon_shift(horizon_minutes, interval)
+            self.is_smc_model = is_smc_model  # Store model type for feature engineering
             
             logger.info("✅ Model loaded successfully!")
             logger.info(f"   Symbol: {symbol}")
@@ -283,23 +287,26 @@ class SignalPredictor:
         if df is None or len(df) < 200:
             raise ValueError(f"Insufficient data for {symbol}")
         
-        # Determine if we should use SMC features
-        # Priority: 1) Model was trained with SMC, 2) use_smc parameter
-        should_use_smc = self.use_smc if hasattr(self, 'use_smc') else use_smc
+        # Determine if we should use SMC features based on MODEL TYPE, not user parameter
+        # Only add SMC features if the model was actually trained with them
+        should_use_smc = self.is_smc_model
         
-        # Add SMC features if model requires them
+        # Add SMC features ONLY if model requires them
         if should_use_smc:
-            logger.info("Adding SMC features for prediction...")
+            logger.info("Adding SMC features (model requires them)...")
             from smc_features import SMCFeatureEngineer, integrate_smc_into_feature_engineer
             integrate_smc_into_feature_engineer(self.feature_engineer)
+        else:
+            logger.info("Skipping SMC features (model doesn't need them)")
         
-        # Add technical features (and SMC if enabled)
+        # Add technical features (and SMC if model requires)
         df = self.feature_engineer.add_all_features(df)
         
-        # Get SMC indicators if enabled
+        # Get SMC indicators for analysis (use user parameter here, not model type)
+        # This is for SMC ANALYSIS, not feature engineering
         smc_indicators = None
         smc_context = None
-        if should_use_smc and hasattr(self.feature_engineer, 'smc'):
+        if use_smc and should_use_smc and hasattr(self.feature_engineer, 'smc'):
             smc_indicators = self.feature_engineer.smc.get_latest_smc_indicators(df)
             smc_context = self._analyze_smc_context(smc_indicators)
             logger.info(f"SMC Analysis: {smc_context['summary']}")
@@ -981,7 +988,7 @@ if __name__ == "__main__":
     # predictor.predict_signal(symbol="HBARUSDT", interval="1h", horizon_minutes=60, 
     #                 estimate_price=True, days=10)
 
-    predictor.predict_all_models()
+    # predictor.predict_all_models()
 
     # symbols = ["BTCUSDT",
     # "ETHUSDT",
@@ -999,6 +1006,6 @@ if __name__ == "__main__":
     # #     singal = predictor.predict_signal(symbol=symbol, interval="15m", 
     # #     horizon_minutes=15, estimate_price=True, days=10)
 
-    # symbol = "ETHUSDT"    
-    # singal = predictor.predict_signal(symbol=symbol, interval="15m", 
-    #     horizon_minutes=15, estimate_price=True, days=10)
+    symbol = "SOLUSDT"    
+    singal = predictor.predict_signal(symbol=symbol, interval="15m", 
+        horizon_minutes=15,custom_confidence=0.85 ,estimate_price=True, days=10,use_smc=True)

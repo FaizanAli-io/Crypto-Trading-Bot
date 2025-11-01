@@ -17,13 +17,14 @@ from whatsapp_handler import WhatsAppHandler
 WHATSAPP_NUMBERS = [
     "+923312844594",
     "+923332275445",
-    "+966560771267"
+    "+966560771267",
+    "+923132680496"
     # Add more numbers here:
     # "+1234567890",
     # "+9876543210",
 ]
 
-HIGH_CONFIDENCE_THRESHOLD = 0.85  # 85% confidence for WhatsApp alerts
+HIGH_CONFIDENCE_THRESHOLD = 0.75  # 75% confidence for WhatsApp alerts
 
 # Symbols to monitor
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT", 
@@ -211,28 +212,28 @@ class ScheduledPredictor:
         
         # Only ETHUSDT has 5min model based on the files
         for symbol in ["ETHUSDT"]:
-            self.predict_and_alert(symbol, "5m", 5, days=3)
+            self.predict_and_alert(symbol, "5m", 5, days=7)
     
     def predict_15min_models(self):
         """Run predictions for 15-minute interval models"""
         logger.info("\n🕐 Running 15-minute interval predictions...")
         
         for symbol in SYMBOLS:
-            self.predict_and_alert(symbol, "15m", 15, days=5)
+            self.predict_and_alert(symbol, "15m", 15, days=10)
     
     def predict_30min_models(self):
         """Run predictions for 30-minute interval models"""
         logger.info("\n🕐 Running 30-minute interval predictions...")
         
         for symbol in SYMBOLS:
-            self.predict_and_alert(symbol, "30m", 30, days=7)
+            self.predict_and_alert(symbol, "30m", 30, days=10)
     
     def predict_1hour_models(self):
         """Run predictions for 1-hour interval models"""
         logger.info("\n🕐 Running 1-hour interval predictions...")
         
         for symbol in SYMBOLS:
-            self.predict_and_alert(symbol, "1h", 60, days=10)
+            self.predict_and_alert(symbol, "1h", 60, days=15)
     
     def setup_schedule(self):
         """Setup all scheduled jobs"""
