@@ -72,6 +72,7 @@ class ScheduledPredictor:
                 symbol=symbol,
                 interval=interval,
                 horizon_minutes=horizon_minutes,
+                custom_confidence=HIGH_CONFIDENCE_THRESHOLD,
                 days=days,
                 use_smc=True
             )
