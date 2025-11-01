@@ -78,7 +78,7 @@ class ScheduledPredictor:
             )
             
             # Check if we should send WhatsApp alert
-            if result['confidence'] >= HIGH_CONFIDENCE_THRESHOLD and result['signal'] != "HOLD":
+            if result['confidence'] >= HIGH_CONFIDENCE_THRESHOLD :
                 self._send_whatsapp_alert(result)
             
             return result
