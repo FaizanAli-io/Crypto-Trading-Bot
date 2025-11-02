@@ -18,7 +18,8 @@ WHATSAPP_NUMBERS = [
     "+923312844594",
     "+923332275445",
     "+966560771267",
-    "+923132680496"
+    "+923132680496",
+    "+923479363616"
     # Add more numbers here:
     # "+1234567890",
     # "+9876543210",
@@ -91,7 +92,7 @@ class ScheduledPredictor:
         """Send WhatsApp alert for high-confidence signal to all numbers"""
         try:
             # Check if signal is fresh (generated within last 2 minutes)
-            signal_time = datetime.fromisoformat(result['timestamp'])
+            signal_time = datetime.fromisoformat(result['prediction_time'])
             current_time = datetime.now()
             signal_age_minutes = (current_time - signal_time).total_seconds() / 60
             
