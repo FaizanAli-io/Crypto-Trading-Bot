@@ -28,7 +28,9 @@ for col in ["pnl", "pnl_pct", "gross_pnl", "fee", "confidence", "position_amount
         trades[col] = pd.to_numeric(trades[col], errors="coerce").fillna(0.0)
 
 # --- Equity curve ---
-initial_capital = float(summary.get("initial_capital", sim.get("initial_capital", 1000)))
+initial_capital = float(
+    summary.get("initial_capital", sim.get("initial_capital", 1000))
+)
 # If your JSON already has capital_after per trade, prefer that
 if "capital_after" in trades.columns and trades["capital_after"].notna().all():
     equity = trades[["exit_time", "capital_after"]].copy()
@@ -104,7 +106,9 @@ if "confidence" in trades.columns:
     trades["conf_bin"] = pd.cut(trades["confidence"], bins=bins, include_lowest=True)
     calib = trades.groupby("conf_bin")["win"].mean().reset_index()
     # mid-point for x-axis
-    calib["bin_mid"] = calib["conf_bin"].apply(lambda iv: (iv.left + iv.right) / 2 if hasattr(iv, "left") else np.nan)
+    calib["bin_mid"] = calib["conf_bin"].apply(
+        lambda iv: (iv.left + iv.right) / 2 if hasattr(iv, "left") else np.nan
+    )
 
     plt.figure()
     plt.plot(calib["bin_mid"], calib["win"] * 100.0, marker="o")
@@ -128,7 +132,12 @@ num_trades = len(trades)
 wins = int(trades["win"].sum())
 win_rate = (wins / num_trades * 100.0) if num_trades > 0 else 0.0
 total_fees = trades["fee"].sum()
-final_equity = float(summary.get("final_capital", equity["equity"].iloc[-1] if len(equity) > 0 else initial_capital))
+final_equity = float(
+    summary.get(
+        "final_capital",
+        equity["equity"].iloc[-1] if len(equity) > 0 else initial_capital,
+    )
+)
 profit_factor = float(summary.get("profit_factor", np.nan))
 
 print("=== Summary ===")

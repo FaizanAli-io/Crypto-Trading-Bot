@@ -123,17 +123,17 @@ class WhatsAppHandler:
         Calculate and return when the next predictions will run for each interval
         """
         from datetime import datetime, timedelta
-        
+
         now = datetime.now()
         current_minute = now.minute
         current_hour = now.hour
-        
+
         # Calculate next run times
         # 5-minute predictions - every 5 minutes
         next_5min = 5 - (current_minute % 5)
         if next_5min == 0:
             next_5min = 5
-        
+
         # 15-minute predictions - at :00, :15, :30, :45
         next_15min_options = [0, 15, 30, 45]
         next_15min = min([m for m in next_15min_options if m > current_minute] or [60])
@@ -141,7 +141,7 @@ class WhatsAppHandler:
             next_15min = 60 - current_minute
         else:
             next_15min = next_15min - current_minute
-        
+
         # 30-minute predictions - at :00 and :30
         next_30min_options = [0, 30]
         next_30min = min([m for m in next_30min_options if m > current_minute] or [60])
@@ -149,38 +149,38 @@ class WhatsAppHandler:
             next_30min = 60 - current_minute
         else:
             next_30min = next_30min - current_minute
-        
+
         # 1-hour predictions - every hour at :00
         next_1hour = 60 - current_minute
-        
+
         # Format message
         message = "👋 *Welcome to Crypto Trading Bot!*\n\n"
         message += "🤖 I'm running automated predictions and will send you high-confidence signals!\n\n"
         message += "⏰ *Next Predictions:*\n"
         message += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        
+
         message += f"🕐 *5-min interval:* {next_5min} min\n"
         message += f"   • ETHUSDT\n\n"
-        
+
         message += f"🕐 *15-min interval:* {next_15min} min\n"
         message += f"   • BTC, ETH, BNB, XRP, ADA\n"
         message += f"   • DOGE, SOL, DOT, LINK, LTC\n\n"
-        
+
         message += f"🕐 *30-min interval:* {next_30min} min\n"
         message += f"   • All 10 cryptocurrencies\n\n"
-        
+
         message += f"🕐 *1-hour interval:* {next_1hour} min\n"
         message += f"   • All 10 cryptocurrencies\n\n"
-        
+
         message += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         message += "📊 *What I do:*\n"
         message += "• Monitor 10 major cryptocurrencies\n"
         message += "• Run AI predictions every 5-60 minutes\n"
         message += "• Send you alerts when confidence ≥ 80%\n"
         message += "• Include BUY/SELL signals with targets\n\n"
-        
+
         message += f"🕐 *Current Time:* {now.strftime('%H:%M:%S')}\n\n"
         message += "💡 Just sit back and wait for high-confidence signals!\n\n"
         message += "⚠️ *Disclaimer:* Not financial advice. Trade at your own risk."
-        
+
         return message

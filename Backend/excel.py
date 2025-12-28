@@ -1,6 +1,7 @@
 import sys, json, pandas as pd
 from pathlib import Path
 
+
 def main(path):
     path = Path(path)
     with path.open("r", encoding="utf-8") as f:
@@ -30,6 +31,7 @@ def main(path):
         df.to_excel(writer, sheet_name="trades", index=False)
 
     print(f"Saved:\n- {csv_out}\n- {xlsx_out}")
+
 
 if __name__ == "__main__":
     main("simulator.json")

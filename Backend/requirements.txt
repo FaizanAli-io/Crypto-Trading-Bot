@@ -1,57 +1,38 @@
-# ============================================================================
-# REQUIRED PACKAGES - DO NOT COMMENT OUT
-# ============================================================================
+# CORE DATA & MACHINE LEARNING (REQUIRED)
 
-# Data processing (REQUIRED)
 pandas>=2.1.0
 numpy>=1.24.0
 scikit-learn>=1.3.0
+xgboost>=2.0.0
+joblib>=1.3.0
 
-# Technical indicators (REQUIRED)
+
+# TECHNICAL INDICATORS (REQUIRED)
+
 ta>=0.11.0
 
-# API & Web (REQUIRED)
+
+# API, WEB & ENVIRONMENT (REQUIRED)
+
 flask>=3.0.0
+pycryptodome>=3.20.0
 python-binance>=1.0.19
 python-dotenv>=1.0.0
 requests>=2.31.0
 
-# Utilities (REQUIRED)
-joblib>=1.3.0
 
-# Logging (REQUIRED)
+# LOGGING & SCHEDULING (REQUIRED)
+
 loguru>=0.7.0
-
-# Scheduling (REQUIRED)
 schedule>=1.2.0
 
-# XGBoost for ML models (REQUIRED)
-xgboost>=2.0.0
 
-# Tabulate for simulation output (REQUIRED)
+# OUTPUT & FORMATTING (REQUIRED)
+
 tabulate>=0.9.0
 
-# ============================================================================
-# OPTIONAL PACKAGES - Used only in specific files
-# ============================================================================
 
-# Visualization (OPTIONAL - only used in xg_model_trainer.py and graph.py)
-# Uncomment if you need to visualize training results or graphs
+# VISUALIZATION (OPTIONAL)
+
 matplotlib>=3.8.0
-# seaborn>=0.12.0  # Used with matplotlib in xg_model_trainer.py
-
-# plotly>=5.17.0  # Not currently used in any file
-
-# Progress bars (OPTIONAL - not currently used)
-# tqdm>=4.66.0
-
-# ============================================================================
-# NOT USED - Amazon Chronos (commented out)
-# ============================================================================
-# These were in the original requirements but are NOT used in the current codebase
-# The project uses XGBoost models instead of Chronos
-
-# git+https://github.com/amazon-science/chronos-forecasting.git
-# torch>=2.0.0
-# transformers>=4.35.0
-# accelerate>=0.24.0
+seaborn>=0.12.0
