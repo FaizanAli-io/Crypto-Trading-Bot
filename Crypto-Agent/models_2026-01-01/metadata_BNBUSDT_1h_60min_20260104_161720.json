@@ -1,0 +1,12 @@
+{
+  "symbol": "BNBUSDT",
+  "interval": "1h",
+  "horizon_minutes": 60,
+  "shift_candles": 1,
+  "num_features": 49,
+  "use_smc": false,
+  "trained_at": "20260104_161720",
+  "model_path": "models_2026-01-01\\xg_models\\BNBUSDT_1h_60min_20260104_161720.pkl",
+  "features_path": "models_2026-01-01\\features\\BNBUSDT_1h_60min_20260104_161720.txt",
+  "scaler_path": "models_2026-01-01\\scalars\\BNBUSDT_1h_60min_20260104_161720.pkl"
+}

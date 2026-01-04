@@ -1,0 +1,12 @@
+{
+  "symbol": "XRPUSDT",
+  "interval": "5m",
+  "horizon_minutes": 5,
+  "shift_candles": 1,
+  "num_features": 46,
+  "use_smc": false,
+  "trained_at": "20260104_160606",
+  "model_path": "models_2026-01-01\\xg_models\\XRPUSDT_5m_5min_20260104_160606.pkl",
+  "features_path": "models_2026-01-01\\features\\XRPUSDT_5m_5min_20260104_160606.txt",
+  "scaler_path": "models_2026-01-01\\scalars\\XRPUSDT_5m_5min_20260104_160606.pkl"
+}

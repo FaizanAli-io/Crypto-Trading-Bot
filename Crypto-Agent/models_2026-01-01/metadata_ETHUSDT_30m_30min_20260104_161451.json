@@ -1,0 +1,12 @@
+{
+  "symbol": "ETHUSDT",
+  "interval": "30m",
+  "horizon_minutes": 30,
+  "shift_candles": 1,
+  "num_features": 49,
+  "use_smc": false,
+  "trained_at": "20260104_161451",
+  "model_path": "models_2026-01-01\\xg_models\\ETHUSDT_30m_30min_20260104_161451.pkl",
+  "features_path": "models_2026-01-01\\features\\ETHUSDT_30m_30min_20260104_161451.txt",
+  "scaler_path": "models_2026-01-01\\scalars\\ETHUSDT_30m_30min_20260104_161451.pkl"
+}

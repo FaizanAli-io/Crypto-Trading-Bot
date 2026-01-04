@@ -1,0 +1,12 @@
+{
+  "symbol": "USDCUSDT",
+  "interval": "2h",
+  "horizon_minutes": 120,
+  "shift_candles": 1,
+  "num_features": 61,
+  "use_smc": false,
+  "trained_at": "20260104_161854",
+  "model_path": "models_2026-01-01\\xg_models\\USDCUSDT_2h_120min_20260104_161854.pkl",
+  "features_path": "models_2026-01-01\\features\\USDCUSDT_2h_120min_20260104_161854.txt",
+  "scaler_path": "models_2026-01-01\\scalars\\USDCUSDT_2h_120min_20260104_161854.pkl"
+}
