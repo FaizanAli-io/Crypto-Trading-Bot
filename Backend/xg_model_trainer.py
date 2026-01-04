@@ -3,31 +3,30 @@ Train XGBoost Model with All Technical Indicators + OHLC
 File: train_feature_model.py
 """
 
-import pandas as pd
+import joblib
 import numpy as np
+import pandas as pd
+import seaborn as sns
+from pathlib import Path
+from datetime import datetime
+import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
-from sklearn.model_selection import train_test_split, TimeSeriesSplit
+from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import (
+    f1_score,
+    recall_score,
+    roc_auc_score,
     accuracy_score,
     precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    classification_report,
     confusion_matrix,
+    classification_report,
 )
-import joblib
-from pathlib import Path
-from loguru import logger
-import matplotlib.pyplot as plt
-import seaborn as sns
-from datetime import datetime
 
 from data_collector import DataCollector
 from feature_engineering import FeatureEngineer
-import config
-
 from smc_features import SMCFeatureEngineer, integrate_smc_into_feature_engineer
+
+from loguru import logger
 
 # Initialize
 smc = SMCFeatureEngineer(

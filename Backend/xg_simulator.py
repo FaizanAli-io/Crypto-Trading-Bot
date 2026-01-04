@@ -5,14 +5,14 @@ Combines backtest predictions with price estimation for realistic trade simulati
 
 import json
 import numpy as np
-import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-from loguru import logger
-from tabulate import tabulate
 
 from xg_validator import ModelValidator
 from xg_predict import SignalPredictor
+
+from loguru import logger
+from tabulate import tabulate
 
 
 class IntegratedTradingSimulator:
@@ -557,10 +557,9 @@ class IntegratedTradingSimulator:
 # CLI Interface
 # ========================
 if __name__ == "__main__":
-    import sys
-    from binance.client import Client
-    from dotenv import load_dotenv
     import os
+    from dotenv import load_dotenv
+    from binance.client import Client
 
     load_dotenv()
 

@@ -6,12 +6,13 @@ Runs predictions at specific intervals and sends high-confidence signals via Wha
 import os
 import time
 import schedule
-from datetime import datetime, timedelta
-from loguru import logger
+from datetime import datetime
 from binance.client import Client
 
 from xg_predict import SignalPredictor
 from whatsapp_handler import WhatsAppHandler
+
+from loguru import logger
 
 # Configuration
 # WhatsApp numbers to send alerts to (can be a single number or list)
@@ -21,9 +22,6 @@ WHATSAPP_NUMBERS = [
     "+966560771267",
     "+923132680496",
     "+923479363616",
-    # Add more numbers here:
-    # "+1234567890",
-    # "+9876543210",
 ]
 
 HIGH_CONFIDENCE_THRESHOLD = 0.75  # 75% confidence for WhatsApp alerts

@@ -6,7 +6,6 @@ Handles incoming WhatsApp messages and sends crypto reports
 import os
 import logging
 import requests
-from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

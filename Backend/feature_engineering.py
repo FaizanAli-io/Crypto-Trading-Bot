@@ -3,14 +3,13 @@ Feature Engineering: Calculate technical indicators for crypto data
 ENHANCED VERSION for Day Trading
 """
 
-import pandas as pd
 import numpy as np
-from ta import add_all_ta_features
+from ta.momentum import RSIIndicator
 from ta.trend import SMAIndicator, EMAIndicator, MACD
-from ta.momentum import RSIIndicator, StochasticOscillator
 from ta.volatility import BollingerBands, AverageTrueRange
-from loguru import logger
+
 import config
+from loguru import logger
 
 
 class FeatureEngineer:

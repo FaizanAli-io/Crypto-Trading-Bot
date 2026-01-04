@@ -1,5 +1,5 @@
-import sys, json, pandas as pd
 from pathlib import Path
+import json, pandas as pd
 
 
 def main(path):

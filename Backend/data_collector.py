@@ -5,13 +5,10 @@ Enhanced with ongoing candle data
 
 import os
 import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
 from binance.client import Client
-from binance.exceptions import BinanceAPIException
+from datetime import datetime, timedelta
+
 from loguru import logger
-import config
-import time
 
 
 class DataCollector:

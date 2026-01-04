@@ -3,8 +3,6 @@ Smart Money Concepts (SMC) Feature Engineering Module
 Integrates with existing FeatureEngineer class
 """
 
-import pandas as pd
-import numpy as np
 from loguru import logger
 
 

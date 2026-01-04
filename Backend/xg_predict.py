@@ -14,6 +14,7 @@ import joblib
 from data_collector import DataCollector
 from feature_engineering import FeatureEngineer
 from smc_features import SMCFeatureEngineer, integrate_smc_into_feature_engineer
+from model_loader import ModelLoader
 
 # Initialize
 smc = SMCFeatureEngineer(
@@ -28,10 +29,10 @@ class SignalPredictor:
     def __init__(self, binance_client=None):
         self.data_collector = DataCollector(binance_client)
         self.feature_engineer = FeatureEngineer()
+        self.model_loader = ModelLoader()
         self.model = None
         self.scaler = None
         self.feature_names = None
-        self.model_dir = Path("models")
         self.signals_dir = Path("signals")
         self.signals_dir.mkdir(exist_ok=True)
 
@@ -47,234 +48,64 @@ class SignalPredictor:
     @staticmethod
     def interval_to_minutes(interval: str) -> int:
         """Convert interval string to minutes"""
-        interval_map = {
-            "1m": 1,
-            "3m": 3,
-            "5m": 5,
-            "15m": 15,
-            "30m": 30,
-            "1h": 60,
-            "2h": 120,
-            "4h": 240,
-            "6h": 360,
-            "8h": 480,
-            "12h": 720,
-            "1d": 1440,
-            "3d": 4320,
-            "1w": 10080,
-        }
-        return interval_map.get(interval, 60)
+        return ModelLoader.interval_to_minutes(interval)
 
     @staticmethod
     def calculate_horizon_shift(horizon_minutes: int, interval: str) -> int:
-        """
-        Calculate number of candles to shift based on prediction horizon
-
-        Args:
-            horizon_minutes: How many minutes ahead to predict
-            interval: Candle interval (e.g., "15m", "1h")
-
-        Returns:
-            Number of candles to shift
-
-        Example:
-            interval="15m", horizon_minutes=60 -> shift=4 candles
-            interval="1h", horizon_minutes=60 -> shift=1 candle
-            interval="15m", horizon_minutes=30 -> shift=2 candles
-        """
-        interval_minutes = SignalPredictor.interval_to_minutes(interval)
-        shift = horizon_minutes / interval_minutes
-
-        if shift != int(shift):
-            logger.warning(
-                f"Horizon {horizon_minutes}min is not evenly divisible by interval {interval} "
-                f"({interval_minutes}min). Using shift={int(shift)} candles."
-            )
-
-        return int(shift)
+        """Calculate number of candles to shift based on prediction horizon"""
+        return ModelLoader.calculate_horizon_shift(horizon_minutes, interval)
 
     def load_model(
-        self, symbol="BTCUSDT", interval="1h", horizon_minutes=60, use_smc=None
+        self,
+        symbol="BTCUSDT",
+        interval="1h",
+        horizon_minutes=60,
+        use_smc=None,
+        silent=False,
     ):
         """
         Load trained XGBoost model for specific symbol, interval, and horizon
-
-        Args:
-            symbol: Trading pair (e.g., "BTCUSDT")
-            interval: Candle interval (e.g., "15m", "1h")
-            horizon_minutes: Prediction horizon in minutes (e.g., 60, 360)
-            use_smc: Whether to load SMC model (None=auto-detect, True=SMC only, False=non-SMC only)
-
-        Returns:
-            bool: Success status
-
-        Example:
-            # Load model trained on 15-min candles, predicting 60 minutes ahead
-            trainer.load_model(symbol="ETHUSDT", interval="15m", horizon_minutes=60)
-
-            # Load SMC model specifically
-            trainer.load_model(symbol="ETHUSDT", interval="15m", horizon_minutes=60, use_smc=True)
+        (Delegates to centralized ModelLoader)
         """
-        try:
-            # Find latest model file for this symbol, interval, and horizon
-            # Pattern: xgb_model_{symbol}_{interval}_{horizon_minutes}min_{timestamp}.pkl
-            # OR: xgb_model_smc_{symbol}_{interval}_{horizon_minutes}min_{timestamp}.pkl
+        result = self.model_loader.load_model(
+            symbol=symbol,
+            interval=interval,
+            horizon_minutes=horizon_minutes,
+            use_smc=use_smc,
+            silent=silent,
+        )
 
-            if use_smc is True:
-                # Only look for SMC models
-                pattern = (
-                    f"xgb_model_smc_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-                )
-            elif use_smc is False:
-                # Only look for non-SMC models
-                pattern = f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-            else:
-                # Auto-detect: prefer SMC if available, otherwise use non-SMC
-                smc_pattern = (
-                    f"xgb_model_smc_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-                )
-                smc_files = list(self.model_dir.glob(smc_pattern))
-                if smc_files:
-                    pattern = smc_pattern
-                    logger.info("SMC model detected - will use SMC features")
-                else:
-                    pattern = (
-                        f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-                    )
-                    logger.info("Non-SMC model detected - will use standard features")
-
-            model_files = list(self.model_dir.glob(pattern))
-
-            if not model_files:
-                logger.error(
-                    f"No model found for {symbol} with interval={interval}, horizon={horizon_minutes}min"
-                )
-                logger.info(f"Looking for pattern: {pattern}")
-                logger.info(f"Available models in {self.model_dir}:")
-
-                # Show available models to help user
-                all_models = list(self.model_dir.glob("xgb_model_*.pkl"))
-                if all_models:
-                    for model in sorted(all_models)[-5:]:  # Show last 5
-                        logger.info(f"  - {model.name}")
-                else:
-                    logger.info("  (no models found)")
-
-                return False
-
-            # Get most recent model
-            latest_model = max(model_files, key=lambda p: p.stat().st_mtime)
-            logger.info(f"Loading model: {latest_model.name}")
-
-            # Detect if this is an SMC model from filename
-            is_smc_model = "_smc_" in latest_model.name or latest_model.name.startswith(
-                "xgb_model_smc_"
-            )
-            self.use_smc = is_smc_model
-
-            self.model = joblib.load(latest_model)
-
-            # Extract timestamp from filename
-            # Format: xgb_model_ETHUSDT_15m_60min_20250108_143022.pkl
-            # OR: xgb_model_smc_ETHUSDT_15m_60min_20250108_143022.pkl
-            parts = latest_model.stem.split("_")
-            # parts = ['xgb', 'model', 'ETHUSDT', '15m', '60min', '20250108', '143022']
-            # OR: ['xgb', 'model', 'smc', 'ETHUSDT', '15m', '60min', '20250108', '143022']
-            timestamp = f"{parts[-2]}_{parts[-1]}"  # "20250108_143022"
-
-            # Build feature file name with SMC prefix if needed
-            smc_prefix = "smc_" if is_smc_model else ""
-            features_file = (
-                self.model_dir
-                / f"features_{smc_prefix}{symbol}_{interval}_{horizon_minutes}min_{timestamp}.txt"
-            )
-
-            if features_file.exists():
-                with open(features_file, "r") as f:
-                    self.feature_names = [line.strip() for line in f.readlines()]
-                logger.info(f"Loaded {len(self.feature_names)} feature names")
-            else:
-                logger.warning(f"Feature names file not found: {features_file}")
-                return False
-
-            # Try to load scaler
-            scaler_file = (
-                self.model_dir
-                / f"scaler_{smc_prefix}{symbol}_{interval}_{horizon_minutes}min_{timestamp}.pkl"
-            )
-            if scaler_file.exists():
-                self.scaler = joblib.load(scaler_file)
-                logger.info("Loaded scaler")
-            else:
-                logger.warning("No scaler found - predictions may be inaccurate!")
-                self.scaler = None
-
-            # Store loaded configuration
+        if result["success"]:
+            self.model = result["model"]
+            self.scaler = result["scaler"]
+            self.feature_names = result["feature_names"]
+            self.use_smc = result["is_smc"]
             self.interval = interval
             self.horizon_minutes = horizon_minutes
             self.shift_candles = self.calculate_horizon_shift(horizon_minutes, interval)
-
-            logger.info("✅ Model loaded successfully!")
-            logger.info(f"   Symbol: {symbol}")
-            logger.info(f"   Interval: {interval}")
-            logger.info(
-                f"   Horizon: {horizon_minutes} minutes ({self.shift_candles} candles)"
-            )
-            logger.info(f"   Features: {len(self.feature_names)}")
-            logger.info(f"   SMC Model: {'YES' if is_smc_model else 'NO'}")
-
             return True
-
-        except Exception as e:
-            logger.error(f"Error loading model: {e}")
-            import traceback
-
-            logger.debug(traceback.format_exc())
+        else:
             return False
 
     def load_latest_model_for_symbol(self, symbol="BTCUSDT"):
         """
         Load the most recent model for a symbol (regardless of interval/horizon)
-
-        Args:
-            symbol: Trading pair
-
-        Returns:
-            bool: Success status
+        (Delegates to centralized ModelLoader)
         """
-        try:
-            pattern = f"xgb_model_{symbol}_*.pkl"
-            model_files = list(self.model_dir.glob(pattern))
+        result = self.model_loader.load_latest_model_for_symbol(symbol=symbol)
 
-            if not model_files:
-                logger.error(f"No models found for {symbol}")
-                return False
-
-            # Get most recent
-            latest_model = max(model_files, key=lambda p: p.stat().st_mtime)
-
-            # Parse filename to extract interval and horizon
-            # Format: xgb_model_ETHUSDT_15m_60min_20250108_143022.pkl
-            parts = latest_model.stem.split("_")
-
-            if len(parts) < 7:
-                logger.error(f"Unexpected filename format: {latest_model.name}")
-                return False
-
-            interval = parts[3]  # "15m"
-            horizon_str = parts[4]  # "60min"
-            horizon_minutes = int(horizon_str.replace("min", ""))
-
-            logger.info(
-                f"Auto-detected: interval={interval}, horizon={horizon_minutes}min"
+        if result["success"]:
+            self.model = result["model"]
+            self.scaler = result["scaler"]
+            self.feature_names = result["feature_names"]
+            self.use_smc = result["is_smc"]
+            self.interval = result.get("interval")
+            self.horizon_minutes = result.get("horizon_minutes")
+            self.shift_candles = self.calculate_horizon_shift(
+                self.horizon_minutes, self.interval
             )
-
-            return self.load_model(
-                symbol=symbol, interval=interval, horizon_minutes=horizon_minutes
-            )
-
-        except Exception as e:
-            logger.error(f"Error loading latest model: {e}")
+            return True
+        else:
             return False
 
     # ================================================================
@@ -289,6 +120,7 @@ class SignalPredictor:
         custom_confidence=None,
         estimate_price=False,
         days=10,
+        silent=False,
     ):
         """
         Generate trading signal for a symbol
@@ -299,17 +131,19 @@ class SignalPredictor:
             horizon_minutes: Minutes ahead to predict (e.g., 60, 360)
             custom_confidence: Override default confidence threshold
             estimate_price: Whether to estimate target price
-            lookback_limit: Number of candles for history (default: 200)
+            days: Days of historical data
+            silent: Suppress logging output
 
         Returns:
             dict: Signal with prediction details
         """
-        logger.info(
-            f"Generating signal for {symbol} - {interval} interval, {horizon_minutes}min horizon"
-        )
+        if not silent:
+            logger.info(
+                f"Generating signal for {symbol} - {interval} interval, {horizon_minutes}min horizon"
+            )
 
         # Load model
-        if not self.load_model(symbol, interval, horizon_minutes):
+        if not self.load_model(symbol, interval, horizon_minutes, silent=silent):
             raise ValueError(
                 f"Could not load model for {symbol} with interval={interval}, horizon={horizon_minutes}min"
             )
@@ -320,7 +154,8 @@ class SignalPredictor:
             if custom_confidence
             else self.confidence_thresholds.get(horizon_minutes, 0.60)
         )
-        logger.info(f"Using confidence threshold: {min_confidence:.0%}")
+        if not silent:
+            logger.info(f"Using confidence threshold: {min_confidence:.0%}")
 
         # Fetch recent data with correct interval
         df = self.data_collector.get_realtime_data(
@@ -405,9 +240,89 @@ class SignalPredictor:
 
         # Save signal
         # self._save_signal(result)
-        self._print_signal(result)
+        if not silent:
+            self._print_signal(result)
 
         return result
+
+    def _predict_with_loaded_model(
+        self,
+        symbol,
+        custom_confidence=None,
+        estimate_price=False,
+        days=5,
+        silent=True,
+    ):
+        """
+        Make prediction using already loaded model (for live monitoring)
+        Skips model loading step for efficiency
+        """
+        # Get confidence threshold
+        min_confidence = (
+            custom_confidence
+            if custom_confidence
+            else self.confidence_thresholds.get(self.horizon_minutes, 0.60)
+        )
+
+        # Fetch recent data
+        df = self.data_collector.get_realtime_data(
+            symbol=symbol,
+            days=days,
+            interval=self.interval,
+            include_ongoing=False,
+        )
+
+        if df is None or len(df) < 200:
+            return None
+
+        # Add SMC features if needed
+        if self.use_smc:
+            integrate_smc_into_feature_engineer(self.feature_engineer)
+
+        # Add features
+        df = self.feature_engineer.add_all_features(df)
+
+        # Get current data
+        current_price = float(df.iloc[-1]["close"])
+        current_time = df.index[-1]
+
+        # Prepare features
+        feature_data = df.iloc[-1:][self.feature_names]
+        feature_data = feature_data.ffill().bfill().fillna(0)
+        X = feature_data.values
+        X = np.nan_to_num(X, nan=0.0, posinf=1e10, neginf=-1e10)
+
+        # Scale if available
+        if self.scaler is not None:
+            X = self.scaler.transform(X)
+
+        # Predict
+        pred_proba = self.model.predict_proba(X)[0]
+        prob_down = float(pred_proba[0])
+        prob_up = float(pred_proba[1])
+
+        predicted_direction = 1 if prob_up > 0.5 else 0
+        confidence = float(max(pred_proba))
+
+        # Determine signal
+        if confidence < min_confidence:
+            signal = "HOLD"
+        elif predicted_direction == 1:
+            signal = "LONG"
+        else:
+            signal = "SHORT"
+
+        return {
+            "symbol": symbol,
+            "interval": self.interval,
+            "horizon_minutes": self.horizon_minutes,
+            "current_price": current_price,
+            "signal": signal,
+            "predicted_direction": "UP" if predicted_direction == 1 else "DOWN",
+            "confidence": confidence,
+            "prob_up": prob_up,
+            "prob_down": prob_down,
+        }
 
     def _estimate_target_price(
         self, df, current_price, direction, confidence, shift_candles
@@ -574,44 +489,12 @@ class SignalPredictor:
     def get_all_available_models(self):
         """
         Parse all model files and extract symbol, interval, and horizon_minutes
+        (Delegates to centralized ModelLoader)
 
         Returns:
-            list: List of dicts with model info [{'symbol': 'BTCUSDT', 'interval': '15m', 'horizon_minutes': 15}, ...]
+            list: List of dicts with model info
         """
-        model_files = list(self.model_dir.glob("xgb_model_*.pkl"))
-
-        models_info = []
-        for model_file in model_files:
-            try:
-                # Parse filename: xgb_model_{symbol}_{interval}_{horizon_minutes}min_{timestamp}.pkl
-                parts = model_file.stem.split("_")
-
-                if len(parts) < 7:
-                    logger.warning(
-                        f"Skipping unexpected filename format: {model_file.name}"
-                    )
-                    continue
-
-                symbol = parts[2]  # "BTCUSDT"
-                interval = parts[3]  # "15m"
-                horizon_str = parts[4]  # "15min"
-                horizon_minutes = int(horizon_str.replace("min", ""))
-
-                models_info.append(
-                    {
-                        "symbol": symbol,
-                        "interval": interval,
-                        "horizon_minutes": horizon_minutes,
-                        "model_file": model_file.name,
-                    }
-                )
-
-            except Exception as e:
-                logger.warning(f"Error parsing model file {model_file.name}: {e}")
-                continue
-
-        logger.info(f"Found {len(models_info)} models")
-        return models_info
+        return self.model_loader.get_all_available_models()
 
     def predict_all_models(self, estimate_price=True, days=10):
         """
@@ -708,6 +591,40 @@ class SignalPredictor:
         with open(latest_file, "w") as f:
             json.dump(batch_result, f, indent=2)
 
+    def _print_batch_summary(self, results):
+        """Print batch predictions in a formatted table"""
+        logger.info("\n" + "=" * 100)
+        logger.info("PREDICTION SUMMARY")
+        logger.info("=" * 100)
+        logger.info(
+            f"{'Symbol':<12} {'Interval':<10} {'Signal':<8} {'Direction':<10} {'Confidence':<12} {'Current Price':<15} {'Target Price':<15}"
+        )
+        logger.info("-" * 100)
+
+        predictions = results.get("predictions", [])
+        for pred in predictions:
+            symbol = pred.get("symbol", "N/A")
+            interval = pred.get("interval", "N/A")
+            signal = pred.get("signal", "N/A")
+            direction = pred.get("predicted_direction", "N/A")
+            confidence = pred.get("confidence", 0)
+            current_price = pred.get("current_price", 0)
+
+            target_price = "N/A"
+            if pred.get("price_estimate") and isinstance(pred["price_estimate"], dict):
+                target_price = f"${pred['price_estimate'].get('target_price', 'N/A')}"
+
+            logger.info(
+                f"{symbol:<12} {interval:<10} {signal:<8} {direction:<10} "
+                f"{confidence:>10.1%}  ${current_price:>13,.2f}  {target_price:>14}"
+            )
+
+        logger.info("-" * 100)
+        logger.info(
+            f"Total Predictions: {results['successful_predictions']} | Failed: {results['failed_predictions']}"
+        )
+        logger.info("=" * 100 + "\n")
+
 
 # ========================
 # CLI Interface
@@ -730,33 +647,15 @@ if __name__ == "__main__":
 
     predictor = SignalPredictor(binance_client)
 
-    # predictor.predict_signal(symbol="HBARUSDT", interval="1h", horizon_minutes=60,
-    #                 estimate_price=True, days=10)
+    # Run predictions for ALL available models
+    logger.info("\n" + "=" * 70)
+    logger.info("LIVE PREDICTIONS - ALL CRYPTOCURRENCIES")
+    logger.info("=" * 70)
 
-    # predictor.predict_all_models()
+    results = predictor.predict_all_models(estimate_price=True, days=10)
 
-    # symbols = ["BTCUSDT",
-    # "ETHUSDT",
-    # "BNBUSDT",
-    # "XRPUSDT",
-    #  "ADAUSDT",
-    # "DOGEUSDT",
-    # "SOLUSDT",
-    # "DOTUSDT",
-    # "LINKUSDT",
-    # "LTCUSDT" ]
-
-    # # for symbol in symbols:
-
-    # #     singal = predictor.predict_signal(symbol=symbol, interval="15m",
-    # #     horizon_minutes=15, estimate_price=True, days=10)
-
-    symbol = "SOLUSDT"
-    singal = predictor.predict_signal(
-        symbol=symbol,
-        interval="15m",
-        horizon_minutes=15,
-        custom_confidence=0.85,
-        estimate_price=True,
-        days=10,
-    )
+    # Print summary table
+    if results and results["predictions"]:
+        predictor._print_batch_summary(results)
+    else:
+        logger.warning("No predictions available")

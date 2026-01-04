@@ -3,17 +3,17 @@ Model Validator: Test XGBoost prediction accuracy for directional forecasting
 Modified to use trained XGBoost models with feature engineering
 """
 
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-from loguru import logger
 import json
-from pathlib import Path
 import joblib
+import numpy as np
+from pathlib import Path
+from datetime import datetime
 
-import config
 from data_collector import DataCollector
 from feature_engineering import FeatureEngineer
+from model_loader import ModelLoader
+
+from loguru import logger
 
 
 class ModelValidator:
@@ -22,68 +22,29 @@ class ModelValidator:
     def __init__(self, binance_client=None):
         self.data_collector = DataCollector(binance_client)
         self.feature_engineer = FeatureEngineer()
+        self.model_loader = ModelLoader()
         self.model = None
         self.scaler = None
         self.feature_names = None
         self.results_dir = Path("validation_results")
         self.results_dir.mkdir(exist_ok=True)
-        self.model_dir = Path("models")
 
     @staticmethod
     def interval_to_minutes(interval: str) -> int:
         """Convert interval string to minutes"""
-        interval_map = {
-            "1m": 1,
-            "3m": 3,
-            "5m": 5,
-            "15m": 15,
-            "30m": 30,
-            "1h": 60,
-            "2h": 120,
-            "4h": 240,
-            "6h": 360,
-            "8h": 480,
-            "12h": 720,
-            "1d": 1440,
-            "3d": 4320,
-            "1w": 10080,
-        }
-        return interval_map.get(interval, 60)
+        return ModelLoader.interval_to_minutes(interval)
 
     @staticmethod
     def calculate_horizon_shift(horizon_minutes: int, interval: str) -> int:
-        """
-        Calculate number of candles to shift based on prediction horizon
-
-        Args:
-            horizon_minutes: How many minutes ahead to predict
-            interval: Candle interval (e.g., "15m", "1h")
-
-        Returns:
-            Number of candles to shift
-
-        Example:
-            interval="15m", horizon_minutes=60 -> shift=4 candles
-            interval="1h", horizon_minutes=60 -> shift=1 candle
-            interval="15m", horizon_minutes=30 -> shift=2 candles
-        """
-        interval_minutes = ModelValidator.interval_to_minutes(interval)
-        shift = horizon_minutes / interval_minutes
-
-        if shift != int(shift):
-            logger.warning(
-                f"Horizon {horizon_minutes}min is not evenly divisible by interval {interval} "
-                f"({interval_minutes}min). Using shift={int(shift)} candles."
-            )
-
-        return int(shift)
+        """Calculate number of candles to shift based on prediction horizon"""
+        return ModelLoader.calculate_horizon_shift(horizon_minutes, interval)
 
     def load_model(
         self, symbol="BTCUSDT", interval="1h", horizon_minutes=60, use_smc=False
     ):
         """
         Load trained XGBoost model for specific symbol, interval, and horizon
-        Automatically selects SMC model if use_smc=True and available, otherwise falls back to simple model
+        (Delegates to centralized ModelLoader)
 
         Args:
             symbol: Trading pair (e.g., "BTCUSDT")
@@ -93,198 +54,30 @@ class ModelValidator:
 
         Returns:
             bool: Success status
-
-        Example:
-            # Load SMC model if available, otherwise simple model
-            validator.load_model(symbol="ETHUSDT", interval="15m", horizon_minutes=60, use_smc=True)
         """
-        try:
-            # Determine which model to try first
-            if use_smc:
-                # Try SMC model first
-                smc_pattern = (
-                    f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_smc_*.pkl"
-                )
-                smc_files = list(self.model_dir.glob(smc_pattern))
+        result = self.model_loader.load_model(
+            symbol=symbol,
+            interval=interval,
+            horizon_minutes=horizon_minutes,
+            use_smc=use_smc,
+        )
 
-                if smc_files:
-                    logger.info(
-                        f"🎯 SMC model found for {symbol} ({interval}, {horizon_minutes}min)"
-                    )
-                    return self._load_model_files(
-                        symbol, interval, horizon_minutes, model_type="smc"
-                    )
-                else:
-                    logger.warning(
-                        f"⚠️ SMC model not found for {symbol} ({interval}, {horizon_minutes}min)"
-                    )
-                    logger.info(f"📦 Falling back to simple model...")
-
-            # Try simple model (default or fallback)
-            simple_pattern = f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-            simple_files = list(self.model_dir.glob(simple_pattern))
-
-            # Exclude SMC models from simple search
-            simple_files = [f for f in simple_files if "_smc_" not in f.name]
-
-            if simple_files:
-                logger.info(
-                    f"📦 Simple model found for {symbol} ({interval}, {horizon_minutes}min)"
-                )
-                return self._load_model_files(
-                    symbol, interval, horizon_minutes, model_type="simple"
-                )
-
-            # No models found
-            logger.error(
-                f"❌ No model found for {symbol} with interval={interval}, horizon={horizon_minutes}min"
-            )
-            logger.info(f"Looking for patterns:")
-            logger.info(
-                f"  - SMC: xgb_model_{symbol}_{interval}_{horizon_minutes}min_smc_*.pkl"
-            )
-            logger.info(
-                f"  - Simple: xgb_model_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-            )
-            logger.info(f"\nAvailable models in {self.model_dir}:")
-
-            # Show available models to help user
-            all_models = list(self.model_dir.glob("xgb_model_*.pkl"))
-            if all_models:
-                for model in sorted(all_models)[-10:]:  # Show last 10
-                    logger.info(f"  - {model.name}")
-            else:
-                logger.info("  (no models found)")
-
-            return False
-
-        except Exception as e:
-            logger.error(f"❌ Error loading model: {e}")
-            import traceback
-
-            logger.debug(traceback.format_exc())
-            return False
-
-    def _load_model_files(self, symbol, interval, horizon_minutes, model_type="simple"):
-        """
-        Internal method to load model files (model, features, scaler)
-
-        Args:
-            symbol: Trading pair
-            interval: Candle interval
-            horizon_minutes: Prediction horizon
-            model_type: "smc" or "simple"
-
-        Returns:
-            bool: Success status
-        """
-        try:
-            # Build pattern based on model type
-            if model_type == "smc":
-                pattern = (
-                    f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_smc_*.pkl"
-                )
-            else:
-                pattern = f"xgb_model_{symbol}_{interval}_{horizon_minutes}min_*.pkl"
-
-            model_files = list(self.model_dir.glob(pattern))
-
-            # Exclude SMC models if looking for simple
-            if model_type == "simple":
-                model_files = [f for f in model_files if "_smc_" not in f.name]
-
-            if not model_files:
-                return False
-
-            # Get most recent model
-            latest_model = max(model_files, key=lambda p: p.stat().st_mtime)
-            logger.info(f"📂 Loading model: {latest_model.name}")
-
-            self.model = joblib.load(latest_model)
-
-            # Extract timestamp from filename
-            # Format: xgb_model_ETHUSDT_15m_60min_smc_20250108_143022.pkl
-            # or:     xgb_model_ETHUSDT_15m_60min_20250108_143022.pkl
-            parts = latest_model.stem.split("_")
-
-            if model_type == "smc":
-                # parts = ['xgb', 'model', 'ETHUSDT', '15m', '60min', 'smc', '20250108', '143022']
-                timestamp = f"{parts[-2]}_{parts[-1]}"
-                model_suffix = "smc"
-            else:
-                # parts = ['xgb', 'model', 'ETHUSDT', '15m', '60min', '20250108', '143022']
-                timestamp = f"{parts[-2]}_{parts[-1]}"
-                model_suffix = ""
-
-            # Load corresponding feature names
-            if model_type == "smc":
-                features_file = (
-                    self.model_dir
-                    / f"features_{symbol}_{interval}_{horizon_minutes}min_smc_{timestamp}.txt"
-                )
-            else:
-                features_file = (
-                    self.model_dir
-                    / f"features_{symbol}_{interval}_{horizon_minutes}min_{timestamp}.txt"
-                )
-
-            if features_file.exists():
-                with open(features_file, "r") as f:
-                    self.feature_names = [line.strip() for line in f.readlines()]
-                logger.info(f"✅ Loaded {len(self.feature_names)} feature names")
-            else:
-                logger.error(f"❌ Feature names file not found: {features_file.name}")
-                return False
-
-            # Try to load scaler
-            if model_type == "smc":
-                scaler_file = (
-                    self.model_dir
-                    / f"scaler_{symbol}_{interval}_{horizon_minutes}min_smc_{timestamp}.pkl"
-                )
-            else:
-                scaler_file = (
-                    self.model_dir
-                    / f"scaler_{symbol}_{interval}_{horizon_minutes}min_{timestamp}.pkl"
-                )
-
-            if scaler_file.exists():
-                self.scaler = joblib.load(scaler_file)
-                logger.info("✅ Loaded scaler")
-            else:
-                logger.warning("⚠️ No scaler found - predictions may be inaccurate!")
-                self.scaler = None
-
-            # Store loaded configuration
+        if result["success"]:
+            self.model = result["model"]
+            self.scaler = result["scaler"]
+            self.feature_names = result["feature_names"]
             self.interval = interval
             self.horizon_minutes = horizon_minutes
             self.shift_candles = self.calculate_horizon_shift(horizon_minutes, interval)
-            self.model_type = model_type
-
-            logger.info("=" * 60)
-            logger.info(f"✅ {model_type.upper()} MODEL LOADED SUCCESSFULLY!")
-            logger.info("=" * 60)
-            logger.info(f"   Symbol:   {symbol}")
-            logger.info(f"   Type:     {model_type.upper()}")
-            logger.info(f"   Interval: {interval}")
-            logger.info(
-                f"   Horizon:  {horizon_minutes} minutes ({self.shift_candles} candles)"
-            )
-            logger.info(f"   Features: {len(self.feature_names)}")
-            logger.info("=" * 60)
-
+            self.model_type = "smc" if result["is_smc"] else "simple"
             return True
-
-        except Exception as e:
-            logger.error(f"❌ Error loading {model_type} model files: {e}")
-            import traceback
-
-            logger.debug(traceback.format_exc())
+        else:
             return False
 
     def load_latest_model_for_symbol(self, symbol="BTCUSDT"):
         """
         Load the most recent model for a symbol (regardless of interval/horizon)
+        (Delegates to centralized ModelLoader)
 
         Args:
             symbol: Trading pair
@@ -292,39 +85,20 @@ class ModelValidator:
         Returns:
             bool: Success status
         """
-        try:
-            pattern = f"xgb_model_{symbol}_*.pkl"
-            model_files = list(self.model_dir.glob(pattern))
+        result = self.model_loader.load_latest_model_for_symbol(symbol=symbol)
 
-            if not model_files:
-                logger.error(f"No models found for {symbol}")
-                return False
-
-            # Get most recent
-            latest_model = max(model_files, key=lambda p: p.stat().st_mtime)
-
-            # Parse filename to extract interval and horizon
-            # Format: xgb_model_ETHUSDT_15m_60min_20250108_143022.pkl
-            parts = latest_model.stem.split("_")
-
-            if len(parts) < 7:
-                logger.error(f"Unexpected filename format: {latest_model.name}")
-                return False
-
-            interval = parts[3]  # "15m"
-            horizon_str = parts[4]  # "60min"
-            horizon_minutes = int(horizon_str.replace("min", ""))
-
-            logger.info(
-                f"Auto-detected: interval={interval}, horizon={horizon_minutes}min"
+        if result["success"]:
+            self.model = result["model"]
+            self.scaler = result["scaler"]
+            self.feature_names = result["feature_names"]
+            self.interval = result.get("interval")
+            self.horizon_minutes = result.get("horizon_minutes")
+            self.shift_candles = self.calculate_horizon_shift(
+                self.horizon_minutes, self.interval
             )
-
-            return self.load_model(
-                symbol=symbol, interval=interval, horizon_minutes=horizon_minutes
-            )
-
-        except Exception as e:
-            logger.error(f"Error loading latest model: {e}")
+            self.model_type = "smc" if result["is_smc"] else "simple"
+            return True
+        else:
             return False
 
     # ================================================================
@@ -479,7 +253,6 @@ class ModelValidator:
             "timestamps": [str(t) for t in timestamps],
         }
 
-        # self._save_results(symbol, results, interval, horizon_minutes)
         self._print_results(symbol, interval, horizon_minutes, results, metrics)
 
         return results
@@ -637,7 +410,7 @@ class ModelValidator:
         }
 
         # Save results (without dataframe)
-        # self._save_results(symbol, results, interval, horizon_minutes)
+        self._save_results(symbol, results, horizon_minutes)
         self._print_results(symbol, interval, horizon_minutes, results, metrics)
 
         return results
@@ -645,16 +418,36 @@ class ModelValidator:
     def _calculate_directional_metrics(
         self, predictions, actuals, confidences, current_prices, future_prices
     ):
-        """Calculate directional prediction metrics"""
+        """
+        Calculate directional prediction metrics with robust validation
+
+        Accuracy is calculated as: (correct predictions / total predictions) * 100
+        Where correct = predicted direction matches actual price movement direction
+        """
         predictions = np.array(predictions)
         actuals = np.array(actuals)
         confidences = np.array(confidences)
         current_prices = np.array(current_prices)
         future_prices = np.array(future_prices)
 
-        # Overall directional accuracy
+        # Validation: ensure all arrays have same length
+        assert (
+            len(predictions) == len(actuals) == len(confidences)
+        ), "Array length mismatch in metrics calculation"
+
+        # Validation: ensure predictions and actuals are binary (0 or 1)
+        assert np.all(
+            (predictions == 0) | (predictions == 1)
+        ), "Predictions must be binary (0 or 1)"
+        assert np.all(
+            (actuals == 0) | (actuals == 1)
+        ), "Actuals must be binary (0 or 1)"
+
+        # Overall directional accuracy: exact match between prediction and actual
         correct = predictions == actuals
-        directional_accuracy = correct.mean() * 100
+        num_correct = correct.sum()
+        total_predictions = len(predictions)
+        directional_accuracy = (num_correct / total_predictions) * 100
 
         # Separate accuracy for UP and DOWN predictions
         up_mask = predictions == 1
@@ -708,10 +501,12 @@ class ModelValidator:
             "total_trades": len(predictions),
         }
 
-    def _print_results(self, symbol, interval, horizon, results, metrics):
-        """Pretty print backtest results"""
+    def _print_results(self, symbol, interval, horizon_minutes, results, metrics):
+        """Pretty print backtest results with verification of calculation accuracy"""
         logger.info(f"\n{'='*70}")
-        logger.info(f"BACKTEST RESULTS: {symbol} ({horizon}h predictions)")
+        logger.info(
+            f"BACKTEST RESULTS: {symbol} ({interval} interval, {horizon_minutes}min predictions)"
+        )
         logger.info(f"{'='*70}")
         logger.info(f"Total Predictions: {metrics['total_trades']}")
         logger.info(f"  UP predictions:   {metrics['num_up_predictions']}")
@@ -720,6 +515,16 @@ class ModelValidator:
         logger.info(f"  Overall:          {metrics['directional_accuracy']:.2f}%")
         logger.info(f"  UP predictions:   {metrics['up_predictions_accuracy']:.2f}%")
         logger.info(f"  DOWN predictions: {metrics['down_predictions_accuracy']:.2f}%")
+
+        # Manual verification of overall accuracy
+        predictions = np.array(results["predictions"])
+        actuals = np.array(results["actuals"])
+        correct_count = (predictions == actuals).sum()
+        manual_accuracy = (correct_count / len(predictions)) * 100
+        logger.info(
+            f"  Verified:         {manual_accuracy:.2f}% ({correct_count}/{len(predictions)} correct)"
+        )
+
         logger.info(f"\nCONFIDENCE ANALYSIS:")
         logger.info(f"  Average confidence: {metrics['avg_confidence']:.2%}")
         logger.info(
@@ -735,7 +540,7 @@ class ModelValidator:
         )
         logger.info(f"{'='*70}\n")
 
-    def _save_results(self, symbol, results, interval, horizon):
+    def _save_results(self, symbol, results, horizon):
         """Save validation results to file"""
         filename = f"{symbol}_backtest_{horizon}h_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         filepath = self.results_dir / filename
@@ -746,64 +551,160 @@ class ModelValidator:
         logger.info(f"Results saved to {filepath}")
 
     def backtest_multiple_symbols(
-        self, symbols=["BTCUSDT", "ETHUSDT", "BNBUSDT"], horizon=1, days=30
+        self,
+        symbols=["BTCUSDT", "ETHUSDT", "BNBUSDT"],
+        interval="1h",
+        horizon_minutes=60,
+        days=30,
+        min_confidence=0.7,
+        use_smc=False,
+        output_file=None,
     ):
         """
-        Test multiple symbols with same horizon
+        Test multiple symbols with same configuration and save results to file
 
         Args:
             symbols: List of trading pairs
-            horizon: Prediction horizon in hours
+            interval: Candle interval (e.g., "15m", "1h")
+            horizon_minutes: Prediction horizon in minutes
             days: Days to test
+            min_confidence: Minimum confidence threshold
+            use_smc: Whether to use SMC models
+            output_file: Path to save results (auto-generated if None)
 
         Returns:
             dict: Results for each symbol
         """
-        logger.info(f"Testing multiple symbols with {horizon}h horizon: {symbols}")
+        logger.info(
+            f"Testing {len(symbols)} symbols with {interval} interval, {horizon_minutes}min horizon"
+        )
 
         all_results = {}
+        summary_stats = []
 
         for symbol in symbols:
-            logger.info(f"\n{'='*50}")
+            logger.info(f"\n{'='*60}")
             logger.info(f"Testing {symbol}")
-            logger.info(f"{'='*50}")
+            logger.info(f"{'='*60}")
 
             try:
-                results = self.backtest(symbol=symbol, horizon=horizon, days=days)
+                results = self.backtest(
+                    symbol=symbol,
+                    interval=interval,
+                    horizon_minutes=horizon_minutes,
+                    days=days,
+                    min_confidence=min_confidence,
+                    use_smc=use_smc,
+                )
                 all_results[symbol] = results
+
+                # Collect summary for comparison
+                summary_stats.append(
+                    {
+                        "symbol": symbol,
+                        "directional_accuracy": results["metrics"][
+                            "directional_accuracy"
+                        ],
+                        "win_rate": results["metrics"]["win_rate"],
+                        "avg_return_per_trade_pct": results["metrics"][
+                            "avg_return_per_trade_pct"
+                        ],
+                        "total_trades": results["metrics"]["total_trades"],
+                        "avg_confidence": results["metrics"]["avg_confidence"],
+                    }
+                )
+
             except Exception as e:
                 logger.error(f"Error testing {symbol}: {e}")
+                import traceback
+
+                logger.debug(traceback.format_exc())
                 continue
 
         # Compare results
-        self._compare_results(all_results, horizon)
+        self._compare_results(summary_stats, interval, horizon_minutes)
+
+        # Save to file
+        if output_file is None:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_file = (
+                self.results_dir
+                / f"multi_backtest_{interval}_{horizon_minutes}min_{timestamp}.json"
+            )
+        else:
+            output_file = Path(output_file)
+
+        # Prepare data for JSON (remove dataframe objects)
+        results_to_save = {}
+        for symbol, result in all_results.items():
+            result_copy = result.copy()
+            if "dataframe" in result_copy:
+                del result_copy["dataframe"]
+            results_to_save[symbol] = result_copy
+
+        # Add summary metadata
+        save_data = {
+            "test_configuration": {
+                "interval": interval,
+                "horizon_minutes": horizon_minutes,
+                "days": days,
+                "min_confidence": min_confidence,
+                "use_smc": use_smc,
+                "tested_symbols": symbols,
+                "timestamp": datetime.now().isoformat(),
+            },
+            "summary_statistics": summary_stats,
+            "detailed_results": results_to_save,
+        }
+
+        with open(output_file, "w") as f:
+            json.dump(save_data, f, indent=2, default=str)
+
+        logger.info(f"\n✅ Results saved to {output_file}")
 
         return all_results
 
-    def _compare_results(self, all_results, horizon):
-        """Compare results across symbols"""
-        logger.info(f"\n{'='*70}")
-        logger.info(f"COMPARISON: {horizon}h Predictions")
-        logger.info(f"{'='*70}")
-        logger.info(
-            f"{'Symbol':<12} {'Dir. Acc.':<12} {'Win Rate':<12} {'Avg Return':<12}"
-        )
-        logger.info("-" * 70)
+    def _compare_results(self, summary_stats, interval, horizon_minutes):
+        """Compare results across symbols with detailed statistics"""
+        if not summary_stats:
+            logger.warning("No results to compare")
+            return
 
-        for symbol, results in all_results.items():
-            metrics = results["metrics"]
+        logger.info(f"\n{'='*80}")
+        logger.info(
+            f"COMPARISON: {interval} interval, {horizon_minutes}min predictions"
+        )
+        logger.info(f"{'='*80}")
+        logger.info(
+            f"{'Symbol':<10} {'Trades':<8} {'Dir.Acc':<10} {'WinRate':<10} {'AvgRet%':<10} {'AvgConf':<10}"
+        )
+        logger.info("-" * 80)
+
+        for stats in summary_stats:
             logger.info(
-                f"{symbol:<12} {metrics['directional_accuracy']:>10.2f}%  "
-                f"{metrics['win_rate']:>10.2f}%  "
-                f"{metrics['avg_return_per_trade_pct']:>10.3f}%"
+                f"{stats['symbol']:<10} "
+                f"{stats['total_trades']:<8} "
+                f"{stats['directional_accuracy']:>8.2f}%  "
+                f"{stats['win_rate']:>8.2f}%  "
+                f"{stats['avg_return_per_trade_pct']:>8.3f}%  "
+                f"{stats['avg_confidence']:>8.2%}"
             )
 
-        logger.info(f"{'='*70}\n")
+        # Calculate aggregates
+        avg_dir_acc = sum(s["directional_accuracy"] for s in summary_stats) / len(
+            summary_stats
+        )
+        avg_win_rate = sum(s["win_rate"] for s in summary_stats) / len(summary_stats)
+        total_trades = sum(s["total_trades"] for s in summary_stats)
+
+        logger.info("-" * 80)
+        logger.info(f"AVERAGES:")
+        logger.info(f"  Directional Accuracy: {avg_dir_acc:.2f}%")
+        logger.info(f"  Win Rate: {avg_win_rate:.2f}%")
+        logger.info(f"  Total Trades: {total_trades}")
+        logger.info(f"{'='*80}\n")
 
 
-# ========================
-# CLI for validation
-# ========================
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
@@ -816,44 +717,53 @@ if __name__ == "__main__":
 
     if api_key:
         binance_client = Client(api_key, api_secret)
+        logger.info("✅ Using authenticated Binance client")
     else:
         binance_client = Client()
+        logger.info("⚠️ Using public Binance client (rate limits apply)")
+
+    # Top 10 cryptocurrencies that models are trained on
+    SYMBOLS = [
+        "BTCUSDT",
+        "ETHUSDT",
+        "BNBUSDT",
+        "XRPUSDT",
+        "ADAUSDT",
+        "DOGEUSDT",
+        "SOLUSDT",
+        "DOTUSDT",
+        "LINKUSDT",
+        "LTCUSDT",
+    ]
+
+    # Test configuration - adjust these parameters as needed
+    INTERVAL = "15m"  # Must match your trained models
+    HORIZON_MINUTES = 15  # Must match your trained models
+    DAYS = 5  # Historical period to test
+    MIN_CONFIDENCE = 0.75  # Only count predictions above this threshold
+    USE_SMC = True  # Try SMC models first, fallback to simple models
+
+    logger.info("=" * 80)
+    logger.info("MULTI-SYMBOL BACKTEST VALIDATION")
+    logger.info("=" * 80)
+    logger.info(f"Testing {len(SYMBOLS)} cryptocurrencies")
+    logger.info(f"Interval: {INTERVAL}")
+    logger.info(f"Horizon: {HORIZON_MINUTES} minutes")
+    logger.info(f"Period: {DAYS} days")
+    logger.info(f"Min Confidence: {MIN_CONFIDENCE:.0%}")
+    logger.info(f"Model Type: {'SMC (with fallback)' if USE_SMC else 'Simple'}")
+    logger.info("=" * 80)
 
     validator = ModelValidator(binance_client)
-    symbol = "XRPUSDT"
-    validator.backtest(
-        symbol=symbol, interval="15m", horizon_minutes=15, days=30, min_confidence=0.85
+
+    results = validator.backtest_multiple_symbols(
+        symbols=SYMBOLS,
+        interval=INTERVAL,
+        horizon_minutes=HORIZON_MINUTES,
+        days=DAYS,
+        min_confidence=MIN_CONFIDENCE,
+        use_smc=USE_SMC,
     )
-    # if len(sys.argv) > 1:
-    #     command = sys.argv[1]
 
-    #     if command == "backtest":
-    #         # python model_validator.py backtest BTCUSDT 1 30 0.5
-    #         symbol = sys.argv[2] if len(sys.argv) > 2 else "BTCUSDT"
-    #         horizon = int(sys.argv[3]) if len(sys.argv) > 3 else 1
-    #         days = int(sys.argv[4]) if len(sys.argv) > 4 else 30
-    #         min_conf = float(sys.argv[5]) if len(sys.argv) > 5 else 0.5
-
-    #         validator.backtest(symbol, horizon, days, min_conf)
-
-    #     elif command == "multi":
-    #         # python model_validator.py multi BTCUSDT,ETHUSDT,BNBUSDT 1 30
-    #         symbols_str = sys.argv[2] if len(sys.argv) > 2 else "BTCUSDT,ETHUSDT"
-    #         symbols = symbols_str.split(',')
-    #         horizon = int(sys.argv[3]) if len(sys.argv) > 3 else 1
-    #         days = int(sys.argv[4]) if len(sys.argv) > 4 else 30
-
-    #         validator.backtest_multiple_symbols(symbols, horizon, days)
-
-    #     else:
-    #         print(f"Unknown command: {command}")
-
-    # else:
-    #     print("\nXGBoost Model Validator - Usage:")
-    #     print("  Single symbol:")
-    #     print("    python model_validator.py backtest BTCUSDT 1 30 0.5")
-    #     print("      Args: symbol horizon days min_confidence")
-    #     print("\n  Multiple symbols:")
-    #     print("    python model_validator.py multi BTCUSDT,ETHUSDT 1 30")
-    #     print("      Args: symbols(comma-separated) horizon days")
-    #     print("\nNote: Horizon must match your trained model (e.g., 1h, 6h)")
+    logger.info("\n✅ Backtest completed for all symbols!")
+    logger.info(f"Results saved to validation_results/ directory")
