@@ -36,6 +36,10 @@ class SignalPredictor:
         self.signals_dir = Path("signals")
         self.signals_dir.mkdir(exist_ok=True)
 
+        # Data cache: symbol -> (df, timestamp)
+        self.data_cache = {}
+        self.cache_ttl_seconds = 60
+
         # Confidence thresholds by horizon
         self.confidence_thresholds = {
             1: 0.70,  # 1h needs 70% confidence
@@ -44,6 +48,22 @@ class SignalPredictor:
             12: 0.55,  # 12h needs 55% confidence
             24: 0.55,  # 24h needs 55% confidence
         }
+
+    def _get_cached_data(self, symbol, days):
+        """Get data from cache if fresh, otherwise fetch and cache."""
+        now = datetime.now()
+        if symbol in self.data_cache:
+            df, timestamp = self.data_cache[symbol]
+            age_seconds = (now - timestamp).total_seconds()
+            if age_seconds < self.cache_ttl_seconds:
+                return df
+
+        # Fetch fresh data
+        df = self.data_collector.get_realtime_data(
+            symbol=symbol, days=days, interval="1m", include_ongoing=False
+        )
+        self.data_cache[symbol] = (df, now)
+        return df
 
     @staticmethod
     def interval_to_minutes(interval: str) -> int:
@@ -143,7 +163,7 @@ class SignalPredictor:
             )
 
         # Load model
-        if not self.load_model(symbol, interval, horizon_minutes, silent=silent):
+        if not self.load_model(symbol, interval, horizon_minutes, silent=True):
             raise ValueError(
                 f"Could not load model for {symbol} with interval={interval}, horizon={horizon_minutes}min"
             )
@@ -154,23 +174,15 @@ class SignalPredictor:
             if custom_confidence
             else self.confidence_thresholds.get(horizon_minutes, 0.60)
         )
-        if not silent:
-            logger.info(f"Using confidence threshold: {min_confidence:.0%}")
 
-        # Fetch recent data with correct interval
-        df = self.data_collector.get_realtime_data(
-            symbol=symbol,
-            days=days,
-            interval=interval,  # Use the model's interval
-            include_ongoing=False,
-        )
+        # Fetch recent data with correct interval (use cache)
+        df = self._get_cached_data(symbol, days)
 
         if df is None or len(df) < 200:
             raise ValueError(f"Insufficient data for {symbol}")
 
         # Add SMC features if model was trained with them
         if self.use_smc:
-            logger.info("Adding SMC features for prediction...")
             integrate_smc_into_feature_engineer(self.feature_engineer)
 
         # Add technical features (and SMC if enabled)
@@ -507,7 +519,9 @@ class SignalPredictor:
         Returns:
             dict: All predictions with metadata
         """
-        logger.info("Starting batch prediction for all available models...")
+        logger.info(
+            f"Running predictions for {len(self.get_all_available_models())} models..."
+        )
 
         # Get all models
         models = self.get_all_available_models()
@@ -525,10 +539,6 @@ class SignalPredictor:
             interval = model_info["interval"]
             horizon_minutes = model_info["horizon_minutes"]
 
-            logger.info(
-                f"\n[{i}/{len(models)}] Processing {symbol} - {interval} - {horizon_minutes}min"
-            )
-
             try:
                 signal = self.predict_signal(
                     symbol=symbol,
@@ -536,13 +546,12 @@ class SignalPredictor:
                     horizon_minutes=horizon_minutes,
                     estimate_price=estimate_price,
                     days=days,
+                    silent=True,
                 )
                 all_predictions.append(signal)
 
             except Exception as e:
-                logger.error(
-                    f"Failed to predict {symbol} - {interval} - {horizon_minutes}min: {e}"
-                )
+                logger.error(f"{symbol}-{interval}: {e}")
                 failed_predictions.append(
                     {
                         "symbol": symbol,
@@ -561,6 +570,10 @@ class SignalPredictor:
             "predictions": all_predictions,
             "failures": failed_predictions,
         }
+
+        logger.info(
+            f"Predictions complete: {len(all_predictions)} success, {len(failed_predictions)} failed"
+        )
 
         # Save to file
         # self._save_batch_predictions(result)

@@ -1,0 +1,560 @@
+{
+  "BNBUSDT_15m_15m": {
+    "symbol": "BNBUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "HOLD",
+    "confidence": 0.5663623213768005,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:16.846728",
+    "valid_until": "2026-01-05T01:01:16.846736",
+    "current_price": 891.02,
+    "price_estimate": null,
+    "prob_up": 0.5663623213768005,
+    "prob_down": 0.43363767862319946,
+    "reason": "Low confidence (56.6% < 60%)"
+  },
+  "BNBUSDT_1h_60m": {
+    "symbol": "BNBUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "HOLD",
+    "confidence": 0.5980298519134521,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:17.994272",
+    "valid_until": "2026-01-05T01:46:17.994283",
+    "current_price": 891.02,
+    "price_estimate": null,
+    "prob_up": 0.5980298519134521,
+    "prob_down": 0.40197014808654785,
+    "reason": "Low confidence (59.8% < 60%)"
+  },
+  "BNBUSDT_2h_120m": {
+    "symbol": "BNBUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "BUY",
+    "confidence": 0.6462748050689697,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:19.688409",
+    "valid_until": "2026-01-05T02:46:19.688414",
+    "current_price": 891.02,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 891.23,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 890.88,
+        "upper": 891.58
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6462748050689697,
+    "prob_down": 0.3537251949310303,
+    "reason": "Upward prediction with 64.6% confidence"
+  },
+  "BNBUSDT_30m_30m": {
+    "symbol": "BNBUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "HOLD",
+    "confidence": 0.5987058877944946,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:20.898650",
+    "valid_until": "2026-01-05T01:16:20.898661",
+    "current_price": 891.02,
+    "price_estimate": null,
+    "prob_up": 0.5987058877944946,
+    "prob_down": 0.40129411220550537,
+    "reason": "Low confidence (59.9% < 60%)"
+  },
+  "BNBUSDT_5m_5m": {
+    "symbol": "BNBUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "BUY",
+    "confidence": 0.6401528120040894,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:22.414112",
+    "valid_until": "2026-01-05T00:51:22.414118",
+    "current_price": 891.02,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 891.23,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 890.88,
+        "upper": 891.58
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6401528120040894,
+    "prob_down": 0.35984718799591064,
+    "reason": "Upward prediction with 64.0% confidence"
+  },
+  "BTCUSDT_15m_15m": {
+    "symbol": "BTCUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "BUY",
+    "confidence": 0.6457797288894653,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:34.378546",
+    "valid_until": "2026-01-05T01:01:34.378553",
+    "current_price": 91070.9,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 91090.01,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 91058.4,
+        "upper": 91121.62
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6457797288894653,
+    "prob_down": 0.35422027111053467,
+    "reason": "Upward prediction with 64.6% confidence"
+  },
+  "BTCUSDT_1h_60m": {
+    "symbol": "BTCUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "BUY",
+    "confidence": 0.6381473541259766,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:36.047638",
+    "valid_until": "2026-01-05T01:46:36.047645",
+    "current_price": 91070.9,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 91089.92,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 91058.3,
+        "upper": 91121.53
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6381473541259766,
+    "prob_down": 0.36185264587402344,
+    "reason": "Upward prediction with 63.8% confidence"
+  },
+  "BTCUSDT_2h_120m": {
+    "symbol": "BTCUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "BUY",
+    "confidence": 0.6669530272483826,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:37.709130",
+    "valid_until": "2026-01-05T02:46:37.709136",
+    "current_price": 91070.9,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 91090.49,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 91058.87,
+        "upper": 91122.1
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6669530272483826,
+    "prob_down": 0.33304697275161743,
+    "reason": "Upward prediction with 66.7% confidence"
+  },
+  "BTCUSDT_30m_30m": {
+    "symbol": "BTCUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "BUY",
+    "confidence": 0.6150237917900085,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:39.267056",
+    "valid_until": "2026-01-05T01:16:39.267063",
+    "current_price": 91070.9,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 91089.18,
+      "expected_change_pct": 0.02,
+      "price_range": {
+        "lower": 91057.56,
+        "upper": 91120.79
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6150237917900085,
+    "prob_down": 0.38497620820999146,
+    "reason": "Upward prediction with 61.5% confidence"
+  },
+  "BTCUSDT_5m_5m": {
+    "symbol": "BTCUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "HOLD",
+    "confidence": 0.5124157667160034,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:40.682982",
+    "valid_until": "2026-01-05T00:51:40.682994",
+    "current_price": 91070.9,
+    "price_estimate": null,
+    "prob_up": 0.5124157667160034,
+    "prob_down": 0.4875842332839966,
+    "reason": "Low confidence (51.2% < 60%)"
+  },
+  "ETHUSDT_15m_15m": {
+    "symbol": "ETHUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "BUY",
+    "confidence": 0.6108991503715515,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:52.011858",
+    "valid_until": "2026-01-05T01:01:52.011864",
+    "current_price": 3128.78,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 3129.61,
+      "expected_change_pct": 0.03,
+      "price_range": {
+        "lower": 3128.22,
+        "upper": 3131.0
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6108991503715515,
+    "prob_down": 0.3891008496284485,
+    "reason": "Upward prediction with 61.1% confidence"
+  },
+  "ETHUSDT_1h_60m": {
+    "symbol": "ETHUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "HOLD",
+    "confidence": 0.5287325382232666,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:46:53.137252",
+    "valid_until": "2026-01-05T01:46:53.137263",
+    "current_price": 3128.78,
+    "price_estimate": null,
+    "prob_up": 0.5287325382232666,
+    "prob_down": 0.4712674617767334,
+    "reason": "Low confidence (52.9% < 60%)"
+  },
+  "ETHUSDT_2h_120m": {
+    "symbol": "ETHUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "HOLD",
+    "confidence": 0.5809834003448486,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:46:54.243181",
+    "valid_until": "2026-01-05T02:46:54.243191",
+    "current_price": 3128.78,
+    "price_estimate": null,
+    "prob_up": 0.419016569852829,
+    "prob_down": 0.5809834003448486,
+    "reason": "Low confidence (58.1% < 60%)"
+  },
+  "ETHUSDT_30m_30m": {
+    "symbol": "ETHUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "SELL",
+    "confidence": 0.6624172329902649,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:46:55.935907",
+    "valid_until": "2026-01-05T01:16:55.935913",
+    "current_price": 3128.78,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 3127.88,
+      "expected_change_pct": -0.03,
+      "price_range": {
+        "lower": 3126.49,
+        "upper": 3129.28
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.3375827670097351,
+    "prob_down": 0.6624172329902649,
+    "reason": "Downward prediction with 66.2% confidence"
+  },
+  "ETHUSDT_5m_5m": {
+    "symbol": "ETHUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "HOLD",
+    "confidence": 0.5177773237228394,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:46:57.222315",
+    "valid_until": "2026-01-05T00:51:57.222327",
+    "current_price": 3128.78,
+    "price_estimate": null,
+    "prob_up": 0.48222264647483826,
+    "prob_down": 0.5177773237228394,
+    "reason": "Low confidence (51.8% < 60%)"
+  },
+  "LINKUSDT_15m_15m": {
+    "symbol": "LINKUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "HOLD",
+    "confidence": 0.5534305572509766,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:04.895631",
+    "valid_until": "2026-01-05T01:02:04.895640",
+    "current_price": 13.36,
+    "price_estimate": null,
+    "prob_up": 0.44656941294670105,
+    "prob_down": 0.5534305572509766,
+    "reason": "Low confidence (55.3% < 60%)"
+  },
+  "LINKUSDT_1h_60m": {
+    "symbol": "LINKUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "HOLD",
+    "confidence": 0.5565108060836792,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:06.342234",
+    "valid_until": "2026-01-05T01:47:06.342246",
+    "current_price": 13.36,
+    "price_estimate": null,
+    "prob_up": 0.4434891641139984,
+    "prob_down": 0.5565108060836792,
+    "reason": "Low confidence (55.7% < 60%)"
+  },
+  "LINKUSDT_2h_120m": {
+    "symbol": "LINKUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "HOLD",
+    "confidence": 0.5712295174598694,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:07.716445",
+    "valid_until": "2026-01-05T02:47:07.716456",
+    "current_price": 13.36,
+    "price_estimate": null,
+    "prob_up": 0.4287704825401306,
+    "prob_down": 0.5712295174598694,
+    "reason": "Low confidence (57.1% < 60%)"
+  },
+  "LINKUSDT_30m_30m": {
+    "symbol": "LINKUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "HOLD",
+    "confidence": 0.5245181322097778,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:08.868269",
+    "valid_until": "2026-01-05T01:17:08.868279",
+    "current_price": 13.36,
+    "price_estimate": null,
+    "prob_up": 0.5245181322097778,
+    "prob_down": 0.47548186779022217,
+    "reason": "Low confidence (52.5% < 60%)"
+  },
+  "LINKUSDT_5m_5m": {
+    "symbol": "LINKUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "HOLD",
+    "confidence": 0.5973299741744995,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:09.996350",
+    "valid_until": "2026-01-05T00:52:09.996361",
+    "current_price": 13.36,
+    "price_estimate": null,
+    "prob_up": 0.4026700258255005,
+    "prob_down": 0.5973299741744995,
+    "reason": "Low confidence (59.7% < 60%)"
+  },
+  "SOLUSDT_15m_15m": {
+    "symbol": "SOLUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "BUY",
+    "confidence": 0.6073970198631287,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:18.159548",
+    "valid_until": "2026-01-05T01:02:18.159555",
+    "current_price": 133.41,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 133.47,
+      "expected_change_pct": 0.04,
+      "price_range": {
+        "lower": 133.39,
+        "upper": 133.55
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6073970198631287,
+    "prob_down": 0.39260298013687134,
+    "reason": "Upward prediction with 60.7% confidence"
+  },
+  "SOLUSDT_1h_60m": {
+    "symbol": "SOLUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "BUY",
+    "confidence": 0.7317491769790649,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:19.743414",
+    "valid_until": "2026-01-05T01:47:19.743420",
+    "current_price": 133.41,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 133.48,
+      "expected_change_pct": 0.05,
+      "price_range": {
+        "lower": 133.4,
+        "upper": 133.56
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.7317491769790649,
+    "prob_down": 0.26825082302093506,
+    "reason": "Upward prediction with 73.2% confidence"
+  },
+  "SOLUSDT_2h_120m": {
+    "symbol": "SOLUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "BUY",
+    "confidence": 0.6148024797439575,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:21.445585",
+    "valid_until": "2026-01-05T02:47:21.445591",
+    "current_price": 133.41,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 133.47,
+      "expected_change_pct": 0.04,
+      "price_range": {
+        "lower": 133.39,
+        "upper": 133.55
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6148024797439575,
+    "prob_down": 0.3851975202560425,
+    "reason": "Upward prediction with 61.5% confidence"
+  },
+  "SOLUSDT_30m_30m": {
+    "symbol": "SOLUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "BUY",
+    "confidence": 0.6599429845809937,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:23.173312",
+    "valid_until": "2026-01-05T01:17:23.173317",
+    "current_price": 133.41,
+    "price_estimate": {
+      "method": "historical_average",
+      "target_price": 133.47,
+      "expected_change_pct": 0.04,
+      "price_range": {
+        "lower": 133.39,
+        "upper": 133.55
+      },
+      "warning": "This is a statistical estimate based on past patterns. NOT a guarantee."
+    },
+    "prob_up": 0.6599429845809937,
+    "prob_down": 0.34005701541900635,
+    "reason": "Upward prediction with 66.0% confidence"
+  },
+  "SOLUSDT_5m_5m": {
+    "symbol": "SOLUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "HOLD",
+    "confidence": 0.5003872513771057,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:24.558455",
+    "valid_until": "2026-01-05T00:52:24.558464",
+    "current_price": 133.41,
+    "price_estimate": null,
+    "prob_up": 0.4996127486228943,
+    "prob_down": 0.5003872513771057,
+    "reason": "Low confidence (50.0% < 60%)"
+  },
+  "XRPUSDT_15m_15m": {
+    "symbol": "XRPUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "signal": "HOLD",
+    "confidence": 0.5666028261184692,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:31.959061",
+    "valid_until": "2026-01-05T01:02:31.959074",
+    "current_price": 2.0775,
+    "price_estimate": null,
+    "prob_up": 0.5666028261184692,
+    "prob_down": 0.43339717388153076,
+    "reason": "Low confidence (56.7% < 60%)"
+  },
+  "XRPUSDT_1h_60m": {
+    "symbol": "XRPUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "signal": "HOLD",
+    "confidence": 0.5517870783805847,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:33.012504",
+    "valid_until": "2026-01-05T01:47:33.012515",
+    "current_price": 2.0775,
+    "price_estimate": null,
+    "prob_up": 0.5517870783805847,
+    "prob_down": 0.4482129216194153,
+    "reason": "Low confidence (55.2% < 60%)"
+  },
+  "XRPUSDT_2h_120m": {
+    "symbol": "XRPUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "signal": "HOLD",
+    "confidence": 0.5670639872550964,
+    "predicted_direction": "UP",
+    "prediction_time": "2026-01-05T00:47:34.127516",
+    "valid_until": "2026-01-05T02:47:34.127527",
+    "current_price": 2.0775,
+    "price_estimate": null,
+    "prob_up": 0.5670639872550964,
+    "prob_down": 0.43293601274490356,
+    "reason": "Low confidence (56.7% < 60%)"
+  },
+  "XRPUSDT_30m_30m": {
+    "symbol": "XRPUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "signal": "HOLD",
+    "confidence": 0.5966935157775879,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:35.211612",
+    "valid_until": "2026-01-05T01:17:35.211623",
+    "current_price": 2.0775,
+    "price_estimate": null,
+    "prob_up": 0.4033065140247345,
+    "prob_down": 0.5966935157775879,
+    "reason": "Low confidence (59.7% < 60%)"
+  },
+  "XRPUSDT_5m_5m": {
+    "symbol": "XRPUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "signal": "HOLD",
+    "confidence": 0.5357984900474548,
+    "predicted_direction": "DOWN",
+    "prediction_time": "2026-01-05T00:47:36.397890",
+    "valid_until": "2026-01-05T00:52:36.397901",
+    "current_price": 2.0775,
+    "price_estimate": null,
+    "prob_up": 0.46420150995254517,
+    "prob_down": 0.5357984900474548,
+    "reason": "Low confidence (53.6% < 60%)"
+  }
+}

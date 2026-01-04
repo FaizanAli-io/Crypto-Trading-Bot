@@ -19,7 +19,6 @@ SUPPORTED_CRYPTOS = {
     "SOL": "SOLUSDT",
     "XRP": "XRPUSDT",
     "LINK": "LINKUSDT",
-    # "USDC": "USDCUSDT",
 }
 
 
