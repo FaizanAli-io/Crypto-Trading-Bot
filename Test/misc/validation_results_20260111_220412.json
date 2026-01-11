@@ -1,0 +1,4772 @@
+[
+  {
+    "symbol": "BNBUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 573,
+    "overall_accuracy": 66.32,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 357,
+        "accuracy": 77.87
+      },
+      "medium_confidence_60_70": {
+        "count": 214,
+        "accuracy": 70.09
+      },
+      "low_confidence_under_60": {
+        "count": 293,
+        "accuracy": 49.49
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 456,
+        "accuracy": 66.89
+      },
+      "down_predictions": {
+        "count": 408,
+        "accuracy": 65.69
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 863.42,
+        "future_price": 863.88,
+        "price_change_pct": 0.053,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6566,
+        "prob_down": 0.3434,
+        "confidence": 0.6566,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 863.88,
+        "future_price": 864.21,
+        "price_change_pct": 0.038,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7231,
+        "prob_down": 0.2769,
+        "confidence": 0.7231,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 864.21,
+        "future_price": 864.32,
+        "price_change_pct": 0.013,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.0945,
+        "prob_down": 0.9055,
+        "confidence": 0.9055,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 864.32,
+        "future_price": 863.29,
+        "price_change_pct": -0.119,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5373,
+        "prob_down": 0.4627,
+        "confidence": 0.5373,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 863.29,
+        "future_price": 863.14,
+        "price_change_pct": -0.017,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6713,
+        "prob_down": 0.3287,
+        "confidence": 0.6713,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 863.14,
+        "future_price": 861.84,
+        "price_change_pct": -0.151,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3268,
+        "prob_down": 0.6732,
+        "confidence": 0.6732,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 861.84,
+        "future_price": 863.49,
+        "price_change_pct": 0.191,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3324,
+        "prob_down": 0.6676,
+        "confidence": 0.6676,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 863.49,
+        "future_price": 864.18,
+        "price_change_pct": 0.08,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5638,
+        "prob_down": 0.4362,
+        "confidence": 0.5638,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 864.18,
+        "future_price": 864.21,
+        "price_change_pct": 0.003,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6365,
+        "prob_down": 0.3635,
+        "confidence": 0.6365,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 864.21,
+        "future_price": 865.13,
+        "price_change_pct": 0.106,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7312,
+        "prob_down": 0.2688,
+        "confidence": 0.7312,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BNBUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 149,
+    "overall_accuracy": 68.98,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 85,
+        "accuracy": 80.0
+      },
+      "medium_confidence_60_70": {
+        "count": 62,
+        "accuracy": 61.29
+      },
+      "low_confidence_under_60": {
+        "count": 69,
+        "accuracy": 62.32
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 130,
+        "accuracy": 67.69
+      },
+      "down_predictions": {
+        "count": 86,
+        "accuracy": 70.93
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 864.32,
+        "future_price": 863.49,
+        "price_change_pct": -0.096,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2297,
+        "prob_down": 0.7703,
+        "confidence": 0.7703,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 863.49,
+        "future_price": 866.0,
+        "price_change_pct": 0.291,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7257,
+        "prob_down": 0.2743,
+        "confidence": 0.7257,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 866.0,
+        "future_price": 864.48,
+        "price_change_pct": -0.176,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5002,
+        "prob_down": 0.4998,
+        "confidence": 0.5002,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 864.48,
+        "future_price": 864.3,
+        "price_change_pct": -0.021,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4611,
+        "prob_down": 0.5389,
+        "confidence": 0.5389,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 864.3,
+        "future_price": 866.35,
+        "price_change_pct": 0.237,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6032,
+        "prob_down": 0.3968,
+        "confidence": 0.6032,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 866.35,
+        "future_price": 872.83,
+        "price_change_pct": 0.748,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7208,
+        "prob_down": 0.2792,
+        "confidence": 0.7208,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 872.83,
+        "future_price": 871.58,
+        "price_change_pct": -0.143,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6626,
+        "prob_down": 0.3374,
+        "confidence": 0.6626,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 871.58,
+        "future_price": 869.16,
+        "price_change_pct": -0.278,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3507,
+        "prob_down": 0.6493,
+        "confidence": 0.6493,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 869.16,
+        "future_price": 863.4,
+        "price_change_pct": -0.663,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4021,
+        "prob_down": 0.5979,
+        "confidence": 0.5979,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 863.4,
+        "future_price": 862.74,
+        "price_change_pct": -0.076,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.8203,
+        "prob_down": 0.1797,
+        "confidence": 0.8203,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "BNBUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 75,
+    "overall_accuracy": 70.09,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 43,
+        "accuracy": 81.4
+      },
+      "medium_confidence_60_70": {
+        "count": 36,
+        "accuracy": 63.89
+      },
+      "low_confidence_under_60": {
+        "count": 28,
+        "accuracy": 60.71
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 67,
+        "accuracy": 71.64
+      },
+      "down_predictions": {
+        "count": 40,
+        "accuracy": 67.5
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 866.0,
+        "future_price": 864.3,
+        "price_change_pct": -0.196,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7167,
+        "prob_down": 0.2833,
+        "confidence": 0.7167,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 864.3,
+        "future_price": 872.83,
+        "price_change_pct": 0.987,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7398,
+        "prob_down": 0.2602,
+        "confidence": 0.7398,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 872.83,
+        "future_price": 869.16,
+        "price_change_pct": -0.42,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5094,
+        "prob_down": 0.4906,
+        "confidence": 0.5094,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 869.16,
+        "future_price": 862.74,
+        "price_change_pct": -0.739,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5111,
+        "prob_down": 0.4889,
+        "confidence": 0.5111,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 862.74,
+        "future_price": 859.52,
+        "price_change_pct": -0.373,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3936,
+        "prob_down": 0.6064,
+        "confidence": 0.6064,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 859.52,
+        "future_price": 860.15,
+        "price_change_pct": 0.073,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4308,
+        "prob_down": 0.5692,
+        "confidence": 0.5692,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 860.15,
+        "future_price": 861.59,
+        "price_change_pct": 0.167,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7433,
+        "prob_down": 0.2567,
+        "confidence": 0.7433,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 861.59,
+        "future_price": 858.71,
+        "price_change_pct": -0.334,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2948,
+        "prob_down": 0.7052,
+        "confidence": 0.7052,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 858.71,
+        "future_price": 859.36,
+        "price_change_pct": 0.076,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8006,
+        "prob_down": 0.1994,
+        "confidence": 0.8006,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 859.36,
+        "future_price": 859.99,
+        "price_change_pct": 0.073,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5207,
+        "prob_down": 0.4793,
+        "confidence": 0.5207,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BNBUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 294,
+    "overall_accuracy": 68.06,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 197,
+        "accuracy": 82.74
+      },
+      "medium_confidence_60_70": {
+        "count": 112,
+        "accuracy": 62.5
+      },
+      "low_confidence_under_60": {
+        "count": 123,
+        "accuracy": 49.59
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 236,
+        "accuracy": 68.22
+      },
+      "down_predictions": {
+        "count": 196,
+        "accuracy": 67.86
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 863.88,
+        "future_price": 864.32,
+        "price_change_pct": 0.051,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7217,
+        "prob_down": 0.2783,
+        "confidence": 0.7217,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 864.32,
+        "future_price": 863.14,
+        "price_change_pct": -0.137,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1544,
+        "prob_down": 0.8456,
+        "confidence": 0.8456,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 863.14,
+        "future_price": 863.49,
+        "price_change_pct": 0.041,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.354,
+        "prob_down": 0.646,
+        "confidence": 0.646,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 863.49,
+        "future_price": 864.21,
+        "price_change_pct": 0.083,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6804,
+        "prob_down": 0.3196,
+        "confidence": 0.6804,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 864.21,
+        "future_price": 866.0,
+        "price_change_pct": 0.207,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.609,
+        "prob_down": 0.391,
+        "confidence": 0.609,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 866.0,
+        "future_price": 866.22,
+        "price_change_pct": 0.025,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6375,
+        "prob_down": 0.3625,
+        "confidence": 0.6375,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 866.22,
+        "future_price": 864.48,
+        "price_change_pct": -0.201,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1746,
+        "prob_down": 0.8254,
+        "confidence": 0.8254,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 864.48,
+        "future_price": 865.21,
+        "price_change_pct": 0.084,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8991,
+        "prob_down": 0.1009,
+        "confidence": 0.8991,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 865.21,
+        "future_price": 864.3,
+        "price_change_pct": -0.105,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5144,
+        "prob_down": 0.4856,
+        "confidence": 0.5144,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 864.3,
+        "future_price": 866.29,
+        "price_change_pct": 0.23,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8145,
+        "prob_down": 0.1855,
+        "confidence": 0.8145,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BNBUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1751,
+    "overall_accuracy": 67.55,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 1043,
+        "accuracy": 81.88
+      },
+      "medium_confidence_60_70": {
+        "count": 640,
+        "accuracy": 66.88
+      },
+      "low_confidence_under_60": {
+        "count": 909,
+        "accuracy": 51.6
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 1372,
+        "accuracy": 67.64
+      },
+      "down_predictions": {
+        "count": 1220,
+        "accuracy": 67.46
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 862.9,
+        "future_price": 863.23,
+        "price_change_pct": 0.038,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6278,
+        "prob_down": 0.3722,
+        "confidence": 0.6278,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 863.23,
+        "future_price": 863.42,
+        "price_change_pct": 0.022,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6696,
+        "prob_down": 0.3304,
+        "confidence": 0.6696,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 863.42,
+        "future_price": 864.11,
+        "price_change_pct": 0.08,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7409,
+        "prob_down": 0.2591,
+        "confidence": 0.7409,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 864.11,
+        "future_price": 864.33,
+        "price_change_pct": 0.025,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6293,
+        "prob_down": 0.3707,
+        "confidence": 0.6293,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 864.33,
+        "future_price": 863.88,
+        "price_change_pct": -0.052,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2314,
+        "prob_down": 0.7686,
+        "confidence": 0.7686,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 863.88,
+        "future_price": 863.61,
+        "price_change_pct": -0.031,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3545,
+        "prob_down": 0.6455,
+        "confidence": 0.6455,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 863.61,
+        "future_price": 864.04,
+        "price_change_pct": 0.05,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4941,
+        "prob_down": 0.5059,
+        "confidence": 0.5059,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 864.04,
+        "future_price": 864.21,
+        "price_change_pct": 0.02,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6699,
+        "prob_down": 0.3301,
+        "confidence": 0.6699,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 864.21,
+        "future_price": 864.3,
+        "price_change_pct": 0.01,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3328,
+        "prob_down": 0.6672,
+        "confidence": 0.6672,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 864.3,
+        "future_price": 864.21,
+        "price_change_pct": -0.01,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.545,
+        "prob_down": 0.455,
+        "confidence": 0.545,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "BTCUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 583,
+    "overall_accuracy": 67.48,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 341,
+        "accuracy": 78.59
+      },
+      "medium_confidence_60_70": {
+        "count": 207,
+        "accuracy": 66.67
+      },
+      "low_confidence_under_60": {
+        "count": 316,
+        "accuracy": 56.01
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 427,
+        "accuracy": 67.21
+      },
+      "down_predictions": {
+        "count": 437,
+        "accuracy": 67.73
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 87786.11,
+        "future_price": 87737.06,
+        "price_change_pct": -0.056,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5911,
+        "prob_down": 0.4089,
+        "confidence": 0.5911,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 87737.06,
+        "future_price": 87644.66,
+        "price_change_pct": -0.105,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3825,
+        "prob_down": 0.6175,
+        "confidence": 0.6175,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 87644.66,
+        "future_price": 87541.85,
+        "price_change_pct": -0.117,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4271,
+        "prob_down": 0.5729,
+        "confidence": 0.5729,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 87541.85,
+        "future_price": 87544.21,
+        "price_change_pct": 0.003,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4977,
+        "prob_down": 0.5023,
+        "confidence": 0.5023,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 87544.21,
+        "future_price": 87496.8,
+        "price_change_pct": -0.054,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.8128,
+        "prob_down": 0.1872,
+        "confidence": 0.8128,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 87496.8,
+        "future_price": 87434.95,
+        "price_change_pct": -0.071,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1905,
+        "prob_down": 0.8095,
+        "confidence": 0.8095,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 87434.95,
+        "future_price": 87662.01,
+        "price_change_pct": 0.26,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6544,
+        "prob_down": 0.3456,
+        "confidence": 0.6544,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 87662.01,
+        "future_price": 87751.89,
+        "price_change_pct": 0.103,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6895,
+        "prob_down": 0.3105,
+        "confidence": 0.6895,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 87751.89,
+        "future_price": 87759.27,
+        "price_change_pct": 0.008,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1007,
+        "prob_down": 0.8993,
+        "confidence": 0.8993,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 87759.27,
+        "future_price": 87825.62,
+        "price_change_pct": 0.076,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5294,
+        "prob_down": 0.4706,
+        "confidence": 0.5294,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BTCUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 143,
+    "overall_accuracy": 66.2,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 98,
+        "accuracy": 82.65
+      },
+      "medium_confidence_60_70": {
+        "count": 53,
+        "accuracy": 52.83
+      },
+      "low_confidence_under_60": {
+        "count": 65,
+        "accuracy": 52.31
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 90,
+        "accuracy": 68.89
+      },
+      "down_predictions": {
+        "count": 126,
+        "accuracy": 64.29
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 87541.85,
+        "future_price": 87662.01,
+        "price_change_pct": 0.137,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4365,
+        "prob_down": 0.5635,
+        "confidence": 0.5635,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 87662.01,
+        "future_price": 87799.97,
+        "price_change_pct": 0.157,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7443,
+        "prob_down": 0.2557,
+        "confidence": 0.7443,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 87799.97,
+        "future_price": 87728.29,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6993,
+        "prob_down": 0.3007,
+        "confidence": 0.6993,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 87728.29,
+        "future_price": 87648.22,
+        "price_change_pct": -0.091,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2821,
+        "prob_down": 0.7179,
+        "confidence": 0.7179,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 87648.22,
+        "future_price": 87809.23,
+        "price_change_pct": 0.184,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8368,
+        "prob_down": 0.1632,
+        "confidence": 0.8368,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 87809.23,
+        "future_price": 87960.0,
+        "price_change_pct": 0.172,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6308,
+        "prob_down": 0.3692,
+        "confidence": 0.6308,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 87960.0,
+        "future_price": 87914.0,
+        "price_change_pct": -0.052,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6846,
+        "prob_down": 0.3154,
+        "confidence": 0.6846,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 87914.0,
+        "future_price": 87846.02,
+        "price_change_pct": -0.077,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2376,
+        "prob_down": 0.7624,
+        "confidence": 0.7624,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 87846.02,
+        "future_price": 87590.4,
+        "price_change_pct": -0.291,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3712,
+        "prob_down": 0.6288,
+        "confidence": 0.6288,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 87590.4,
+        "future_price": 87704.39,
+        "price_change_pct": 0.13,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8495,
+        "prob_down": 0.1505,
+        "confidence": 0.8495,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BTCUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 54,
+    "overall_accuracy": 50.47,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 32,
+        "accuracy": 59.38
+      },
+      "medium_confidence_60_70": {
+        "count": 29,
+        "accuracy": 48.28
+      },
+      "low_confidence_under_60": {
+        "count": 46,
+        "accuracy": 45.65
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 63,
+        "accuracy": 52.38
+      },
+      "down_predictions": {
+        "count": 44,
+        "accuracy": 47.73
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 87799.97,
+        "future_price": 87648.22,
+        "price_change_pct": -0.173,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5439,
+        "prob_down": 0.4561,
+        "confidence": 0.5439,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 87648.22,
+        "future_price": 87960.0,
+        "price_change_pct": 0.356,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5465,
+        "prob_down": 0.4535,
+        "confidence": 0.5465,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 87960.0,
+        "future_price": 87846.02,
+        "price_change_pct": -0.13,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6594,
+        "prob_down": 0.3406,
+        "confidence": 0.6594,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 87846.02,
+        "future_price": 87704.39,
+        "price_change_pct": -0.161,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1534,
+        "prob_down": 0.8466,
+        "confidence": 0.8466,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 87704.39,
+        "future_price": 87631.88,
+        "price_change_pct": -0.083,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.845,
+        "prob_down": 0.155,
+        "confidence": 0.845,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 87631.88,
+        "future_price": 87877.99,
+        "price_change_pct": 0.281,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6017,
+        "prob_down": 0.3983,
+        "confidence": 0.6017,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 87877.99,
+        "future_price": 88024.64,
+        "price_change_pct": 0.167,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7165,
+        "prob_down": 0.2835,
+        "confidence": 0.7165,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 88024.64,
+        "future_price": 87922.64,
+        "price_change_pct": -0.116,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.604,
+        "prob_down": 0.396,
+        "confidence": 0.604,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 87922.64,
+        "future_price": 88032.18,
+        "price_change_pct": 0.125,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7767,
+        "prob_down": 0.2233,
+        "confidence": 0.7767,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 88032.18,
+        "future_price": 88316.37,
+        "price_change_pct": 0.323,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6054,
+        "prob_down": 0.3946,
+        "confidence": 0.6054,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "BTCUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 301,
+    "overall_accuracy": 69.68,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 188,
+        "accuracy": 84.04
+      },
+      "medium_confidence_60_70": {
+        "count": 97,
+        "accuracy": 67.01
+      },
+      "low_confidence_under_60": {
+        "count": 147,
+        "accuracy": 53.06
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 221,
+        "accuracy": 70.59
+      },
+      "down_predictions": {
+        "count": 211,
+        "accuracy": 68.72
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 87737.06,
+        "future_price": 87541.85,
+        "price_change_pct": -0.222,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1387,
+        "prob_down": 0.8613,
+        "confidence": 0.8613,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 87541.85,
+        "future_price": 87496.8,
+        "price_change_pct": -0.051,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3504,
+        "prob_down": 0.6496,
+        "confidence": 0.6496,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 87496.8,
+        "future_price": 87662.01,
+        "price_change_pct": 0.189,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2891,
+        "prob_down": 0.7109,
+        "confidence": 0.7109,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 87662.01,
+        "future_price": 87759.27,
+        "price_change_pct": 0.111,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6792,
+        "prob_down": 0.3208,
+        "confidence": 0.6792,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 87759.27,
+        "future_price": 87799.97,
+        "price_change_pct": 0.046,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7125,
+        "prob_down": 0.2875,
+        "confidence": 0.7125,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 87799.97,
+        "future_price": 87854.51,
+        "price_change_pct": 0.062,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7186,
+        "prob_down": 0.2814,
+        "confidence": 0.7186,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 87854.51,
+        "future_price": 87728.29,
+        "price_change_pct": -0.144,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4876,
+        "prob_down": 0.5124,
+        "confidence": 0.5124,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 87728.29,
+        "future_price": 87675.44,
+        "price_change_pct": -0.06,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.371,
+        "prob_down": 0.629,
+        "confidence": 0.629,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 87675.44,
+        "future_price": 87648.22,
+        "price_change_pct": -0.031,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.8354,
+        "prob_down": 0.1646,
+        "confidence": 0.8354,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 87648.22,
+        "future_price": 87776.18,
+        "price_change_pct": 0.146,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4989,
+        "prob_down": 0.5011,
+        "confidence": 0.5011,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "BTCUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1744,
+    "overall_accuracy": 67.28,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 1084,
+        "accuracy": 81.27
+      },
+      "medium_confidence_60_70": {
+        "count": 608,
+        "accuracy": 64.31
+      },
+      "low_confidence_under_60": {
+        "count": 900,
+        "accuracy": 52.44
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 1272,
+        "accuracy": 68.0
+      },
+      "down_predictions": {
+        "count": 1320,
+        "accuracy": 66.59
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 87792.82,
+        "future_price": 87770.01,
+        "price_change_pct": -0.026,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6236,
+        "prob_down": 0.3764,
+        "confidence": 0.6236,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 87770.01,
+        "future_price": 87786.11,
+        "price_change_pct": 0.018,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8818,
+        "prob_down": 0.1182,
+        "confidence": 0.8818,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 87786.11,
+        "future_price": 87793.41,
+        "price_change_pct": 0.008,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2774,
+        "prob_down": 0.7226,
+        "confidence": 0.7226,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 87793.41,
+        "future_price": 87745.33,
+        "price_change_pct": -0.055,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5041,
+        "prob_down": 0.4959,
+        "confidence": 0.5041,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 87745.33,
+        "future_price": 87737.06,
+        "price_change_pct": -0.009,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3172,
+        "prob_down": 0.6828,
+        "confidence": 0.6828,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 87737.06,
+        "future_price": 87670.03,
+        "price_change_pct": -0.076,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1469,
+        "prob_down": 0.8531,
+        "confidence": 0.8531,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 87670.03,
+        "future_price": 87652.43,
+        "price_change_pct": -0.02,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3424,
+        "prob_down": 0.6576,
+        "confidence": 0.6576,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 87652.43,
+        "future_price": 87644.66,
+        "price_change_pct": -0.009,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.307,
+        "prob_down": 0.693,
+        "confidence": 0.693,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 87644.66,
+        "future_price": 87691.05,
+        "price_change_pct": 0.053,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6945,
+        "prob_down": 0.3055,
+        "confidence": 0.6945,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 87691.05,
+        "future_price": 87644.52,
+        "price_change_pct": -0.053,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5301,
+        "prob_down": 0.4699,
+        "confidence": 0.5301,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "ETHUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 603,
+    "overall_accuracy": 69.79,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 398,
+        "accuracy": 81.41
+      },
+      "medium_confidence_60_70": {
+        "count": 179,
+        "accuracy": 68.72
+      },
+      "low_confidence_under_60": {
+        "count": 287,
+        "accuracy": 54.36
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 473,
+        "accuracy": 67.44
+      },
+      "down_predictions": {
+        "count": 391,
+        "accuracy": 72.63
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 2978.56,
+        "future_price": 2976.84,
+        "price_change_pct": -0.058,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.0993,
+        "prob_down": 0.9007,
+        "confidence": 0.9007,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 2976.84,
+        "future_price": 2973.4,
+        "price_change_pct": -0.116,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2606,
+        "prob_down": 0.7394,
+        "confidence": 0.7394,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 2973.4,
+        "future_price": 2971.15,
+        "price_change_pct": -0.076,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3583,
+        "prob_down": 0.6417,
+        "confidence": 0.6417,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 2971.15,
+        "future_price": 2970.49,
+        "price_change_pct": -0.022,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5015,
+        "prob_down": 0.4985,
+        "confidence": 0.5015,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 2970.49,
+        "future_price": 2971.65,
+        "price_change_pct": 0.039,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8169,
+        "prob_down": 0.1831,
+        "confidence": 0.8169,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 2971.65,
+        "future_price": 2966.3,
+        "price_change_pct": -0.18,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.462,
+        "prob_down": 0.538,
+        "confidence": 0.538,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 2966.3,
+        "future_price": 2975.67,
+        "price_change_pct": 0.316,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.9476,
+        "prob_down": 0.0524,
+        "confidence": 0.9476,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 2975.67,
+        "future_price": 2978.08,
+        "price_change_pct": 0.081,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6541,
+        "prob_down": 0.3459,
+        "confidence": 0.6541,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 2978.08,
+        "future_price": 2980.48,
+        "price_change_pct": 0.081,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1366,
+        "prob_down": 0.8634,
+        "confidence": 0.8634,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 2980.48,
+        "future_price": 2982.84,
+        "price_change_pct": 0.079,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4877,
+        "prob_down": 0.5123,
+        "confidence": 0.5123,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "ETHUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 150,
+    "overall_accuracy": 69.44,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 80,
+        "accuracy": 83.75
+      },
+      "medium_confidence_60_70": {
+        "count": 74,
+        "accuracy": 67.57
+      },
+      "low_confidence_under_60": {
+        "count": 62,
+        "accuracy": 53.23
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 100,
+        "accuracy": 74.0
+      },
+      "down_predictions": {
+        "count": 116,
+        "accuracy": 65.52
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 2971.15,
+        "future_price": 2975.67,
+        "price_change_pct": 0.152,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3591,
+        "prob_down": 0.6409,
+        "confidence": 0.6409,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 2975.67,
+        "future_price": 2982.25,
+        "price_change_pct": 0.221,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6085,
+        "prob_down": 0.3915,
+        "confidence": 0.6085,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 2982.25,
+        "future_price": 2977.14,
+        "price_change_pct": -0.171,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4165,
+        "prob_down": 0.5835,
+        "confidence": 0.5835,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 2977.14,
+        "future_price": 2971.64,
+        "price_change_pct": -0.185,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5133,
+        "prob_down": 0.4867,
+        "confidence": 0.5133,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 2971.64,
+        "future_price": 2979.81,
+        "price_change_pct": 0.275,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8112,
+        "prob_down": 0.1888,
+        "confidence": 0.8112,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 2979.81,
+        "future_price": 2984.32,
+        "price_change_pct": 0.151,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7896,
+        "prob_down": 0.2104,
+        "confidence": 0.7896,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 2984.32,
+        "future_price": 2982.49,
+        "price_change_pct": -0.061,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4665,
+        "prob_down": 0.5335,
+        "confidence": 0.5335,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 2982.49,
+        "future_price": 2980.0,
+        "price_change_pct": -0.083,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5767,
+        "prob_down": 0.4233,
+        "confidence": 0.5767,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 2980.0,
+        "future_price": 2975.35,
+        "price_change_pct": -0.156,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.294,
+        "prob_down": 0.706,
+        "confidence": 0.706,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 2975.35,
+        "future_price": 2981.49,
+        "price_change_pct": 0.206,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.77,
+        "prob_down": 0.23,
+        "confidence": 0.77,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "ETHUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 59,
+    "overall_accuracy": 55.14,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 34,
+        "accuracy": 61.76
+      },
+      "medium_confidence_60_70": {
+        "count": 29,
+        "accuracy": 68.97
+      },
+      "low_confidence_under_60": {
+        "count": 44,
+        "accuracy": 40.91
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 53,
+        "accuracy": 62.26
+      },
+      "down_predictions": {
+        "count": 54,
+        "accuracy": 48.15
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 2982.25,
+        "future_price": 2971.64,
+        "price_change_pct": -0.356,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6679,
+        "prob_down": 0.3321,
+        "confidence": 0.6679,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 2971.64,
+        "future_price": 2984.32,
+        "price_change_pct": 0.427,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6158,
+        "prob_down": 0.3842,
+        "confidence": 0.6158,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 2984.32,
+        "future_price": 2980.0,
+        "price_change_pct": -0.145,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1984,
+        "prob_down": 0.8016,
+        "confidence": 0.8016,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 2980.0,
+        "future_price": 2981.49,
+        "price_change_pct": 0.05,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4779,
+        "prob_down": 0.5221,
+        "confidence": 0.5221,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 2981.49,
+        "future_price": 2978.53,
+        "price_change_pct": -0.099,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.497,
+        "prob_down": 0.503,
+        "confidence": 0.503,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 2978.53,
+        "future_price": 2984.0,
+        "price_change_pct": 0.184,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.483,
+        "prob_down": 0.517,
+        "confidence": 0.517,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 2984.0,
+        "future_price": 2989.69,
+        "price_change_pct": 0.191,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6889,
+        "prob_down": 0.3111,
+        "confidence": 0.6889,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 2989.69,
+        "future_price": 2982.96,
+        "price_change_pct": -0.225,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2658,
+        "prob_down": 0.7342,
+        "confidence": 0.7342,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 2982.96,
+        "future_price": 2989.87,
+        "price_change_pct": 0.232,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4086,
+        "prob_down": 0.5914,
+        "confidence": 0.5914,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 2989.87,
+        "future_price": 2990.44,
+        "price_change_pct": 0.019,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6401,
+        "prob_down": 0.3599,
+        "confidence": 0.6401,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "ETHUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 305,
+    "overall_accuracy": 70.6,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 180,
+        "accuracy": 81.11
+      },
+      "medium_confidence_60_70": {
+        "count": 114,
+        "accuracy": 73.68
+      },
+      "low_confidence_under_60": {
+        "count": 138,
+        "accuracy": 54.35
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 212,
+        "accuracy": 69.34
+      },
+      "down_predictions": {
+        "count": 220,
+        "accuracy": 71.82
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 2976.84,
+        "future_price": 2971.15,
+        "price_change_pct": -0.191,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5245,
+        "prob_down": 0.4755,
+        "confidence": 0.5245,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 2971.15,
+        "future_price": 2971.65,
+        "price_change_pct": 0.017,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4833,
+        "prob_down": 0.5167,
+        "confidence": 0.5167,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 2971.65,
+        "future_price": 2975.67,
+        "price_change_pct": 0.135,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1979,
+        "prob_down": 0.8021,
+        "confidence": 0.8021,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 2975.67,
+        "future_price": 2980.48,
+        "price_change_pct": 0.162,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7856,
+        "prob_down": 0.2144,
+        "confidence": 0.7856,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 2980.48,
+        "future_price": 2982.25,
+        "price_change_pct": 0.059,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6218,
+        "prob_down": 0.3782,
+        "confidence": 0.6218,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 2982.25,
+        "future_price": 2983.71,
+        "price_change_pct": 0.049,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1364,
+        "prob_down": 0.8636,
+        "confidence": 0.8636,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 2983.71,
+        "future_price": 2977.14,
+        "price_change_pct": -0.22,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2903,
+        "prob_down": 0.7097,
+        "confidence": 0.7097,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 2977.14,
+        "future_price": 2975.64,
+        "price_change_pct": -0.05,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3763,
+        "prob_down": 0.6237,
+        "confidence": 0.6237,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 2975.64,
+        "future_price": 2971.64,
+        "price_change_pct": -0.134,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3235,
+        "prob_down": 0.6765,
+        "confidence": 0.6765,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 2971.64,
+        "future_price": 2979.75,
+        "price_change_pct": 0.273,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8957,
+        "prob_down": 0.1043,
+        "confidence": 0.8957,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "ETHUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1783,
+    "overall_accuracy": 68.79,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 1150,
+        "accuracy": 81.74
+      },
+      "medium_confidence_60_70": {
+        "count": 630,
+        "accuracy": 64.29
+      },
+      "low_confidence_under_60": {
+        "count": 812,
+        "accuracy": 53.94
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 1293,
+        "accuracy": 69.84
+      },
+      "down_predictions": {
+        "count": 1299,
+        "accuracy": 67.74
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 2978.11,
+        "future_price": 2978.83,
+        "price_change_pct": 0.024,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6416,
+        "prob_down": 0.3584,
+        "confidence": 0.6416,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 2978.83,
+        "future_price": 2978.56,
+        "price_change_pct": -0.009,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7947,
+        "prob_down": 0.2053,
+        "confidence": 0.7947,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 2978.56,
+        "future_price": 2976.7,
+        "price_change_pct": -0.062,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2822,
+        "prob_down": 0.7178,
+        "confidence": 0.7178,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 2976.7,
+        "future_price": 2976.08,
+        "price_change_pct": -0.021,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3641,
+        "prob_down": 0.6359,
+        "confidence": 0.6359,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 2976.08,
+        "future_price": 2976.84,
+        "price_change_pct": 0.026,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1416,
+        "prob_down": 0.8584,
+        "confidence": 0.8584,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 2976.84,
+        "future_price": 2976.03,
+        "price_change_pct": -0.027,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6782,
+        "prob_down": 0.3218,
+        "confidence": 0.6782,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 2976.03,
+        "future_price": 2974.21,
+        "price_change_pct": -0.061,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4529,
+        "prob_down": 0.5471,
+        "confidence": 0.5471,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 2974.21,
+        "future_price": 2973.4,
+        "price_change_pct": -0.027,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3114,
+        "prob_down": 0.6886,
+        "confidence": 0.6886,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 2973.4,
+        "future_price": 2974.4,
+        "price_change_pct": 0.034,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8364,
+        "prob_down": 0.1636,
+        "confidence": 0.8364,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 2974.4,
+        "future_price": 2972.34,
+        "price_change_pct": -0.069,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4875,
+        "prob_down": 0.5125,
+        "confidence": 0.5125,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "LINKUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 531,
+    "overall_accuracy": 61.46,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 241,
+        "accuracy": 79.25
+      },
+      "medium_confidence_60_70": {
+        "count": 191,
+        "accuracy": 64.4
+      },
+      "low_confidence_under_60": {
+        "count": 432,
+        "accuracy": 50.23
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 342,
+        "accuracy": 58.48
+      },
+      "down_predictions": {
+        "count": 522,
+        "accuracy": 63.41
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 12.29,
+        "future_price": 12.28,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2889,
+        "prob_down": 0.7111,
+        "confidence": 0.7111,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 12.28,
+        "future_price": 12.27,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5078,
+        "prob_down": 0.4922,
+        "confidence": 0.5078,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 12.27,
+        "future_price": 12.24,
+        "price_change_pct": -0.244,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4439,
+        "prob_down": 0.5561,
+        "confidence": 0.5561,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 12.24,
+        "future_price": 12.23,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4589,
+        "prob_down": 0.5411,
+        "confidence": 0.5411,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 12.23,
+        "future_price": 12.24,
+        "price_change_pct": 0.082,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7598,
+        "prob_down": 0.2402,
+        "confidence": 0.7598,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 12.24,
+        "future_price": 12.23,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5601,
+        "prob_down": 0.4399,
+        "confidence": 0.5601,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 12.23,
+        "future_price": 12.27,
+        "price_change_pct": 0.327,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4658,
+        "prob_down": 0.5342,
+        "confidence": 0.5342,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 12.27,
+        "future_price": 12.26,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5053,
+        "prob_down": 0.4947,
+        "confidence": 0.5053,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 12.26,
+        "future_price": 12.28,
+        "price_change_pct": 0.163,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5096,
+        "prob_down": 0.4904,
+        "confidence": 0.5096,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 12.28,
+        "future_price": 12.31,
+        "price_change_pct": 0.244,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4355,
+        "prob_down": 0.5645,
+        "confidence": 0.5645,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "LINKUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 146,
+    "overall_accuracy": 67.59,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 66,
+        "accuracy": 86.36
+      },
+      "medium_confidence_60_70": {
+        "count": 53,
+        "accuracy": 60.38
+      },
+      "low_confidence_under_60": {
+        "count": 97,
+        "accuracy": 58.76
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 119,
+        "accuracy": 63.87
+      },
+      "down_predictions": {
+        "count": 97,
+        "accuracy": 72.16
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 12.24,
+        "future_price": 12.27,
+        "price_change_pct": 0.245,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5066,
+        "prob_down": 0.4934,
+        "confidence": 0.5066,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 12.27,
+        "future_price": 12.3,
+        "price_change_pct": 0.244,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5047,
+        "prob_down": 0.4953,
+        "confidence": 0.5047,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 12.3,
+        "future_price": 12.24,
+        "price_change_pct": -0.488,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1787,
+        "prob_down": 0.8213,
+        "confidence": 0.8213,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 12.24,
+        "future_price": 12.21,
+        "price_change_pct": -0.245,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3982,
+        "prob_down": 0.6018,
+        "confidence": 0.6018,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 12.21,
+        "future_price": 12.24,
+        "price_change_pct": 0.246,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5447,
+        "prob_down": 0.4553,
+        "confidence": 0.5447,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 12.24,
+        "future_price": 12.25,
+        "price_change_pct": 0.082,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.637,
+        "prob_down": 0.363,
+        "confidence": 0.637,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 12.25,
+        "future_price": 12.24,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.612,
+        "prob_down": 0.388,
+        "confidence": 0.612,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 12.24,
+        "future_price": 12.23,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5978,
+        "prob_down": 0.4022,
+        "confidence": 0.5978,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 12.23,
+        "future_price": 12.17,
+        "price_change_pct": -0.491,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5387,
+        "prob_down": 0.4613,
+        "confidence": 0.5387,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 12.17,
+        "future_price": 12.26,
+        "price_change_pct": 0.74,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8483,
+        "prob_down": 0.1517,
+        "confidence": 0.8483,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "LINKUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 61,
+    "overall_accuracy": 57.01,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 35,
+        "accuracy": 71.43
+      },
+      "medium_confidence_60_70": {
+        "count": 30,
+        "accuracy": 50.0
+      },
+      "low_confidence_under_60": {
+        "count": 42,
+        "accuracy": 50.0
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 57,
+        "accuracy": 63.16
+      },
+      "down_predictions": {
+        "count": 50,
+        "accuracy": 50.0
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 12.3,
+        "future_price": 12.21,
+        "price_change_pct": -0.732,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2767,
+        "prob_down": 0.7233,
+        "confidence": 0.7233,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 12.21,
+        "future_price": 12.25,
+        "price_change_pct": 0.328,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5579,
+        "prob_down": 0.4421,
+        "confidence": 0.5579,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 12.25,
+        "future_price": 12.23,
+        "price_change_pct": -0.163,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6205,
+        "prob_down": 0.3795,
+        "confidence": 0.6205,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 12.23,
+        "future_price": 12.26,
+        "price_change_pct": 0.245,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6056,
+        "prob_down": 0.3944,
+        "confidence": 0.6056,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 12.26,
+        "future_price": 12.19,
+        "price_change_pct": -0.571,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6144,
+        "prob_down": 0.3856,
+        "confidence": 0.6144,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 12.19,
+        "future_price": 12.26,
+        "price_change_pct": 0.574,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5461,
+        "prob_down": 0.4539,
+        "confidence": 0.5461,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 12.26,
+        "future_price": 12.3,
+        "price_change_pct": 0.326,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2459,
+        "prob_down": 0.7541,
+        "confidence": 0.7541,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 12.3,
+        "future_price": 12.29,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5318,
+        "prob_down": 0.4682,
+        "confidence": 0.5318,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 12.29,
+        "future_price": 12.39,
+        "price_change_pct": 0.814,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3849,
+        "prob_down": 0.6151,
+        "confidence": 0.6151,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 12.39,
+        "future_price": 12.44,
+        "price_change_pct": 0.404,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6794,
+        "prob_down": 0.3206,
+        "confidence": 0.6794,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "LINKUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 287,
+    "overall_accuracy": 66.44,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 154,
+        "accuracy": 83.12
+      },
+      "medium_confidence_60_70": {
+        "count": 70,
+        "accuracy": 71.43
+      },
+      "low_confidence_under_60": {
+        "count": 208,
+        "accuracy": 52.4
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 198,
+        "accuracy": 66.16
+      },
+      "down_predictions": {
+        "count": 234,
+        "accuracy": 66.67
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 12.28,
+        "future_price": 12.24,
+        "price_change_pct": -0.326,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.174,
+        "prob_down": 0.826,
+        "confidence": 0.826,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 12.24,
+        "future_price": 12.24,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.409,
+        "prob_down": 0.591,
+        "confidence": 0.591,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 12.24,
+        "future_price": 12.27,
+        "price_change_pct": 0.245,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.792,
+        "prob_down": 0.208,
+        "confidence": 0.792,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 12.27,
+        "future_price": 12.28,
+        "price_change_pct": 0.081,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5079,
+        "prob_down": 0.4921,
+        "confidence": 0.5079,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 12.28,
+        "future_price": 12.3,
+        "price_change_pct": 0.163,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3587,
+        "prob_down": 0.6413,
+        "confidence": 0.6413,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 12.3,
+        "future_price": 12.29,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1184,
+        "prob_down": 0.8816,
+        "confidence": 0.8816,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 12.29,
+        "future_price": 12.24,
+        "price_change_pct": -0.407,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3813,
+        "prob_down": 0.6187,
+        "confidence": 0.6187,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 12.24,
+        "future_price": 12.23,
+        "price_change_pct": -0.082,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4639,
+        "prob_down": 0.5361,
+        "confidence": 0.5361,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 12.23,
+        "future_price": 12.21,
+        "price_change_pct": -0.164,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4693,
+        "prob_down": 0.5307,
+        "confidence": 0.5307,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 12.21,
+        "future_price": 12.26,
+        "price_change_pct": 0.41,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4394,
+        "prob_down": 0.5606,
+        "confidence": 0.5606,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "LINKUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1698,
+    "overall_accuracy": 65.51,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 663,
+        "accuracy": 82.96
+      },
+      "medium_confidence_60_70": {
+        "count": 590,
+        "accuracy": 64.75
+      },
+      "low_confidence_under_60": {
+        "count": 1339,
+        "accuracy": 57.21
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 905,
+        "accuracy": 59.45
+      },
+      "down_predictions": {
+        "count": 1687,
+        "accuracy": 68.76
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 12.28,
+        "future_price": 12.28,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4364,
+        "prob_down": 0.5636,
+        "confidence": 0.5636,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 12.28,
+        "future_price": 12.29,
+        "price_change_pct": 0.081,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4691,
+        "prob_down": 0.5309,
+        "confidence": 0.5309,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 12.29,
+        "future_price": 12.29,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6059,
+        "prob_down": 0.3941,
+        "confidence": 0.6059,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 12.29,
+        "future_price": 12.26,
+        "price_change_pct": -0.244,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4582,
+        "prob_down": 0.5418,
+        "confidence": 0.5418,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 12.26,
+        "future_price": 12.28,
+        "price_change_pct": 0.163,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4248,
+        "prob_down": 0.5752,
+        "confidence": 0.5752,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 12.28,
+        "future_price": 12.28,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5352,
+        "prob_down": 0.4648,
+        "confidence": 0.5352,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 12.28,
+        "future_price": 12.28,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6175,
+        "prob_down": 0.3825,
+        "confidence": 0.6175,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 12.28,
+        "future_price": 12.27,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1732,
+        "prob_down": 0.8268,
+        "confidence": 0.8268,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 12.27,
+        "future_price": 12.27,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2234,
+        "prob_down": 0.7766,
+        "confidence": 0.7766,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 12.27,
+        "future_price": 12.26,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4075,
+        "prob_down": 0.5925,
+        "confidence": 0.5925,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "SOLUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 602,
+    "overall_accuracy": 69.68,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 358,
+        "accuracy": 83.24
+      },
+      "medium_confidence_60_70": {
+        "count": 208,
+        "accuracy": 62.98
+      },
+      "low_confidence_under_60": {
+        "count": 298,
+        "accuracy": 58.05
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 435,
+        "accuracy": 69.89
+      },
+      "down_predictions": {
+        "count": 429,
+        "accuracy": 69.46
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 125.04,
+        "future_price": 124.93,
+        "price_change_pct": -0.088,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5419,
+        "prob_down": 0.4581,
+        "confidence": 0.5419,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 124.93,
+        "future_price": 124.63,
+        "price_change_pct": -0.24,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5402,
+        "prob_down": 0.4598,
+        "confidence": 0.5402,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 124.63,
+        "future_price": 124.39,
+        "price_change_pct": -0.193,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4945,
+        "prob_down": 0.5055,
+        "confidence": 0.5055,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 124.39,
+        "future_price": 124.2,
+        "price_change_pct": -0.153,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4614,
+        "prob_down": 0.5386,
+        "confidence": 0.5386,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 124.2,
+        "future_price": 124.39,
+        "price_change_pct": 0.153,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4527,
+        "prob_down": 0.5473,
+        "confidence": 0.5473,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 124.39,
+        "future_price": 123.75,
+        "price_change_pct": -0.515,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4724,
+        "prob_down": 0.5276,
+        "confidence": 0.5276,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 123.75,
+        "future_price": 124.19,
+        "price_change_pct": 0.356,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7659,
+        "prob_down": 0.2341,
+        "confidence": 0.7659,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 124.19,
+        "future_price": 124.18,
+        "price_change_pct": -0.008,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4797,
+        "prob_down": 0.5203,
+        "confidence": 0.5203,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 124.18,
+        "future_price": 124.09,
+        "price_change_pct": -0.072,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.239,
+        "prob_down": 0.761,
+        "confidence": 0.761,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 124.09,
+        "future_price": 124.19,
+        "price_change_pct": 0.081,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3172,
+        "prob_down": 0.6828,
+        "confidence": 0.6828,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "SOLUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 138,
+    "overall_accuracy": 63.89,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 93,
+        "accuracy": 76.34
+      },
+      "medium_confidence_60_70": {
+        "count": 60,
+        "accuracy": 55.0
+      },
+      "low_confidence_under_60": {
+        "count": 63,
+        "accuracy": 53.97
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 115,
+        "accuracy": 65.22
+      },
+      "down_predictions": {
+        "count": 101,
+        "accuracy": 62.38
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 124.39,
+        "future_price": 124.19,
+        "price_change_pct": -0.161,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3321,
+        "prob_down": 0.6679,
+        "confidence": 0.6679,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 124.19,
+        "future_price": 124.46,
+        "price_change_pct": 0.217,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6683,
+        "prob_down": 0.3317,
+        "confidence": 0.6683,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 124.46,
+        "future_price": 124.86,
+        "price_change_pct": 0.321,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6764,
+        "prob_down": 0.3236,
+        "confidence": 0.6764,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 124.86,
+        "future_price": 124.65,
+        "price_change_pct": -0.168,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2116,
+        "prob_down": 0.7884,
+        "confidence": 0.7884,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 124.65,
+        "future_price": 125.15,
+        "price_change_pct": 0.401,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5825,
+        "prob_down": 0.4175,
+        "confidence": 0.5825,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 125.15,
+        "future_price": 124.99,
+        "price_change_pct": -0.128,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7007,
+        "prob_down": 0.2993,
+        "confidence": 0.7007,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 124.99,
+        "future_price": 125.18,
+        "price_change_pct": 0.152,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.264,
+        "prob_down": 0.736,
+        "confidence": 0.736,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 125.18,
+        "future_price": 125.21,
+        "price_change_pct": 0.024,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7162,
+        "prob_down": 0.2838,
+        "confidence": 0.7162,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 125.21,
+        "future_price": 124.96,
+        "price_change_pct": -0.2,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2767,
+        "prob_down": 0.7233,
+        "confidence": 0.7233,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 124.96,
+        "future_price": 125.3,
+        "price_change_pct": 0.272,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7803,
+        "prob_down": 0.2197,
+        "confidence": 0.7803,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "SOLUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 65,
+    "overall_accuracy": 60.75,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 40,
+        "accuracy": 72.5
+      },
+      "medium_confidence_60_70": {
+        "count": 34,
+        "accuracy": 50.0
+      },
+      "low_confidence_under_60": {
+        "count": 33,
+        "accuracy": 57.58
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 64,
+        "accuracy": 67.19
+      },
+      "down_predictions": {
+        "count": 43,
+        "accuracy": 51.16
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 124.46,
+        "future_price": 124.65,
+        "price_change_pct": 0.153,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3816,
+        "prob_down": 0.6184,
+        "confidence": 0.6184,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 124.65,
+        "future_price": 124.99,
+        "price_change_pct": 0.273,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5259,
+        "prob_down": 0.4741,
+        "confidence": 0.5259,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 124.99,
+        "future_price": 125.21,
+        "price_change_pct": 0.176,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.279,
+        "prob_down": 0.721,
+        "confidence": 0.721,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 125.21,
+        "future_price": 125.3,
+        "price_change_pct": 0.072,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5383,
+        "prob_down": 0.4617,
+        "confidence": 0.5383,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 125.3,
+        "future_price": 124.24,
+        "price_change_pct": -0.846,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5491,
+        "prob_down": 0.4509,
+        "confidence": 0.5491,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 124.24,
+        "future_price": 125.05,
+        "price_change_pct": 0.652,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3891,
+        "prob_down": 0.6109,
+        "confidence": 0.6109,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 125.05,
+        "future_price": 125.22,
+        "price_change_pct": 0.136,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7199,
+        "prob_down": 0.2801,
+        "confidence": 0.7199,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 125.22,
+        "future_price": 124.73,
+        "price_change_pct": -0.391,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4124,
+        "prob_down": 0.5876,
+        "confidence": 0.5876,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 124.73,
+        "future_price": 124.96,
+        "price_change_pct": 0.184,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.457,
+        "prob_down": 0.543,
+        "confidence": 0.543,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 124.96,
+        "future_price": 125.2,
+        "price_change_pct": 0.192,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2359,
+        "prob_down": 0.7641,
+        "confidence": 0.7641,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "SOLUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 292,
+    "overall_accuracy": 67.59,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 196,
+        "accuracy": 82.65
+      },
+      "medium_confidence_60_70": {
+        "count": 114,
+        "accuracy": 63.16
+      },
+      "low_confidence_under_60": {
+        "count": 122,
+        "accuracy": 47.54
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 234,
+        "accuracy": 66.67
+      },
+      "down_predictions": {
+        "count": 198,
+        "accuracy": 68.69
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 124.93,
+        "future_price": 124.39,
+        "price_change_pct": -0.432,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5212,
+        "prob_down": 0.4788,
+        "confidence": 0.5212,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 124.39,
+        "future_price": 124.39,
+        "price_change_pct": 0.0,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5921,
+        "prob_down": 0.4079,
+        "confidence": 0.5921,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 124.39,
+        "future_price": 124.19,
+        "price_change_pct": -0.161,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3949,
+        "prob_down": 0.6051,
+        "confidence": 0.6051,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 124.19,
+        "future_price": 124.09,
+        "price_change_pct": -0.081,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7709,
+        "prob_down": 0.2291,
+        "confidence": 0.7709,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 124.09,
+        "future_price": 124.46,
+        "price_change_pct": 0.298,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5495,
+        "prob_down": 0.4505,
+        "confidence": 0.5495,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 124.46,
+        "future_price": 125.12,
+        "price_change_pct": 0.53,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6138,
+        "prob_down": 0.3862,
+        "confidence": 0.6138,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 125.12,
+        "future_price": 124.86,
+        "price_change_pct": -0.208,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1809,
+        "prob_down": 0.8191,
+        "confidence": 0.8191,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 124.86,
+        "future_price": 124.93,
+        "price_change_pct": 0.056,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5667,
+        "prob_down": 0.4333,
+        "confidence": 0.5667,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 124.93,
+        "future_price": 124.65,
+        "price_change_pct": -0.224,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5058,
+        "prob_down": 0.4942,
+        "confidence": 0.5058,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 124.65,
+        "future_price": 125.16,
+        "price_change_pct": 0.409,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4077,
+        "prob_down": 0.5923,
+        "confidence": 0.5923,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "SOLUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1757,
+    "overall_accuracy": 67.79,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 1140,
+        "accuracy": 80.18
+      },
+      "medium_confidence_60_70": {
+        "count": 683,
+        "accuracy": 65.15
+      },
+      "low_confidence_under_60": {
+        "count": 769,
+        "accuracy": 51.76
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 1302,
+        "accuracy": 66.74
+      },
+      "down_predictions": {
+        "count": 1290,
+        "accuracy": 68.84
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 125.01,
+        "future_price": 125.14,
+        "price_change_pct": 0.104,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6324,
+        "prob_down": 0.3676,
+        "confidence": 0.6324,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 125.14,
+        "future_price": 125.04,
+        "price_change_pct": -0.08,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5431,
+        "prob_down": 0.4569,
+        "confidence": 0.5431,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 125.04,
+        "future_price": 125.02,
+        "price_change_pct": -0.016,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.245,
+        "prob_down": 0.755,
+        "confidence": 0.755,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 125.02,
+        "future_price": 124.98,
+        "price_change_pct": -0.032,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2651,
+        "prob_down": 0.7349,
+        "confidence": 0.7349,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 124.98,
+        "future_price": 124.93,
+        "price_change_pct": -0.04,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1606,
+        "prob_down": 0.8394,
+        "confidence": 0.8394,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 124.93,
+        "future_price": 124.8,
+        "price_change_pct": -0.104,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7512,
+        "prob_down": 0.2488,
+        "confidence": 0.7512,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 124.8,
+        "future_price": 124.74,
+        "price_change_pct": -0.048,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.5169,
+        "prob_down": 0.4831,
+        "confidence": 0.5169,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 124.74,
+        "future_price": 124.63,
+        "price_change_pct": -0.088,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3051,
+        "prob_down": 0.6949,
+        "confidence": 0.6949,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 124.63,
+        "future_price": 124.6,
+        "price_change_pct": -0.024,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2727,
+        "prob_down": 0.7273,
+        "confidence": 0.7273,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 124.6,
+        "future_price": 124.52,
+        "price_change_pct": -0.064,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3716,
+        "prob_down": 0.6284,
+        "confidence": 0.6284,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "XRPUSDT",
+    "interval": "15m",
+    "horizon_minutes": 15,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 864,
+    "correct_predictions": 604,
+    "overall_accuracy": 69.91,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 359,
+        "accuracy": 83.01
+      },
+      "medium_confidence_60_70": {
+        "count": 206,
+        "accuracy": 66.02
+      },
+      "low_confidence_under_60": {
+        "count": 299,
+        "accuracy": 56.86
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 417,
+        "accuracy": 72.66
+      },
+      "down_predictions": {
+        "count": 447,
+        "accuracy": 67.34
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 1.84,
+        "future_price": 1.83,
+        "price_change_pct": -0.376,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1743,
+        "prob_down": 0.8257,
+        "confidence": 0.8257,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.104,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3574,
+        "prob_down": 0.6426,
+        "confidence": 0.6426,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.027,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8957,
+        "prob_down": 0.1043,
+        "confidence": 0.8957,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 1.83,
+        "future_price": 1.82,
+        "price_change_pct": -0.629,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1634,
+        "prob_down": 0.8366,
+        "confidence": 0.8366,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 1.82,
+        "future_price": 1.82,
+        "price_change_pct": 0.088,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3422,
+        "prob_down": 0.6578,
+        "confidence": 0.6578,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:15:00",
+        "current_price": 1.82,
+        "future_price": 1.82,
+        "price_change_pct": 0.077,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.601,
+        "prob_down": 0.399,
+        "confidence": 0.601,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 1.82,
+        "future_price": 1.83,
+        "price_change_pct": 0.544,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7184,
+        "prob_down": 0.2816,
+        "confidence": 0.7184,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:45:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.175,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1473,
+        "prob_down": 0.8527,
+        "confidence": 0.8527,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.022,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.445,
+        "prob_down": 0.555,
+        "confidence": 0.555,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T02:15:00",
+        "current_price": 1.83,
+        "future_price": 1.84,
+        "price_change_pct": 0.453,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5968,
+        "prob_down": 0.4032,
+        "confidence": 0.5968,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "XRPUSDT",
+    "interval": "1h",
+    "horizon_minutes": 60,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 216,
+    "correct_predictions": 148,
+    "overall_accuracy": 68.52,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 82,
+        "accuracy": 79.27
+      },
+      "medium_confidence_60_70": {
+        "count": 59,
+        "accuracy": 64.41
+      },
+      "low_confidence_under_60": {
+        "count": 75,
+        "accuracy": 60.0
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 121,
+        "accuracy": 71.9
+      },
+      "down_predictions": {
+        "count": 95,
+        "accuracy": 64.21
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.077,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.389,
+        "prob_down": 0.611,
+        "confidence": 0.611,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 1.83,
+        "future_price": 1.84,
+        "price_change_pct": 0.623,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5614,
+        "prob_down": 0.4386,
+        "confidence": 0.5614,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.016,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6537,
+        "prob_down": 0.3463,
+        "confidence": 0.6537,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": 0.06,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2051,
+        "prob_down": 0.7949,
+        "confidence": 0.7949,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 1.84,
+        "future_price": 1.85,
+        "price_change_pct": 0.179,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.615,
+        "prob_down": 0.385,
+        "confidence": 0.615,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 1.85,
+        "future_price": 1.84,
+        "price_change_pct": -0.222,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2077,
+        "prob_down": 0.7923,
+        "confidence": 0.7923,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T06:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.087,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4675,
+        "prob_down": 0.5325,
+        "confidence": 0.5325,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 1.84,
+        "future_price": 1.83,
+        "price_change_pct": -0.293,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3927,
+        "prob_down": 0.6073,
+        "confidence": 0.6073,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T08:00:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.202,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.3886,
+        "prob_down": 0.6114,
+        "confidence": 0.6114,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 1.83,
+        "future_price": 1.84,
+        "price_change_pct": 0.77,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7926,
+        "prob_down": 0.2074,
+        "confidence": 0.7926,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "XRPUSDT",
+    "interval": "2h",
+    "horizon_minutes": 120,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 107,
+    "correct_predictions": 73,
+    "overall_accuracy": 68.22,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 41,
+        "accuracy": 75.61
+      },
+      "medium_confidence_60_70": {
+        "count": 30,
+        "accuracy": 60.0
+      },
+      "low_confidence_under_60": {
+        "count": 36,
+        "accuracy": 66.67
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 65,
+        "accuracy": 70.77
+      },
+      "down_predictions": {
+        "count": 42,
+        "accuracy": 64.29
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": 0.043,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5048,
+        "prob_down": 0.4952,
+        "confidence": 0.5048,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.043,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7262,
+        "prob_down": 0.2738,
+        "confidence": 0.7262,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T05:00:00",
+        "current_price": 1.84,
+        "future_price": 1.83,
+        "price_change_pct": -0.38,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2992,
+        "prob_down": 0.7008,
+        "confidence": 0.7008,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T07:00:00",
+        "current_price": 1.83,
+        "future_price": 1.84,
+        "price_change_pct": 0.567,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5551,
+        "prob_down": 0.4449,
+        "confidence": 0.5551,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T09:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.141,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4239,
+        "prob_down": 0.5761,
+        "confidence": 0.5761,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T11:00:00",
+        "current_price": 1.84,
+        "future_price": 1.85,
+        "price_change_pct": 0.543,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5443,
+        "prob_down": 0.4557,
+        "confidence": 0.5443,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T13:00:00",
+        "current_price": 1.85,
+        "future_price": 1.86,
+        "price_change_pct": 0.167,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6152,
+        "prob_down": 0.3848,
+        "confidence": 0.6152,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T15:00:00",
+        "current_price": 1.86,
+        "future_price": 1.86,
+        "price_change_pct": 0.156,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6061,
+        "prob_down": 0.3939,
+        "confidence": 0.6061,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T17:00:00",
+        "current_price": 1.86,
+        "future_price": 1.86,
+        "price_change_pct": 0.242,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6999,
+        "prob_down": 0.3001,
+        "confidence": 0.6999,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T19:00:00",
+        "current_price": 1.86,
+        "future_price": 1.87,
+        "price_change_pct": 0.327,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6957,
+        "prob_down": 0.3043,
+        "confidence": 0.6957,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "symbol": "XRPUSDT",
+    "interval": "30m",
+    "horizon_minutes": 30,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 432,
+    "correct_predictions": 296,
+    "overall_accuracy": 68.52,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 182,
+        "accuracy": 80.22
+      },
+      "medium_confidence_60_70": {
+        "count": 109,
+        "accuracy": 65.14
+      },
+      "low_confidence_under_60": {
+        "count": 141,
+        "accuracy": 56.03
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 213,
+        "accuracy": 70.89
+      },
+      "down_predictions": {
+        "count": 219,
+        "accuracy": 66.21
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.076,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.421,
+        "prob_down": 0.579,
+        "confidence": 0.579,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 1.83,
+        "future_price": 1.82,
+        "price_change_pct": -0.541,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.406,
+        "prob_down": 0.594,
+        "confidence": 0.594,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:00:00",
+        "current_price": 1.82,
+        "future_price": 1.83,
+        "price_change_pct": 0.621,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8607,
+        "prob_down": 0.1393,
+        "confidence": 0.8607,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T01:30:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.197,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.6639,
+        "prob_down": 0.3361,
+        "confidence": 0.6639,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:00:00",
+        "current_price": 1.83,
+        "future_price": 1.84,
+        "price_change_pct": 0.425,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5848,
+        "prob_down": 0.4152,
+        "confidence": 0.5848,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T02:30:00",
+        "current_price": 1.84,
+        "future_price": 1.85,
+        "price_change_pct": 0.206,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.67,
+        "prob_down": 0.33,
+        "confidence": 0.67,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:00:00",
+        "current_price": 1.85,
+        "future_price": 1.84,
+        "price_change_pct": -0.222,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.1855,
+        "prob_down": 0.8145,
+        "confidence": 0.8145,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T03:30:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": 0.119,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7023,
+        "prob_down": 0.2977,
+        "confidence": 0.7023,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.06,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4182,
+        "prob_down": 0.5818,
+        "confidence": 0.5818,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T04:30:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": 0.098,
+        "actual_direction": "UP",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2804,
+        "prob_down": 0.7196,
+        "confidence": 0.7196,
+        "correct": false
+      }
+    ]
+  },
+  {
+    "symbol": "XRPUSDT",
+    "interval": "5m",
+    "horizon_minutes": 5,
+    "validation_period": {
+      "start": "2026-01-01T00:00:00",
+      "end": "2026-01-10T00:00:00",
+      "days": 9
+    },
+    "total_predictions": 2592,
+    "correct_predictions": 1793,
+    "overall_accuracy": 69.17,
+    "accuracy_by_confidence": {
+      "high_confidence_70plus": {
+        "count": 1113,
+        "accuracy": 82.75
+      },
+      "medium_confidence_60_70": {
+        "count": 663,
+        "accuracy": 65.31
+      },
+      "low_confidence_under_60": {
+        "count": 816,
+        "accuracy": 53.8
+      }
+    },
+    "accuracy_by_direction": {
+      "up_predictions": {
+        "count": 1271,
+        "accuracy": 70.34
+      },
+      "down_predictions": {
+        "count": 1321,
+        "accuracy": 68.05
+      }
+    },
+    "sample_predictions": [
+      {
+        "timestamp": "2026-01-01T00:00:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.033,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6654,
+        "prob_down": 0.3346,
+        "confidence": 0.6654,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:05:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": 0.011,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.8193,
+        "prob_down": 0.1807,
+        "confidence": 0.8193,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:10:00",
+        "current_price": 1.84,
+        "future_price": 1.84,
+        "price_change_pct": -0.027,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.2082,
+        "prob_down": 0.7918,
+        "confidence": 0.7918,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:15:00",
+        "current_price": 1.84,
+        "future_price": 1.83,
+        "price_change_pct": -0.174,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.357,
+        "prob_down": 0.643,
+        "confidence": 0.643,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:20:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.175,
+        "actual_direction": "DOWN",
+        "predicted_direction": "DOWN",
+        "prob_up": 0.4595,
+        "prob_down": 0.5405,
+        "confidence": 0.5405,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:25:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.055,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.6646,
+        "prob_down": 0.3354,
+        "confidence": 0.6646,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:30:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.016,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.5118,
+        "prob_down": 0.4882,
+        "confidence": 0.5118,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:35:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": -0.066,
+        "actual_direction": "DOWN",
+        "predicted_direction": "UP",
+        "prob_up": 0.7264,
+        "prob_down": 0.2736,
+        "confidence": 0.7264,
+        "correct": false
+      },
+      {
+        "timestamp": "2026-01-01T00:40:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.115,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.846,
+        "prob_down": 0.154,
+        "confidence": 0.846,
+        "correct": true
+      },
+      {
+        "timestamp": "2026-01-01T00:45:00",
+        "current_price": 1.83,
+        "future_price": 1.83,
+        "price_change_pct": 0.049,
+        "actual_direction": "UP",
+        "predicted_direction": "UP",
+        "prob_up": 0.7272,
+        "prob_down": 0.2728,
+        "confidence": 0.7272,
+        "correct": true
+      }
+    ]
+  }
+]

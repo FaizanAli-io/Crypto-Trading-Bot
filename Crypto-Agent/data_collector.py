@@ -5,8 +5,8 @@ Enhanced with ongoing candle data
 
 import os
 import pandas as pd
-from binance.client import Client
 from pathlib import Path
+from binance.client import Client
 from datetime import datetime, timedelta
 
 from loguru import logger

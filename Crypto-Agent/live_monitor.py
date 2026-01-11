@@ -7,13 +7,12 @@ Displays only high-confidence signals in a clean format
 
 import sys
 import time
+from loguru import logger
 from datetime import datetime
 
-from xg_predict import SignalPredictor
+from xg_predict_simple import SignalPredictor
 
-from loguru import logger
-
-MIN_CONFIDENCE = 0.80
+MIN_CONFIDENCE = 0.50
 NEXT_SCAN_INTERVAL = 30
 
 
@@ -148,8 +147,14 @@ class LiveMonitor:
                 print(f"📡 SCAN #{iteration} - {now}")
                 print(f"{'=' * 60}")
 
+                now = time.time()
+                print("Starting scan...")
+
                 # Scan all models
                 signals = self.scan_all_models()
+                elapsed = time.time() - now
+
+                print(f"Scan completed in {elapsed:.2f} seconds")
 
                 # Display results
                 self.print_signals(signals)
