@@ -3,13 +3,15 @@ Train XGBoost Model with All Technical Indicators + OHLC
 File: train_feature_model.py
 """
 
+import json
 import joblib
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from pathlib import Path
-from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+
 from xgboost import XGBClassifier
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import (
@@ -51,12 +53,14 @@ class FeatureModelTrainer:
         self.xg_models_dir = self.model_root / "xg_models"
         self.features_dir = self.model_root / "features"
         self.scalars_dir = self.model_root / "scalars"
+        self.meta_dir = self.model_root / "metadata"
 
         for path in [
             self.model_root,
             self.xg_models_dir,
             self.features_dir,
             self.scalars_dir,
+            self.meta_dir,
         ]:
             path.mkdir(parents=True, exist_ok=True)
 
@@ -379,10 +383,8 @@ class FeatureModelTrainer:
             "scaler_path": str(scaler_path),
         }
 
-        import json
-
         metadata_path = (
-            self.model_root
+            self.meta_dir
             / f"metadata_{smc_prefix}{symbol}_{self.interval}_{self.horizon_minutes}min_{timestamp}.json"
         )
         with open(metadata_path, "w") as f:

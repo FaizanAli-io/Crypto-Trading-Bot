@@ -24,31 +24,95 @@ class FeatureEngineer:
         ENHANCED with day trading features
         """
         try:
+            initial_len = len(df)
+            logger.info(f"FeatureEng: Starting with {initial_len} rows")
+
             df = df.copy()
 
             # Original features
             df = self._add_basic_features(df)
+            logger.info(
+                f"FeatureEng: After basic: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_moving_averages(df)
+            logger.info(
+                f"FeatureEng: After MA: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_rsi(df)
+            logger.info(
+                f"FeatureEng: After RSI: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_macd(df)
+            logger.info(
+                f"FeatureEng: After MACD: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_bollinger_bands(df)
+            logger.info(
+                f"FeatureEng: After BB: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_atr(df)
+            logger.info(
+                f"FeatureEng: After ATR: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
             df = self._add_volume_features(df)
+            logger.info(
+                f"FeatureEng: After volume: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
 
             # NEW: Enhanced day trading features
             df = self._add_momentum_indicators(df)
-            df = self._add_volatility_indicators(df)
-            df = self._add_trend_strength(df)
-            df = self._add_support_resistance(df)
-            df = self._add_market_structure(df)
-            df = self._calculate_composite_score(df)
-
-            # Drop NaN values
-            df = df.dropna()
-
             logger.info(
-                f"Added {len(df.columns)} features (including day trading indicators)"
+                f"FeatureEng: After momentum: {len(df)} rows, NaN: {df.isna().sum().sum()}"
             )
+
+            df = self._add_volatility_indicators(df)
+            logger.info(
+                f"FeatureEng: After volatility: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
+            df = self._add_trend_strength(df)
+            logger.info(
+                f"FeatureEng: After trend: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
+            df = self._add_support_resistance(df)
+            logger.info(
+                f"FeatureEng: After SR: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
+            df = self._add_market_structure(df)
+            logger.info(
+                f"FeatureEng: After market: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
+            df = self._calculate_composite_score(df)
+            logger.info(
+                f"FeatureEng: After composite: {len(df)} rows, NaN: {df.isna().sum().sum()}"
+            )
+
+            # Smart NaN handling: forward fill then backward fill, then fill remaining with 0
+            logger.info(
+                f"FeatureEng: Before NaN handling: {len(df)} rows, NaN count: {df.isna().sum().sum()}"
+            )
+            df = df.ffill().bfill().fillna(0)
+            logger.info(
+                f"FeatureEng: After NaN handling: {len(df)} rows, NaN count: {df.isna().sum().sum()}"
+            )
+
+            # CRITICAL: Replace any inf values that might have been created
+            df = df.replace([np.inf, -np.inf], 0)
+            logger.info(f"FeatureEng: After inf handling: {len(df)} rows")
+
+            # Only drop rows if they're completely empty (all NaN) - this should rarely happen
+            df = df.dropna(how="all")
+            logger.info(f"FeatureEng: After dropna(how='all'): {len(df)} rows")
+
             return df
 
         except Exception as e:
@@ -59,7 +123,7 @@ class FeatureEngineer:
 
     def _add_basic_features(self, df):
         """Add basic price-derived features"""
-        df["returns"] = df["close"].pct_change()
+        df["returns"] = df["close"].pct_change(fill_method=None)
         df["log_returns"] = np.log(df["close"] / df["close"].shift(1))
         df["price_change"] = df["close"] - df["open"]
         df["price_change_pct"] = (df["close"] - df["open"]) / df["open"] * 100
@@ -148,7 +212,7 @@ class FeatureEngineer:
 
     def _add_volume_features(self, df):
         """Add volume-based features"""
-        df["volume_change"] = df["volume"].pct_change()
+        df["volume_change"] = df["volume"].pct_change(fill_method=None)
         df["volume_ma_20"] = df["volume"].rolling(window=20).mean()
         df["volume_ratio"] = df["volume"] / df["volume_ma_20"]
         df["pv_trend"] = df["returns"] * df["volume"]
@@ -159,16 +223,16 @@ class FeatureEngineer:
     def _add_momentum_indicators(self, df):
         """Add momentum-based indicators critical for day trading"""
         # Rate of Change (ROC)
-        df["roc_3h"] = df["close"].pct_change(3) * 100
-        df["roc_6h"] = df["close"].pct_change(6) * 100
-        df["roc_12h"] = df["close"].pct_change(12) * 100
+        df["roc_3h"] = df["close"].pct_change(3, fill_method=None) * 100
+        df["roc_6h"] = df["close"].pct_change(6, fill_method=None) * 100
+        df["roc_12h"] = df["close"].pct_change(12, fill_method=None) * 100
 
         # Price acceleration (2nd derivative)
         df["price_acceleration"] = df["close"].diff().diff()
 
         # Volume-weighted momentum
         df["volume_momentum"] = (
-            (df["volume"] * df["close"].pct_change()).rolling(6).sum()
+            (df["volume"] * df["close"].pct_change(fill_method=None)).rolling(6).sum()
         )
 
         # Relative Volume (current vs average)
@@ -184,9 +248,15 @@ class FeatureEngineer:
         df["low_close"] = abs(df["low"] - df["close"].shift(1))
 
         # Volatility regimes
-        df["volatility_3h"] = df["close"].pct_change().rolling(3).std() * 100
-        df["volatility_6h"] = df["close"].pct_change().rolling(6).std() * 100
-        df["volatility_24h"] = df["close"].pct_change().rolling(24).std() * 100
+        df["volatility_3h"] = (
+            df["close"].pct_change(fill_method=None).rolling(3).std() * 100
+        )
+        df["volatility_6h"] = (
+            df["close"].pct_change(fill_method=None).rolling(6).std() * 100
+        )
+        df["volatility_24h"] = (
+            df["close"].pct_change(fill_method=None).rolling(24).std() * 100
+        )
 
         # Volatility ratio (current vs historical)
         df["volatility_ratio"] = df["volatility_6h"] / df["volatility_24h"]

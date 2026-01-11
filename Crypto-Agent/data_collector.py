@@ -6,9 +6,11 @@ Enhanced with ongoing candle data
 import os
 import pandas as pd
 from binance.client import Client
+from pathlib import Path
 from datetime import datetime, timedelta
 
 from loguru import logger
+from persistent_cache import CandleCache
 
 
 class DataCollector:
@@ -26,6 +28,13 @@ class DataCollector:
             else:
                 self.client = Client()  # Public client
                 logger.warning("Using public Binance client (no API keys)")
+
+        # Persistent cache (SQLite) for historical candles
+        try:
+            cache_path = Path("cache") / "candles.db"
+            self.cache = CandleCache(cache_path)
+        except Exception:
+            self.cache = None
 
     def _interval_to_hours(self, interval):
         """Convert interval string to hours"""
@@ -205,11 +214,11 @@ class DataCollector:
                     last_timestamp = klines[-1][0]
                     current_start = last_timestamp + interval_ms
 
-                    logger.info(
-                        f"Batch {batch_count}: Fetched {len(klines)} candles | "
-                        f"Total: {len(all_klines):,} | "
-                        f"Last: {datetime.fromtimestamp(last_timestamp/1000).strftime('%Y-%m-%d %H:%M')}"
-                    )
+                    # logger.info(
+                    #     f"Batch {batch_count}: Fetched {len(klines)} candles | "
+                    #     f"Total: {len(all_klines):,} | "
+                    #     f"Last: {datetime.fromtimestamp(last_timestamp/1000).strftime('%Y-%m-%d %H:%M')}"
+                    # )
 
                     # Rate limiting - avoid hitting Binance API limits
                     if batch_count % 3 == 0:
@@ -231,11 +240,11 @@ class DataCollector:
             # Filter to exact date range (in case we got extra data)
             df = df[(df.index >= begin_date) & (df.index <= end_date)]
 
-            logger.info(f"✅ Successfully collected {len(df):,} candles for {symbol}")
-            logger.info(f"   Date range: {df.index[0]} to {df.index[-1]}")
-            logger.info(
-                f"   Price range: ${df['close'].min():.2f} - ${df['close'].max():.2f}"
-            )
+            # logger.info(f"✅ Successfully collected {len(df):,} candles for {symbol}")
+            # logger.info(f"   Date range: {df.index[0]} to {df.index[-1]}")
+            # logger.info(
+            #     f"   Price range: ${df['close'].min():.2f} - ${df['close'].max():.2f}"
+            # )
 
             return df
 
@@ -285,117 +294,162 @@ class DataCollector:
             total_minutes = days * 24 * 60
             limit = total_minutes // interval_minutes
 
-            logger.info(
-                f"Fetching {days} days of {interval} candles for {symbol} (total: {limit} candles)"
-            )
+            # logger.info(
+            #     f"Fetching {days} days of {interval} candles for {symbol} (total: {limit} candles)"
+            # )
 
-            # If limit <= 1000, use simple single request
-            if limit <= 1000:
-                klines = self.client.get_klines(
-                    symbol=symbol, interval=interval, limit=limit
-                )
-                df = self._klines_to_dataframe(klines)
+            # First try persistent cache for last N candles
+            df = None
+            if self.cache:
+                rows = self.cache.get_last_candles(symbol, interval, limit)
+                if rows and len(rows) >= min(limit, 10):  # require some baseline
+                    import pandas as pd
 
-            # If limit > 1000, use batch fetching
-            else:
-                logger.info(f"Limit > 1000, using batch fetching...")
-                all_klines = []
-                remaining = limit
-                batch_count = 0
+                    df = pd.DataFrame(
+                        rows,
+                        columns=[
+                            "timestamp_ms",
+                            "open",
+                            "high",
+                            "low",
+                            "close",
+                            "volume",
+                        ],
+                    )
+                    # Convert ms -> localized timestamp to match existing behavior
+                    from datetime import datetime as dt
 
-                # Calculate interval duration in milliseconds
-                interval_map = {
-                    "1m": 60 * 1000,
-                    "3m": 3 * 60 * 1000,
-                    "5m": 5 * 60 * 1000,
-                    "15m": 15 * 60 * 1000,
-                    "30m": 30 * 60 * 1000,
-                    "1h": 60 * 60 * 1000,
-                    "2h": 2 * 60 * 60 * 1000,
-                    "4h": 4 * 60 * 60 * 1000,
-                    "6h": 6 * 60 * 60 * 1000,
-                    "8h": 8 * 60 * 60 * 1000,
-                    "12h": 12 * 60 * 60 * 1000,
-                    "1d": 24 * 60 * 60 * 1000,
-                    "3d": 3 * 24 * 60 * 60 * 1000,
-                    "1w": 7 * 24 * 60 * 60 * 1000,
-                }
+                    local_tz = dt.now().astimezone().tzinfo
+                    ts = (
+                        pd.to_datetime(df["timestamp_ms"], unit="ms", utc=True)
+                        .dt.tz_convert(local_tz)
+                        .dt.tz_localize(None)
+                    )
+                    df = pd.DataFrame(
+                        {
+                            "open": df["open"].astype(float),
+                            "high": df["high"].astype(float),
+                            "low": df["low"].astype(float),
+                            "close": df["close"].astype(float),
+                            "volume": df["volume"].astype(float),
+                        },
+                        index=ts,
+                    )
 
-                interval_ms = interval_map.get(
-                    interval, 60 * 60 * 1000
-                )  # Default to 1h
+            # If cache missing or incomplete, fetch from Binance
+            if df is None or len(df) < limit:
+                if limit <= 1000:
+                    klines = self.client.get_klines(
+                        symbol=symbol, interval=interval, limit=limit
+                    )
+                    df = self._klines_to_dataframe(klines)
+                    # Persist to cache
+                    if self.cache and klines:
+                        try:
+                            self.cache.upsert_klines(symbol, interval, klines)
+                        except Exception:
+                            pass
 
-                # Get current timestamp
-                current_time = int(datetime.now().timestamp() * 1000)
+                # If limit > 1000, use batch fetching
+                elif limit > 1000:
+                    # logger.info(f"Limit > 1000, using batch fetching...")
+                    all_klines = []
+                    remaining = limit
+                    batch_count = 0
 
-                # Calculate start timestamp (go backward from now)
-                start_time = current_time - (limit * interval_ms)
+                    # Calculate interval duration in milliseconds
+                    interval_map = {
+                        "1m": 60 * 1000,
+                        "3m": 3 * 60 * 1000,
+                        "5m": 5 * 60 * 1000,
+                        "15m": 15 * 60 * 1000,
+                        "30m": 30 * 60 * 1000,
+                        "1h": 60 * 60 * 1000,
+                        "2h": 2 * 60 * 60 * 1000,
+                        "4h": 4 * 60 * 60 * 1000,
+                        "6h": 6 * 60 * 60 * 1000,
+                        "8h": 8 * 60 * 60 * 1000,
+                        "12h": 12 * 60 * 60 * 1000,
+                        "1d": 24 * 60 * 60 * 1000,
+                        "3d": 3 * 24 * 60 * 60 * 1000,
+                        "1w": 7 * 24 * 60 * 60 * 1000,
+                    }
 
-                # Fetch in batches
-                current_end = current_time
+                    interval_ms = interval_map.get(
+                        interval, 60 * 60 * 1000
+                    )  # Default to 1h
 
-                while remaining > 0:
-                    batch_count += 1
-                    batch_limit = min(remaining, 1000)
+                    # Get current timestamp
+                    current_time = int(datetime.now().timestamp() * 1000)
 
-                    # Calculate start time for this batch
-                    batch_start = current_end - (batch_limit * interval_ms)
+                    # Calculate start timestamp (go backward from now)
+                    start_time = current_time - (limit * interval_ms)
 
-                    try:
-                        klines = self.client.get_klines(
-                            symbol=symbol,
-                            interval=interval,
-                            startTime=batch_start,
-                            endTime=current_end,
-                            limit=batch_limit,
-                        )
+                    # Fetch in batches
+                    current_end = current_time
 
-                        if not klines:
-                            logger.warning(
-                                f"No more data available at batch {batch_count}"
+                    while remaining > 0:
+                        batch_count += 1
+                        batch_limit = min(remaining, 1000)
+
+                        # Calculate start time for this batch
+                        batch_start = current_end - (batch_limit * interval_ms)
+
+                        try:
+                            klines = self.client.get_klines(
+                                symbol=symbol,
+                                interval=interval,
+                                startTime=batch_start,
+                                endTime=current_end,
+                                limit=batch_limit,
                             )
+
+                            if not klines:
+                                logger.warning(
+                                    f"No more data available at batch {batch_count}"
+                                )
+                                break
+
+                            # Insert at beginning (we're going backward in time)
+                            all_klines = klines + all_klines
+
+                            remaining -= len(klines)
+
+                            # Update end time for next batch (earliest timestamp from this batch)
+                            current_end = klines[0][0] - interval_ms
+
+                            # If we got fewer candles than requested, we've hit the data limit
+                            if len(klines) < batch_limit:
+                                logger.warning(
+                                    f"Reached data limit, got {len(klines)} < {batch_limit}"
+                                )
+                                break
+
+                            # Rate limiting
+                            if batch_count % 3 == 0:
+                                import time
+
+                                time.sleep(0.5)
+
+                        except Exception as e:
+                            logger.error(f"Error in batch {batch_count}: {e}")
                             break
 
-                        # Insert at beginning (we're going backward in time)
-                        all_klines = klines + all_klines
+                    if not all_klines:
+                        raise ValueError(f"No data retrieved for {symbol}")
 
-                        remaining -= len(klines)
+                    df = self._klines_to_dataframe(all_klines)
+                    # Persist to cache
+                    if self.cache and all_klines:
+                        try:
+                            self.cache.upsert_klines(symbol, interval, all_klines)
+                        except Exception:
+                            pass
 
-                        # Update end time for next batch (earliest timestamp from this batch)
-                        current_end = klines[0][0] - interval_ms
+                    # Keep only the requested number of most recent candles
+                    df = df.tail(limit)
 
-                        logger.info(
-                            f"Batch {batch_count}: Fetched {len(klines)} candles | "
-                            f"Remaining: {remaining} | "
-                            f"Total: {len(all_klines)}"
-                        )
-
-                        # If we got fewer candles than requested, we've hit the data limit
-                        if len(klines) < batch_limit:
-                            logger.warning(
-                                f"Reached data limit, got {len(klines)} < {batch_limit}"
-                            )
-                            break
-
-                        # Rate limiting
-                        if batch_count % 3 == 0:
-                            import time
-
-                            time.sleep(0.5)
-
-                    except Exception as e:
-                        logger.error(f"Error in batch {batch_count}: {e}")
-                        break
-
-                if not all_klines:
-                    raise ValueError(f"No data retrieved for {symbol}")
-
-                df = self._klines_to_dataframe(all_klines)
-
-                # Keep only the requested number of most recent candles
-                df = df.tail(limit)
-
-                logger.info(f"Fetched {len(df)} candles across {batch_count} batches")
+                # logger.info(f"Fetched {len(df)} candles across {batch_count} batches")
 
             # Add ongoing candle if requested
             if include_ongoing:
@@ -405,12 +459,27 @@ class DataCollector:
                     if ongoing_candle.index[0] not in df.index:
                         # Append ongoing candle
                         df = pd.concat([df, ongoing_candle])
-                        logger.info(
-                            f"Added ongoing candle at {ongoing_candle.index[0]}"
-                        )
+                        # Persist ongoing candle into cache with ms timestamp
+                        if self.cache:
+                            try:
+                                ts_ms = int(ongoing_candle.index[0].timestamp() * 1000)
+                                candle = {
+                                    "timestamp_ms": ts_ms,
+                                    "open": float(ongoing_candle.iloc[0]["open"]),
+                                    "high": float(ongoing_candle.iloc[0]["high"]),
+                                    "low": float(ongoing_candle.iloc[0]["low"]),
+                                    "close": float(ongoing_candle.iloc[0]["close"]),
+                                    "volume": float(ongoing_candle.iloc[0]["volume"]),
+                                }
+                                self.cache.upsert_candles(symbol, interval, [candle])
+                            except Exception:
+                                pass
+                        # logger.info(
+                        #     f"Added ongoing candle at {ongoing_candle.index[0]}"
+                        # )
 
-            logger.info(f"✅ Collected {len(df)} data points for {symbol}")
-            logger.info(f"   Date range: {df.index[0]} to {df.index[-1]}")
+            # logger.info(f"✅ Collected {len(df)} data points for {symbol}")
+            # logger.info(f"   Date range: {df.index[0]} to {df.index[-1]}")
 
             return df
 

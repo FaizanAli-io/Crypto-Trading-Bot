@@ -11,8 +11,8 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
-import "./Dashboard.css";
 import io from "socket.io-client";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const [cryptos, setCryptos] = useState([]);
@@ -29,57 +29,83 @@ const Dashboard = () => {
   const [showWalletDialog, setShowWalletDialog] = useState(false);
   const [showPriceDialog, setShowPriceDialog] = useState(false);
   const [showPredictionDialog, setShowPredictionDialog] = useState(false);
-  const [refreshInterval, setRefreshInterval] = useState(60);
   const [range, setRange] = useState("1h");
-  const [isStreaming, setIsStreaming] = useState(false);
-  const streamRef = useRef(null);
-  const socketRef = useRef(null);
   const [wsConnected, setWsConnected] = useState(false);
+  const socketRef = useRef(null);
 
   const API_BASE_URL = "http://localhost:5000/api";
   const WS_URL = "http://localhost:5000";
 
-  const fetchAllData = async () => {
-    try {
-      setLoading(true);
+  // Initialize WebSocket connection
+  useEffect(() => {
+    const socket = io(WS_URL, {
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: Infinity,
+      transports: ["websocket", "polling"]
+    });
 
-      // Fetch cryptos list
-      const cryptosRes = await fetch(`${API_BASE_URL}/cryptos`);
-      const cryptosData = await cryptosRes.json();
-      if (cryptosData.success) {
-        setCryptos(cryptosData.data);
-        if (!selectedCrypto && cryptosData.data.length > 0) {
-          setSelectedCrypto(cryptosData.data[0].symbol);
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
+      setWsConnected(true);
+      console.log("✅ WebSocket connected");
+    });
+
+    socket.on("disconnect", () => {
+      setWsConnected(false);
+      console.log("❌ WebSocket disconnected");
+    });
+
+    // Receive initial data on connect
+    socket.on("initial_data", (data) => {
+      if (data.prices) setPrices(data.prices);
+      if (data.predictions) setPredictions(data.predictions);
+      setLoading(false);
+    });
+
+    // Real-time price updates
+    socket.on("prices_update", (data) => {
+      if (data.prices) setPrices(data.prices);
+    });
+
+    // Real-time prediction updates
+    socket.on("predictions_update", (data) => {
+      if (data.predictions) {
+        setPredictions(data.predictions);
+        setPredictionsTimestamp(new Date());
+      }
+    });
+
+    // Fetch cryptos and wallet (use REST for these)
+    const fetchInitialData = async () => {
+      try {
+        const cryptosRes = await fetch(`${API_BASE_URL}/cryptos`);
+        const cryptosData = await cryptosRes.json();
+        if (cryptosData.success) {
+          setCryptos(cryptosData.data);
+          if (!selectedCrypto && cryptosData.data.length > 0) {
+            setSelectedCrypto(cryptosData.data[0].symbol);
+          }
         }
-      }
 
-      // Fetch prices (fallback if websocket not connected)
-      const pricesRes = await fetch(`${API_BASE_URL}/prices`);
-      const pricesData = await pricesRes.json();
-      if (pricesData.success) {
-        setPrices(pricesData.prices || pricesData.data || {});
+        const walletRes = await fetch(`${API_BASE_URL}/wallet`);
+        const walletData = await walletRes.json();
+        if (walletData.success) {
+          setWallet(walletData.data);
+        }
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
       }
+    };
 
-      // Fetch wallet
-      const walletRes = await fetch(`${API_BASE_URL}/wallet`);
-      const walletData = await walletRes.json();
-      if (walletData.success) {
-        setWallet(walletData.data);
-      }
+    fetchInitialData();
 
-      // Fetch predictions
-      const predictionsRes = await fetch(`${API_BASE_URL}/predictions`);
-      const predictionsData = await predictionsRes.json();
-      if (predictionsData.success) {
-        setPredictions(predictionsData.data);
-      }
-
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    }
-  };
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const runPredictions = async () => {
     setPredictionsLoading(true);
@@ -102,76 +128,36 @@ const Dashboard = () => {
     }
   };
 
-  // Polling (disabled when streaming is active)
-  useEffect(() => {
-    fetchAllData();
-    if (isStreaming) return undefined;
-    const interval = setInterval(fetchAllData, refreshInterval * 1000);
-    return () => clearInterval(interval);
-  }, [refreshInterval, isStreaming]);
-  // Sync streaming indicator with WebSocket status
-  useEffect(() => {
-    setIsStreaming(wsConnected);
-  }, [wsConnected]);
+  const formatPrice = (price) => {
+    if (!price && price !== 0) return "N/A";
+    if (price > 1000) return `$${(price / 1000).toFixed(2)}k`;
+    return `$${price.toFixed(4)}`;
+  };
 
-  // Minimal WebSocket client for real-time predictions (keeps old UI intact)
-  useEffect(() => {
-    try {
-      const socket = io(WS_URL, {
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
-        reconnectionAttempts: Infinity,
-        transports: ["polling"],
-        upgrade: false
-      });
-      socketRef.current = socket;
+  const formatChange = (change) => {
+    const symbol = change >= 0 ? "+" : "";
+    const className = change >= 0 ? "positive" : "negative";
+    return (
+      <span className={className}>
+        {symbol}
+        {change.toFixed(2)}%
+      </span>
+    );
+  };
 
-      socket.on("connect", () => {
-        console.log("✅ Socket.IO connected");
-        setWsConnected(true);
-        setIsStreaming(true);
-        // Request latest prices & predictions on connect
-        socket.emit("request_prices");
-        // Request latest predictions on connect
-        socket.emit("request_predictions");
-      });
+  const formatPercent = (value) => {
+    if (!value && value !== 0) return "N/A";
+    return `${(value * 100).toFixed(1)}%`;
+  };
 
-      socket.on("disconnect", () => {
-        console.log("❌ Socket.IO disconnected");
-        setWsConnected(false);
-        setIsStreaming(false);
-      });
-      socket.on("prices_update", (data) => {
-        if (data?.prices) {
-          setPrices(data.prices);
-        }
-      });
-
-      socket.on("predictions_update", (data) => {
-        console.log("📊 Received predictions_update:", data);
-        if (data?.predictions) {
-          setPredictions(data.predictions);
-          setPredictionsTimestamp(new Date());
-        }
-      });
-
-      // Also handle initial data if provided
-      socket.on("initial_data", (data) => {
-        console.log("📦 Received initial_data:", data);
-        if (data?.predictions) {
-          setPredictions(data.predictions);
-          setPredictionsTimestamp(new Date());
-        }
-      });
-
-      return () => {
-        socket.disconnect();
-      };
-    } catch (err) {
-      // Fail silently to preserve old UI
-    }
-  }, []);
+  const timeDisplay = useMemo(() => {
+    if (!predictionsTimestamp) return "Never";
+    const now = new Date();
+    const diff = Math.floor((now - predictionsTimestamp) / 1000);
+    if (diff < 60) return `${diff}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    return `${Math.floor(diff / 3600)}h ago`;
+  }, [predictionsTimestamp]);
 
   const filteredHistory = useMemo(() => {
     if (!selectedCrypto || !prices[selectedCrypto]) return [];
@@ -180,260 +166,148 @@ const Dashboard = () => {
 
     const now = new Date();
     const rangeMinutes =
-      {
-        "15m": 15,
-        "1h": 60,
-        "6h": 360,
-        "24h": 1440
-      }[range] || 60;
+      { "15m": 15, "1h": 60, "6h": 360, "24h": 1440 }[range] || 60;
+    const cutoff = now.getTime() - rangeMinutes * 60 * 1000;
 
-    const sliced = history.filter((item) => {
-      const ts = new Date(item.timestamp);
-      const diffMinutes = (now - ts) / (1000 * 60);
-      return diffMinutes <= rangeMinutes;
-    });
-
-    // Fallback: if not enough points (e.g., backend only has 1h), use whatever is available
-    if (sliced.length < 5) return history;
-    return sliced;
-  }, [prices, selectedCrypto, range]);
+    return history
+      .filter((candle) => new Date(candle.timestamp).getTime() >= cutoff)
+      .map((candle) => ({
+        ...candle,
+        timestamp: new Date(candle.timestamp).getTime()
+      }));
+  }, [selectedCrypto, prices, range]);
 
   const yDomain = useMemo(() => {
-    if (!filteredHistory.length) return ["auto", "auto"];
-    const highs = filteredHistory.map((h) => h.high ?? h.close);
-    const lows = filteredHistory.map((h) => h.low ?? h.close);
-    const max = Math.max(...highs);
-    const min = Math.min(...lows);
-    const pad = (max - min) * 0.02 || max * 0.01 || 1;
-    return [min - pad, max + pad];
+    if (filteredHistory.length === 0) return ["dataMin", "dataMax"];
+    const closes = filteredHistory.map((h) => h.close);
+    const min = Math.min(...closes);
+    const max = Math.max(...closes);
+    const padding = (max - min) * 0.1;
+    return [min - padding, max + padding];
   }, [filteredHistory]);
-
-  const getPredictionSignal = (symbol) => {
-    const symbolPreds = Object.entries(predictions)
-      .filter(([key]) => key.includes(symbol))
-      .map(([, value]) => value);
-
-    if (symbolPreds.length === 0) return null;
-
-    // Aggregate predictions
-    const buySignals = symbolPreds.filter((p) => p.signal === "BUY").length;
-    const sellSignals = symbolPreds.filter((p) => p.signal === "SELL").length;
-
-    if (buySignals > sellSignals) {
-      return { signal: "BUY", confidence: buySignals };
-    } else if (sellSignals > buySignals) {
-      return { signal: "SELL", confidence: sellSignals };
-    }
-    return { signal: "HOLD", confidence: 0 };
-  };
-
-  const formatPrice = (price) => {
-    if (price === undefined || price === null) return "N/A";
-    return `$${Number(price).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 4
-    })}`;
-  };
-
-  const formatChange = (change) => {
-    if (change === undefined || change === null) return "N/A";
-    return `${change > 0 ? "+" : ""}${change.toFixed(2)}%`;
-  };
-
-  const formatPercent = (value) => {
-    if (value === undefined || value === null) return "N/A";
-    return `${(Number(value) * 100).toFixed(1)}%`;
-  };
-
-  const getTimeSinceUpdate = () => {
-    if (!predictionsTimestamp) return "Never";
-    const now = new Date();
-    const diff = Math.floor((now - predictionsTimestamp) / 1000);
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    return `${Math.floor(diff / 3600)}h ago`;
-  };
-
-  const [timeDisplay, setTimeDisplay] = useState("Never");
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeDisplay(getTimeSinceUpdate());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [predictionsTimestamp]);
 
   const filteredPredictions = useMemo(() => {
     const list = Object.values(predictions || {});
-    const parseTime = (t) => {
-      try {
-        return t ? new Date(t).getTime() : 0;
-      } catch {
-        return 0;
-      }
-    };
-    return (
-      list
-        .filter((p) => Number(p.confidence ?? 0) >= predictionThreshold)
-        .filter(
-          (p) =>
-            !predictionsCryptoFilter || p.symbol === predictionsCryptoFilter
-        )
-        // Sort by most recent prediction_time descending
-        .sort(
-          (a, b) => parseTime(b.prediction_time) - parseTime(a.prediction_time)
-        )
-    );
+    return list
+      .filter((p) => Number(p.confidence ?? 0) >= predictionThreshold)
+      .filter(
+        (p) => !predictionsCryptoFilter || p.symbol === predictionsCryptoFilter
+      )
+      .sort((a, b) => Number(b.confidence ?? 0) - Number(a.confidence ?? 0));
   }, [predictions, predictionThreshold, predictionsCryptoFilter]);
 
   if (loading) {
     return (
-      <div className="dashboard loading">
-        <div className="loader">Loading Dashboard...</div>
+      <div className="dashboard">
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Loading dashboard...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="dashboard">
-      {/* Header */}
       <header className="dashboard-header">
-        <div className="header-content">
-          <h1>📊 Crypto Trading Dashboard</h1>
-          <div className="header-controls">
-            {isStreaming ? (
-              <div
-                className="live-indicator"
-                title="Live via server-sent events"
-              >
-                ● Live stream active
-              </div>
-            ) : (
-              <label>
-                Auto-refresh:
-                <select
-                  value={refreshInterval}
-                  onChange={(e) => setRefreshInterval(Number(e.target.value))}
-                >
-                  <option value={30}>30s</option>
-                  <option value={60}>1m</option>
-                  <option value={300}>5m</option>
-                </select>
-              </label>
-            )}
-            <button className="btn-primary" onClick={fetchAllData}>
-              ↻ Refresh now
-            </button>
-            <button
-              className="btn-wallet"
-              onClick={() => setShowWalletDialog(true)}
-            >
-              💰 Wallet ({wallet?.asset_count || 0} assets)
-            </button>
-          </div>
+        <h1>⚡ Crypto Trading Bot</h1>
+        <div className="header-status">
+          <span
+            className={`ws-status ${
+              wsConnected ? "connected" : "disconnected"
+            }`}
+          >
+            {wsConnected ? "🟢 Live" : "🔴 Offline"}
+          </span>
         </div>
       </header>
 
-      {/* Main Grid */}
       <div className="dashboard-grid">
-        {/* Crypto Cards */}
-        <div className="crypto-section">
-          <h2>Market Overview</h2>
-          <div className="crypto-grid">
+        {/* Price Cards */}
+        <section className="section">
+          <h2>Market Prices</h2>
+          <div className="price-cards">
             {cryptos.map((crypto) => {
-              const priceData = prices[crypto.symbol];
-              const prediction = getPredictionSignal(crypto.symbol);
-
-              if (!priceData || priceData.error) {
-                return (
-                  <div key={crypto.symbol} className="crypto-card error">
-                    <div className="crypto-header">
-                      <h3>{crypto.symbol}</h3>
-                    </div>
-                    <p className="error-message">Data unavailable</p>
-                  </div>
-                );
-              }
-
+              const p = prices[crypto.symbol];
+              if (!p) return null;
               return (
-                <div key={crypto.symbol} className="crypto-card">
-                  <div className="crypto-header">
-                    <h3>{crypto.symbol}</h3>
-                    <span
-                      className={`badge ${
-                        priceData["24h_change"] >= 0 ? "up" : "down"
-                      }`}
-                    >
-                      {formatChange(priceData["24h_change"])}
-                    </span>
-                  </div>
-
-                  <div className="crypto-price">
-                    <div className="price-value">
-                      {formatPrice(priceData.current_price)}
-                    </div>
-                    <div className="price-range">
-                      <small>H: {formatPrice(priceData["24h_high"])}</small>
-                      <small>L: {formatPrice(priceData["24h_low"])}</small>
-                    </div>
-                  </div>
-
-                  <div className="prediction-signal">
-                    {prediction && (
-                      <button
-                        className={`signal ${prediction.signal.toLowerCase()}`}
-                        onClick={() => {
-                          setPredictionsCryptoFilter(crypto.symbol);
-                          setShowPredictionDialog(true);
-                        }}
-                      >
-                        <strong>{prediction.signal}</strong>
-                      </button>
-                    )}
-                  </div>
-
-                  <button
-                    className="btn-details"
-                    onClick={() => {
-                      setSelectedCrypto(crypto.symbol);
-                      setShowPriceDialog(true);
-                    }}
+                <div
+                  key={crypto.symbol}
+                  className="price-card"
+                  onClick={() => {
+                    setSelectedCrypto(crypto.symbol);
+                    setShowPriceDialog(true);
+                  }}
+                >
+                  <h3>{crypto.symbol}</h3>
+                  <div className="price">{formatPrice(p.current_price)}</div>
+                  <div
+                    className={p["24h_change"] >= 0 ? "positive" : "negative"}
                   >
-                    View Chart
-                  </button>
+                    {p["24h_change"] >= 0 ? "↑" : "↓"}{" "}
+                    {Math.abs(p["24h_change"]).toFixed(2)}%
+                  </div>
                 </div>
               );
             })}
           </div>
-        </div>
+        </section>
 
-        {/* Portfolio Summary */}
+        {/* Wallet Summary */}
         {wallet && (
-          <div className="portfolio-section">
-            <h2>Portfolio Summary</h2>
-            <div className="portfolio-stats">
+          <section className="section">
+            <h2>Wallet Summary</h2>
+            <div
+              className="wallet-summary-card"
+              onClick={() => setShowWalletDialog(true)}
+            >
               <div className="stat">
                 <label>Total Value</label>
-                <div className="stat-value">
+                <div className="value">
                   ${wallet.total_value_usdt.toLocaleString()}
                 </div>
               </div>
               <div className="stat">
                 <label>Assets</label>
-                <div className="stat-value">{wallet.asset_count}</div>
+                <div className="value">{wallet.asset_count}</div>
               </div>
             </div>
-            <button
-              className="btn-primary"
-              onClick={() => setShowWalletDialog(true)}
-            >
-              View Detailed Wallet
-            </button>
-          </div>
+          </section>
         )}
+
+        {/* Predictions Summary */}
+        <section className="section">
+          <h2>AI Predictions</h2>
+          <div className="predictions-summary">
+            <div className="stat-box buy">
+              <span className="count">
+                {filteredPredictions.filter((p) => p.signal === "BUY").length}
+              </span>
+              <span>Buy Signals</span>
+            </div>
+            <div className="stat-box sell">
+              <span className="count">
+                {filteredPredictions.filter((p) => p.signal === "SELL").length}
+              </span>
+              <span>Sell Signals</span>
+            </div>
+            <div className="stat-box hold">
+              <span className="count">
+                {filteredPredictions.filter((p) => p.signal === "HOLD").length}
+              </span>
+              <span>Hold Signals</span>
+            </div>
+          </div>
+          <button
+            className="btn-predictions"
+            onClick={() => setShowPredictionDialog(true)}
+          >
+            🤖 View All Predictions
+          </button>
+        </section>
       </div>
 
-      {/* Price Chart Dialog */}
+      {/* Price Chart Modal */}
       {showPriceDialog && selectedCrypto && prices[selectedCrypto] && (
         <dialog className="dialog dialog-price" open>
           <div className="dialog-content">
@@ -445,7 +319,6 @@ const Dashboard = () => {
             </button>
             <h2>
               {selectedCrypto} - Price Chart ({range})
-              {isStreaming ? " • live" : " • polling"}
             </h2>
             <div className="range-toggle">
               {[
@@ -492,13 +365,8 @@ const Dashboard = () => {
                       backgroundColor: "#1a1a2e",
                       border: "1px solid #16213e"
                     }}
-                    labelStyle={{ color: "#0f3460" }}
-                    formatter={(value) =>
-                      value || value === 0 ? value.toFixed(2) : value
-                    }
-                    labelFormatter={(label) => new Date(label).toLocaleString()}
+                    formatter={(value) => value.toFixed(2)}
                   />
-                  <Legend />
                   <Line
                     type="monotone"
                     dataKey="close"
@@ -536,7 +404,7 @@ const Dashboard = () => {
       {/* Wallet Dialog */}
       {showWalletDialog && wallet && (
         <dialog className="dialog" open>
-          <div className="dialog-content dialog-large">
+          <div className="dialog-content">
             <button
               className="btn-close"
               onClick={() => setShowWalletDialog(false)}
@@ -544,7 +412,6 @@ const Dashboard = () => {
               ×
             </button>
             <h2>Wallet Details</h2>
-
             <div className="wallet-summary">
               <div className="wallet-stat">
                 <label>Total Value</label>
@@ -557,7 +424,6 @@ const Dashboard = () => {
                 <div className="value">{wallet.asset_count}</div>
               </div>
             </div>
-
             <table className="wallet-table">
               <thead>
                 <tr>
@@ -676,7 +542,7 @@ const Dashboard = () => {
                         null;
                       return (
                         <tr
-                          key={`${pred.symbol}-${pred.interval}-${pred.horizon_minutes}-${idx}`}
+                          key={`${pred.symbol}-${pred.interval}-${idx}`}
                           className={`signal-row ${
                             pred.signal?.toLowerCase() || "neutral"
                           }`}
@@ -721,23 +587,18 @@ const Dashboard = () => {
               </div>
             ) : (
               <p className="no-data">
-                No predictions meeting the selected confidence. Click "Get
-                Predictions" to run the models or lower the filter.
+                No predictions. Click "Get Predictions" to run models.
               </p>
             )}
           </div>
         </dialog>
       )}
 
-      {/* Footer */}
       <footer className="dashboard-footer">
         <p>Last updated: {new Date().toLocaleTimeString()}</p>
-        <button
-          className="btn-predictions"
-          onClick={() => setShowPredictionDialog(true)}
-        >
-          🤖 View All Predictions
-        </button>
+        <p>
+          {wsConnected ? "🟢 Real-time via WebSocket" : "🔴 Connection issues"}
+        </p>
       </footer>
     </div>
   );

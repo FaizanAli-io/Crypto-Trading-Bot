@@ -12,7 +12,6 @@ import {
   Legend
 } from "recharts";
 import "./Dashboard.css";
-import io from "socket.io-client";
 
 const Dashboard = () => {
   const [cryptos, setCryptos] = useState([]);
@@ -33,11 +32,8 @@ const Dashboard = () => {
   const [range, setRange] = useState("1h");
   const [isStreaming, setIsStreaming] = useState(false);
   const streamRef = useRef(null);
-  const socketRef = useRef(null);
-  const [wsConnected, setWsConnected] = useState(false);
 
   const API_BASE_URL = "http://localhost:5000/api";
-  const WS_URL = "http://localhost:5000";
 
   const fetchAllData = async () => {
     try {
@@ -109,68 +105,40 @@ const Dashboard = () => {
     const interval = setInterval(fetchAllData, refreshInterval * 1000);
     return () => clearInterval(interval);
   }, [refreshInterval, isStreaming]);
-  // Sync streaming indicator with WebSocket status
-  useEffect(() => {
-    setIsStreaming(wsConnected);
-  }, [wsConnected]);
 
-  // Minimal WebSocket client for real-time predictions (keeps old UI intact)
+  // Subscribe to SSE stream when available; fallback to polling automatically
   useEffect(() => {
+    const base = API_BASE_URL.replace(/\/api$/, "");
+    const sseUrl = `${base}/stream/prices`;
+    let es;
+
     try {
-      const socket = io(WS_URL, {
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
-        reconnectionAttempts: Infinity,
-        transports: ["polling"],
-        upgrade: false
-      });
-      socketRef.current = socket;
-
-      socket.on("connect", () => {
-        console.log("✅ Socket.IO connected");
-        setWsConnected(true);
-        setIsStreaming(true);
-        // Request latest prices & predictions on connect
-        socket.emit("request_prices");
-        // Request latest predictions on connect
-        socket.emit("request_predictions");
-      });
-
-      socket.on("disconnect", () => {
-        console.log("❌ Socket.IO disconnected");
-        setWsConnected(false);
+      es = new EventSource(sseUrl);
+      streamRef.current = es;
+      es.onopen = () => setIsStreaming(true);
+      es.onmessage = (event) => {
+        try {
+          const payload = JSON.parse(event.data);
+          if (payload?.prices || payload?.data) {
+            setPrices(payload.prices || payload.data);
+          }
+        } catch (err) {
+          console.error("SSE parse error", err);
+        }
+      };
+      es.onerror = () => {
         setIsStreaming(false);
-      });
-      socket.on("prices_update", (data) => {
-        if (data?.prices) {
-          setPrices(data.prices);
-        }
-      });
-
-      socket.on("predictions_update", (data) => {
-        console.log("📊 Received predictions_update:", data);
-        if (data?.predictions) {
-          setPredictions(data.predictions);
-          setPredictionsTimestamp(new Date());
-        }
-      });
-
-      // Also handle initial data if provided
-      socket.on("initial_data", (data) => {
-        console.log("📦 Received initial_data:", data);
-        if (data?.predictions) {
-          setPredictions(data.predictions);
-          setPredictionsTimestamp(new Date());
-        }
-      });
-
-      return () => {
-        socket.disconnect();
+        es.close();
       };
     } catch (err) {
-      // Fail silently to preserve old UI
+      setIsStreaming(false);
     }
+
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.close();
+      }
+    };
   }, []);
 
   const filteredHistory = useMemo(() => {
@@ -231,7 +199,7 @@ const Dashboard = () => {
     if (price === undefined || price === null) return "N/A";
     return `$${Number(price).toLocaleString(undefined, {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 4
+      maximumFractionDigits: 2
     })}`;
   };
 
@@ -265,25 +233,12 @@ const Dashboard = () => {
 
   const filteredPredictions = useMemo(() => {
     const list = Object.values(predictions || {});
-    const parseTime = (t) => {
-      try {
-        return t ? new Date(t).getTime() : 0;
-      } catch {
-        return 0;
-      }
-    };
-    return (
-      list
-        .filter((p) => Number(p.confidence ?? 0) >= predictionThreshold)
-        .filter(
-          (p) =>
-            !predictionsCryptoFilter || p.symbol === predictionsCryptoFilter
-        )
-        // Sort by most recent prediction_time descending
-        .sort(
-          (a, b) => parseTime(b.prediction_time) - parseTime(a.prediction_time)
-        )
-    );
+    return list
+      .filter((p) => Number(p.confidence ?? 0) >= predictionThreshold)
+      .filter(
+        (p) => !predictionsCryptoFilter || p.symbol === predictionsCryptoFilter
+      )
+      .sort((a, b) => Number(b.confidence ?? 0) - Number(a.confidence ?? 0));
   }, [predictions, predictionThreshold, predictionsCryptoFilter]);
 
   if (loading) {

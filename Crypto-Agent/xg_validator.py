@@ -730,18 +730,24 @@ if __name__ == "__main__":
     SYMBOLS = list(SUPPORTED_CRYPTOS.values())
 
     # Test configuration - adjust these parameters as needed
-    INTERVAL = "15m"  # Must match your trained models
-    HORIZON_MINUTES = 15  # Must match your trained models
-    DAYS = 5  # Historical period to test
+    INTERVALS_TO_TEST = [
+        ("5m", 5),  # 5 minute interval, 5 minute horizon
+        ("15m", 15),  # 15 minute interval, 15 minute horizon
+        ("30m", 30),  # 30 minute interval, 30 minute horizon
+        ("1h", 60),  # 1 hour interval, 60 minute horizon
+        ("2h", 120),  # 2 hour interval, 120 minute horizon
+    ]
+    DAYS = 30  # Historical period to test
     MIN_CONFIDENCE = 0.75  # Only count predictions above this threshold
     USE_SMC = True  # Try SMC models first, fallback to simple models
 
     logger.info("=" * 80)
-    logger.info("MULTI-SYMBOL BACKTEST VALIDATION")
+    logger.info("MULTI-INTERVAL MULTI-SYMBOL BACKTEST VALIDATION")
     logger.info("=" * 80)
     logger.info(f"Testing {len(SYMBOLS)} cryptocurrencies")
-    logger.info(f"Interval: {INTERVAL}")
-    logger.info(f"Horizon: {HORIZON_MINUTES} minutes")
+    logger.info(
+        f"Intervals: {', '.join(interval for interval, _ in INTERVALS_TO_TEST)}"
+    )
     logger.info(f"Period: {DAYS} days")
     logger.info(f"Min Confidence: {MIN_CONFIDENCE:.0%}")
     logger.info(f"Model Type: {'SMC (with fallback)' if USE_SMC else 'Simple'}")
@@ -749,14 +755,34 @@ if __name__ == "__main__":
 
     validator = ModelValidator(binance_client)
 
-    results = validator.backtest_multiple_symbols(
-        symbols=SYMBOLS,
-        interval=INTERVAL,
-        horizon_minutes=HORIZON_MINUTES,
-        days=DAYS,
-        min_confidence=MIN_CONFIDENCE,
-        use_smc=USE_SMC,
-    )
+    # Test each interval configuration
+    all_interval_results = {}
+    for interval, horizon_minutes in INTERVALS_TO_TEST:
+        logger.info(f"\n{'#'*80}")
+        logger.info(
+            f"TESTING INTERVAL: {interval} (horizon: {horizon_minutes} minutes)"
+        )
+        logger.info(f"{'#'*80}\n")
 
-    logger.info("\n✅ Backtest completed for all symbols!")
+        try:
+            results = validator.backtest_multiple_symbols(
+                symbols=SYMBOLS,
+                interval=interval,
+                horizon_minutes=horizon_minutes,
+                days=DAYS,
+                min_confidence=MIN_CONFIDENCE,
+                use_smc=USE_SMC,
+            )
+            all_interval_results[f"{interval}_{horizon_minutes}min"] = results
+        except Exception as e:
+            logger.error(f"Error testing interval {interval}: {e}")
+            import traceback
+
+            logger.debug(traceback.format_exc())
+            continue
+
+    logger.info("\n✅ Backtest completed for all intervals and symbols!")
     logger.info(f"Results saved to validation_results/ directory")
+    logger.info(
+        f"Tested intervals: {len(all_interval_results)}/{len(INTERVALS_TO_TEST)}"
+    )
